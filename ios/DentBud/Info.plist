@@ -54,6 +54,10 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFPro.ttf</string>
+		<string>Euclid Circular A Bold.ttf</string>
+		<string>Euclid Circular A Medium.ttf</string>
+		<string>Euclid Circular A Regular.ttf</string>
+		<string>Euclid Circular A SemiBold.ttf</string>
 	</array>
 </dict>
 </plist>
