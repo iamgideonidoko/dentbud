@@ -3,10 +3,10 @@ import {View, Text, Button, TouchableWithoutFeedback, StyleSheet, Image} from 'r
 import MenuIcon from '../assets/icons/menu.svg';
 import DentBudLogo from '../assets/images/dentbud-logo-sm.png';
 
-const CustomHeader = () => {
+const CustomHeader = ({navigation}) => {
   return (<View style={styles.wrapper}>
         <View style={{flexDirection: "row"}}><Image source={DentBudLogo} style={{width: 30, height: 30, borderRadius: 100, marginRight: 6}}  /><Text style={styles.welcomeText}>DentBud</Text></View>
-        <View><TouchableWithoutFeedback title="Love" onPress={() => console.log("menu pressed")}><MenuIcon width={30} height={30} /></TouchableWithoutFeedback></View>
+        <View><TouchableWithoutFeedback title="Love" onPress={() => navigation?.openDrawer()}><MenuIcon width={30} height={30} /></TouchableWithoutFeedback></View>
     </View>);
 };
 

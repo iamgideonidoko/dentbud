@@ -3,9 +3,9 @@ import {View, Text, Button} from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 
 
-const Home = () => {
+const Home = ({navigation}) => {
     return (<View>
-        <CustomHeader />
+        <CustomHeader navigation={navigation} />
         <Text>Hi from Home</Text>
     </View>)
 }

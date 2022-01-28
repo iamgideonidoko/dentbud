@@ -6,7 +6,7 @@ import MaleAvatar from '../assets/images/male-avatar.png';
 import CalendarIcon from '../assets/icons/Calendar.svg';
 import ChatIcon from '../assets/icons/Chat.svg';
 
-const DrawerContent = (props) => {
+const DrawerContent = ({navigation}) => {
   return <SafeAreaView style={{borderWidth: 0, flex: 1}}>
     <ScrollView style={{padding: 20}}>
         <View style={{borderWidth: 0, flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20}}>
@@ -20,8 +20,8 @@ const DrawerContent = (props) => {
         <View style={styles.usernameWrapper}><Text style={styles.username}>@johndoe</Text></View>
     </View>
     <View style={styles.navItemsWrapper}>
-        <View style={[styles.navItem, {backgroundColor: "#4845D220"}]}><ChatIcon /><Text style={[styles.navItemText]}>Chat your assistant</Text><TouchableOpacity style={[styles.navItemBtn, {backgroundColor: "#4845D230"}]}><Text style={[styles.navItemBtnText, {color: "#4845D2"}]}>Chat</Text></TouchableOpacity></View>
-        <View style={[styles.navItem, {backgroundColor: "#21AD8020"}]}><CalendarIcon /><Text style={[styles.navItemText]}>Manage your activites</Text><TouchableOpacity style={[styles.navItemBtn, {backgroundColor: "#21AD8030"}]}><Text style={[styles.navItemBtnText, {color: "#21AD80"}]}>Manage</Text></TouchableOpacity></View>
+        <View style={[styles.navItem, {backgroundColor: "#4845D220"}]}><ChatIcon /><Text style={[styles.navItemText]}>Chat your assistant</Text><TouchableOpacity onPress={() => navigation.navigate('Home')} style={[styles.navItemBtn, {backgroundColor: "#4845D230"}]}><Text style={[styles.navItemBtnText, {color: "#4845D2"}]}>Chat</Text></TouchableOpacity></View>
+        <View style={[styles.navItem, {backgroundColor: "#21AD8020"}]}><CalendarIcon /><Text style={[styles.navItemText]}>Manage your activites</Text><TouchableOpacity onPress={() => navigation.navigate('Activity')} style={[styles.navItemBtn, {backgroundColor: "#21AD8030"}]}><Text style={[styles.navItemBtnText, {color: "#21AD80"}]}>Manage</Text></TouchableOpacity></View>
     </View>
     </ScrollView>
   </SafeAreaView>;

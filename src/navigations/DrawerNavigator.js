@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 import DrawerContent from './DrawerContent';
 import MenuIcon from '../assets/icons/menu.svg';
 import Home from '../screens/Home';
-import Profile from '../screens/Profile';
+import Activity from '../screens/Activity';
 
 
 const DrawerNavigator = () => {
@@ -28,7 +28,7 @@ const DrawerNavigator = () => {
             overlayColor: "white"
         }}>
             <Drawer.Screen name="Home" component={Home}></Drawer.Screen>
-            <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
+            <Drawer.Screen name="Activity" component={Activity}></Drawer.Screen>
         </Drawer.Navigator>
     );
 }
