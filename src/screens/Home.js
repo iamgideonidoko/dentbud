@@ -14,6 +14,7 @@ import {
   Alert,
 }  from 'react-native';
 import CustomHeader from '../components/CustomHeader';
+import PlaneIcon from '../assets/icons/Plane.svg'
 
 
 const Home = ({navigation}) => {
@@ -181,7 +182,7 @@ const Home = ({navigation}) => {
                 sendMessage();
               }}
             >
-              <Text style={{fontFamily: "Euclid Circular A Regular"}}>Send</Text>
+              <Text style={{fontFamily: "Euclid Circular A Regular"}}><PlaneIcon width={5} style={{opacity: 0.7}} /></Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -210,6 +211,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     backgroundColor: '#fff',
     borderRadius: 100,
+    padding: 5
   },
   messageInput: {
     height: 40,
