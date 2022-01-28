@@ -118,20 +118,22 @@ const Home = ({navigation}) => {
           data={JSON.parse(JSON.stringify(messages)).reverse()}
           renderItem={({ item }) => (
             <TouchableWithoutFeedback>
-              <View style={{ marginTop: 6 }}>
+              <View style={{ marginTop: 10 }}>
                 <View
                   style={{
                     maxWidth: Dimensions.get('screen').width * 0.8,
-                    backgroundColor: '#3a6ee8',
+                    backgroundColor: item.sender === currentUser.name
+                        ? '#21AD80'
+                        : '#4845D2',
                     alignSelf:
                       item.sender === currentUser.name
                         ? 'flex-end'
                         : 'flex-start',
                     marginHorizontal: 10,
                     padding: 10,
-                    borderRadius: 8,
+                    borderRadius: 10,
                     borderBottomLeftRadius:
-                      item.sender === currentUser.name ? 8 : 0,
+                      item.sender === currentUser.name ? 10 : 0,
                     borderBottomRightRadius:
                       item.sender === currentUser.name ? 0 : 8,
                   }}
@@ -140,6 +142,7 @@ const Home = ({navigation}) => {
                     style={{
                       color: '#fff',
                       fontSize: 16,
+                      fontFamily: "Euclid Circular A Regular"
                     }}
                   >
                     {item.message}
@@ -147,8 +150,10 @@ const Home = ({navigation}) => {
                   <Text
                     style={{
                       color: '#dfe4ea',
-                      fontSize: 14,
+                      fontSize: 12,
                       alignSelf: 'flex-end',
+                      marginTop: 4,
+                      fontFamily: "Euclid Circular A Regular"
                     }}
                   >
                     {item.time}
@@ -159,11 +164,11 @@ const Home = ({navigation}) => {
           )}
         />
 
-        <View style={{ paddingVertical: 10 }}>
+        <View style={{ paddingVertical: 10, borderWidth: 0 }}>
           <View style={styles.messageInputView}>
             <TextInput
               defaultValue={inputMessage}
-              style={styles.messageInput}
+              style={[styles.messageInput, {fontFamily: "Euclid Circular A Regular"}]}
               placeholder='Message'
               onChangeText={(text) => setInputMessage(text)}
               onSubmitEditing={() => {
@@ -176,7 +181,7 @@ const Home = ({navigation}) => {
                 sendMessage();
               }}
             >
-              <Text>Send</Text>
+              <Text style={{fontFamily: "Euclid Circular A Regular"}}>Send</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -202,9 +207,9 @@ const styles = StyleSheet.create({
   messageInputView: {
     display: 'flex',
     flexDirection: 'row',
-    marginHorizontal: 14,
+    marginHorizontal: 10,
     backgroundColor: '#fff',
-    borderRadius: 4,
+    borderRadius: 100,
   },
   messageInput: {
     height: 40,
