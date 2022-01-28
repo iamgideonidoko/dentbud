@@ -1,15 +1,17 @@
 import React from 'react';
 // import Container from '../components/Container'
-import {SafeAreaView, Text, View, Image, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {SafeAreaView, Text, View, Image, StyleSheet, ScrollView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import DentBudLogo from '../assets/images/dentbud-logo-md.png';
 import MaleAvatar from '../assets/images/male-avatar.png';
 import CalendarIcon from '../assets/icons/Calendar.svg';
 import ChatIcon from '../assets/icons/Chat.svg';
+import BackIcon from '../assets/icons/Back.svg';
 
 const DrawerContent = ({navigation}) => {
   return <SafeAreaView style={{borderWidth: 0, flex: 1}}>
     <ScrollView style={{padding: 20}}>
         <View style={{borderWidth: 0, flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20}}>
+        <View style={{borderWidth: 0, position: "absolute", top: 0, right: -5, borderRadius: 100}}><TouchableWithoutFeedback onPress={() => navigation?.closeDrawer()} style={{position: "absolute", top: 20, left: 0}}><BackIcon/></TouchableWithoutFeedback></View>
         <Image source={DentBudLogo} style={{width: 100, height: 100}} />
         <Text style={styles.appName}>DentBud</Text>
         <Text style={styles.miniAppName}>...your favourite assistant</Text>
