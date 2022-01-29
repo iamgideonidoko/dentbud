@@ -23,8 +23,14 @@ const DrawerContent = ({navigation}) => {
     </View>
     <View style={styles.navItemsWrapper}>
         <View style={[styles.navItem, {backgroundColor: "#4845D220"}]}><ChatIcon /><Text style={[styles.navItemText]}>Chat your assistant</Text><TouchableOpacity onPress={() => navigation.navigate('Home')} style={[styles.navItemBtn, {backgroundColor: "#4845D230"}]}><Text style={[styles.navItemBtnText, {color: "#4845D2"}]}>Chat</Text></TouchableOpacity></View>
-        <View style={[styles.navItem, {backgroundColor: "#21AD8020"}]}><CalendarIcon /><Text style={[styles.navItemText]}>Manage your activites</Text><TouchableOpacity onPress={() => navigation.navigate('Activity')} style={[styles.navItemBtn, {backgroundColor: "#21AD8030"}]}><Text style={[styles.navItemBtnText, {color: "#21AD80"}]}>Manage</Text></TouchableOpacity></View>
+        <View style={[styles.navItem, {backgroundColor: "#21AD8020"}]}><CalendarIcon /><Text style={[styles.navItemText]}>Manage your Courses</Text><TouchableOpacity onPress={() => navigation.navigate('Course')} style={[styles.navItemBtn, {backgroundColor: "#21AD8030"}]}><Text style={[styles.navItemBtnText, {color: "#21AD80"}]}>Courses</Text></TouchableOpacity></View>
     </View>
+    <View style={[styles.navItemsWrapper, {paddingBottom: 50}]}>
+        <View style={[styles.navItem, {backgroundColor: "#4845D220"}]}><ChatIcon /><Text style={[styles.navItemText]}>Structure your timetable</Text><TouchableOpacity onPress={() => navigation.navigate('Timetable')} style={[styles.navItemBtn, {backgroundColor: "#4845D230"}]}><Text style={[styles.navItemBtnText, {color: "#4845D2"}]}>Timetable</Text></TouchableOpacity></View>
+
+        <View style={[styles.navItem, {backgroundColor: "#21AD8020"}]}><CalendarIcon /><Text style={[styles.navItemText]}>All of your activites</Text><TouchableOpacity onPress={() => navigation.navigate('Activity')} style={[styles.navItemBtn, {backgroundColor: "#21AD8030"}]}><Text style={[styles.navItemBtnText, {color: "#21AD80"}]}>Activities</Text></TouchableOpacity></View>
+    </View>
+
     </ScrollView>
   </SafeAreaView>;
 };
@@ -88,7 +94,8 @@ const styles = StyleSheet.create({
     navItemText: {
         fontFamily: "Euclid Circular A Bold",
         marginTop: 5,
-        marginBottom: 5
+        marginBottom: 5,
+        color: "#00000090"
     },
     navItemBtn: {
         padding: 8,

@@ -12,6 +12,8 @@ target 'DentBud' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-viewpager', :path => '../node_modules/@react-native-community/viewpager'
+
   target 'DentBudTests' do
     inherit! :complete
     # Pods for testing

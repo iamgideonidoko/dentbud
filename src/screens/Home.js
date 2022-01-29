@@ -169,7 +169,7 @@ const Home = ({navigation}) => {
           <View style={styles.messageInputView}>
             <TextInput
               defaultValue={inputMessage}
-              style={[styles.messageInput, {fontFamily: "Euclid Circular A Regular"}]}
+              style={[styles.messageInput, {fontFamily: "Euclid Circular A Regular", color: "#00000090"}]}
               placeholder='Message'
               onChangeText={(text) => setInputMessage(text)}
               onSubmitEditing={() => {
@@ -182,7 +182,7 @@ const Home = ({navigation}) => {
                 sendMessage();
               }}
             >
-              <Text style={{fontFamily: "Euclid Circular A Regular"}}><PlaneIcon width={5} style={{opacity: 0.7}} /></Text>
+              <Text style={{fontFamily: "Euclid Circular A Regular"}}><PlaneIcon style={{opacity: 0.7}} /></Text>
             </TouchableOpacity>
           </View>
         </View>
