@@ -24,7 +24,15 @@ const Register = ({navigation}) => {
           </View>
           <Text style={[styles.appName]}>DentBud</Text>
           <Text style={styles.loginTitleText}>Register</Text>
-          {/* <View style={styles.hr}></View> */}
+          <View style={styles.inputBox}>
+            <Text style={styles.inputLabel}>Name</Text>
+            <TextInput
+              style={styles.input}
+              autoCapitalize={"none"}
+              keyboardType='email-address'
+              textContentType='emailAddress'
+            />
+          </View>
           <View style={styles.inputBox}>
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
@@ -36,6 +44,15 @@ const Register = ({navigation}) => {
           </View>
           <View style={styles.inputBox}>
             <Text style={styles.inputLabel}>Password</Text>
+            <TextInput
+              style={styles.input}
+              autoCapitalize={false}
+              secureTextEntry={true}
+              textContentType='password'
+            />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={styles.inputLabel}>Retype Password</Text>
             <TextInput
               style={styles.input}
               autoCapitalize={false}
@@ -86,7 +103,7 @@ const styles = StyleSheet.create({
     },
     centerizedView: {
       width: '100%',
-      top: '18%',
+      top: '10%',
     },
     authBox: {
       width: '85%',
