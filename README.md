@@ -2,10 +2,15 @@
 
 - Run dev server
 ```bash
-npm run dev
+yarn run dev
 ```
 
 - Create build
 ```bash
 tsc
+```
+
+- Global Installation
+```bash
+yarn global add ts-node
 ```

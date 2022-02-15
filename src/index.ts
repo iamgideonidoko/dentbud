@@ -27,4 +27,4 @@ app.use(errorHandler);
 
 const PORT: Number = Number(process.env.PORT) || 5000;
 
-const server: Server = app.listen(PORT, () => console.log(`🚀 is on port ${PORT}.`));
+const server: Server = app.listen(PORT, () => console.log(`Server started on port ${PORT}.`));
