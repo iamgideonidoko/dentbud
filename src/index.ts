@@ -1,27 +1,28 @@
-import express, {Request, Response, NextFunction, Application, ErrorRequestHandler} from 'express';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import express, { Request, Response, NextFunction, Application, ErrorRequestHandler } from 'express';
 import { Server } from 'http';
 import createHttpError from 'http-errors';
-import {config} from 'dotenv';
+import { config } from 'dotenv';
 
 config();
 
 const app: Application = express();
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
-    res.send('Hello from ts app');
+  res.send('Hello from ts app');
 });
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    next(new createHttpError.NotFound());
+  next(new createHttpError.NotFound());
 });
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-    res.status(err.status || 500);
-    res.send({ 
-        status: err.status || 500,
-        message: err.message
-    });
-}
+  res.status(err.status || 500);
+  res.send({
+    status: err.status || 500,
+    message: err.message,
+  });
+};
 
 app.use(errorHandler);
 
