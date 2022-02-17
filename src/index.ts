@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { Request, Response, NextFunction, Application, ErrorRequestHandler } from 'express';
 import { Server } from 'http';
-import createHttpError from 'http-errors';
+import createError from 'http-errors';
 import { config } from 'dotenv';
 import morgan from 'morgan';
 import xss from 'xss-clean';
+import AppError from './config/appError.config';
+import globalErrorHandler from './api/v1/middlewares/globalErrorHandler.middleware';
 
 config();
 
@@ -19,23 +21,22 @@ if (process.env.NODE_ENV === 'development') {
 // sanitize data against XSS
 app.use(xss());
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  next(new createHttpError.NotFound());
-});
-
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    status: err.status || 500,
-    message: err.message,
-  });
-};
-
-app.use(errorHandler);
-
 // Routes
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send('Hello from DentBud backend');
+  res.send('DentBud backend');
+});
+
+// Error for unhandled routes
+app.use((req: Request, res: Response, next: NextFunction) => {
+  next(new createError.NotFound());
+});
+
+// middleware for global error handling
+app.use(globalErrorHandler);
+
+// for unhandled routes
+app.all('*', (req, res, next: NextFunction) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 const PORT: number = Number(process.env.PORT) || 5000;
