@@ -21,6 +21,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+//  limit request payload size
+app.use(express.json({ limit: '10kb' }));
+
 // sanitize data against XSS
 app.use(xss());
 
