@@ -7,6 +7,8 @@ import morgan from 'morgan';
 import xss from 'xss-clean';
 import AppError from './config/appError.config';
 import globalErrorHandler from './api/v1/middlewares/globalErrorHandler.middleware';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
 
 config();
 
@@ -20,6 +22,12 @@ if (process.env.NODE_ENV === 'development') {
 
 // sanitize data against XSS
 app.use(xss());
+
+// compress stuff sent to the client
+app.use(compression());
+
+// parse cookies
+app.use(cookieParser());
 
 // Routes
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
