@@ -11,6 +11,7 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import limiter from './config/rateLimiter.config';
+import appCors from './config/cors.config';
 
 config();
 
@@ -39,6 +40,9 @@ app.use(helmet());
 
 // register rate limiter
 app.use(limiter());
+
+// cors
+app.use(appCors());
 
 // Routes
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
