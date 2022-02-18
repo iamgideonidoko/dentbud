@@ -9,6 +9,7 @@ import AppError from './config/appError.config';
 import globalErrorHandler from './api/v1/middlewares/globalErrorHandler.middleware';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
 
 config();
 
@@ -28,6 +29,9 @@ app.use(compression());
 
 // parse cookies
 app.use(cookieParser());
+
+// add secure HTTP headers
+app.use(helmet());
 
 // Routes
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
