@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { registerUser } from '../controllers/user.controller';
 
-const router = Router();
+const userRoute = Router();
 
 /*
-@route          POST api/users/reguser (reg user)
+@route          POST /api/v1/user)
 @description    Register a new user.
 @access         Public
 */
 
-router.post('/user', registerUser);
+userRoute.post('/user', registerUser);
 
-export default router;
+export default userRoute;

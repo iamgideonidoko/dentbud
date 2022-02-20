@@ -11,6 +11,8 @@ import limiter from './config/rateLimiter.config';
 import appCors from './config/cors.config';
 import mongoose from 'mongoose';
 import constants from './config/constants.config';
+// Routes Import
+import userRoute from './api/v1/routes/user.route';
 
 config();
 
@@ -61,9 +63,22 @@ mongoose
   .catch((err) => console.log('MONGODB CONNECTION ERROR: ' + err));
 
 // Routes
-app.get('/', (req: Request, res: Response) => {
-  res.send('DentBud backend');
+app.get('/', (_req: Request, res: Response) => {
+  res.status(200).json({
+    name: 'DentBud Core',
+    description: 'Core service for DentBud, an AI-powered mobile assistant for students.',
+  });
 });
+
+app.get(constants.v1Base, (_req: Request, res: Response) => {
+  res.status(200).json({
+    name: 'DentBud Core v1',
+    description: 'Core service (v1) for DentBud, an AI-powered mobile assistant for students.',
+    version: 'v1',
+  });
+});
+
+app.use(constants.v1Base, userRoute);
 
 // Error for unhandled routes
 app.use((req: Request, res: Response, next: NextFunction) => {
