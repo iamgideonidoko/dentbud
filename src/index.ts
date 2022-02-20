@@ -3,7 +3,6 @@ import createError from 'http-errors';
 import { config } from 'dotenv';
 import morgan from 'morgan';
 import xss from 'xss-clean';
-import AppError from './config/appError.config';
 import globalErrorHandler from './api/v1/middlewares/globalErrorHandler.middleware';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -56,11 +55,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // middleware for global error handling
 app.use(globalErrorHandler);
-
-// for unhandled routes
-app.all('*', (req, _res, next: NextFunction) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
 
 const PORT: number = Number(process.env.PORT) || 5000;
 

@@ -31,7 +31,7 @@ const handleProdError: ErrorRequestHandler = (err, req: Request, res: Response) 
     // 2) Send generic message
     return res.status(500).json({
       status: 'error',
-      message: 'Something went very wrong!',
+      message: 'Something went wrong!',
     });
   }
 
@@ -42,7 +42,7 @@ const handleProdError: ErrorRequestHandler = (err, req: Request, res: Response) 
 
 const globalErrorHandler: ErrorRequestHandler = (err, req: Request, res: Response, next: NextFunction) => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
+  err.status = `${err.statusCode}`.startsWith('4') ? 'fail' : 'error';
 
   // the node environment has to be declared
   if (process.env.NODE_ENV === 'development') {
