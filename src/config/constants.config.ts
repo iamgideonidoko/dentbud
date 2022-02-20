@@ -4,7 +4,7 @@ import { Secret } from 'jsonwebtoken';
 config();
 
 type Constants = {
-  mongodbURI: string | undefined;
+  mongodbURI: string;
   jwtSecret: Secret;
   jwtDuration: number;
 };

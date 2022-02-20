@@ -9,6 +9,8 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import limiter from './config/rateLimiter.config';
 import appCors from './config/cors.config';
+import mongoose from 'mongoose';
+import constants from './config/constants.config';
 
 config();
 
@@ -42,6 +44,21 @@ app.use(limiter());
 
 // cors
 app.use(appCors());
+
+/* 
+@description    MongoDB Connection using Mongoose ORM
+*/
+mongoose
+  .connect(
+    constants.mongodbURI /* , {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  } */,
+  )
+  .then(() => console.log('MongoDB Connected...'))
+  .catch((err) => console.log('MONGODB CONNECTION ERROR: ' + err));
 
 // Routes
 app.get('/', (req: Request, res: Response) => {
