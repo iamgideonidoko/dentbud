@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import createError from 'http-errors';
 
 // a function that validate data transfer objects (DTO)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,7 +18,8 @@ const validateDto = (ajvValidate: any) => {
       // res.status(400).json(...)
       // but in general copying the errors reference is crucial
       const errors = ajvValidate.errors;
-      res.status(400).json(errors);
+      // next(createError(400, JSON.stringify(errors)));
+      next(createError(400, ...[{ validation_error: errors }]));
     }
     next();
   };

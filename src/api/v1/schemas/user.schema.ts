@@ -5,10 +5,10 @@ import { NewUser } from '../interfaces/user.interface';
 const newUserSchema: JSONSchemaType<NewUser> = {
   type: 'object',
   properties: {
-    name: { type: 'string', nullable: false },
-    email: { type: 'string', nullable: false },
-    password: { type: 'string', nullable: false },
-    retype_password: { type: 'string', nullable: false },
+    name: { type: 'string', nullable: false, minLength: 2 },
+    email: { type: 'string', nullable: false, format: 'email' },
+    password: { type: 'string', nullable: false, minLength: 4 },
+    retype_password: { type: 'string', nullable: false, minLength: 4 },
   },
   required: ['name', 'email', 'password', 'retype_password'],
   additionalProperties: false,

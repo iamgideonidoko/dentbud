@@ -88,6 +88,17 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // middleware for global error handling
 app.use(globalErrorHandler);
 
+// get the unhandled rejection and throw it to another fallback handler we already have.
+process.on('unhandledRejection', (reason: Error) => {
+  throw reason;
+});
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+process.on('uncaughtException', (error: Error) => {
+  console.log('UncaughtException Error => ', error);
+  process.exit(1);
+});
+
 const PORT: number = Number(process.env.PORT) || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}.`));

@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { registerUser } from '../controllers/user.controller';
+import { newUserAjvValidate } from '../schemas/user.schema';
+import validateDto from '../middlewares/validateDto.middleware';
 
 const userRoute = Router();
 
@@ -9,6 +11,6 @@ const userRoute = Router();
 @access         Public
 */
 
-userRoute.post('/user', registerUser);
+userRoute.post('/user', validateDto(newUserAjvValidate), registerUser);
 
 export default userRoute;
