@@ -6,7 +6,7 @@ export interface NewUser {
 }
 
 export interface RegisterReturn {
-  token: string | undefined;
+  accessToken: string | undefined;
   user: {
     id: string;
     name: string;
