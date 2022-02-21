@@ -26,7 +26,7 @@ export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise
       const savedUser = await newUser.save();
       const { id, name, email, created_at } = savedUser;
 
-      const token = await signAccessToken({ id });
+      const token = await signAccessToken(id);
 
       return new Promise<RegisterReturn>((resolve) =>
         resolve({
@@ -40,7 +40,8 @@ export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise
         }),
       );
     } catch (err) {
-      return next(err);
+      // return next(err);
+      throw err;
     }
   }
 };
