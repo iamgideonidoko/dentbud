@@ -5,15 +5,19 @@ config();
 
 type Constants = {
   mongodbURI: string;
-  jwtSecret: Secret;
-  jwtDuration: number;
+  accessTokenSecret: Secret;
+  refreshTokenSecret: Secret;
+  tokenSpan: number | string;
+  refreshTokenSpan: number | string;
   v1Base: string;
 };
 
 const constants: Constants = {
   mongodbURI: process.env.MONGODB_URI as string,
-  jwtSecret: process.env.JWT_SECRET as Secret,
-  jwtDuration: 21600, // about 5 or 6hrs
+  accessTokenSecret: process.env.ACCESS_TOKEN_SECRET as Secret,
+  refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET as Secret,
+  tokenSpan: '5h',
+  refreshTokenSpan: '1y',
   v1Base: '/api/v1',
 };
 

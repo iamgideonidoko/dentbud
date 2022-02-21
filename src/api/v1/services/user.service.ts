@@ -2,7 +2,7 @@ import createError from 'http-errors';
 import User from '../models/user.model';
 import { NewUser, RegisterReturn } from '../interfaces/user.interface';
 import { hashPassword } from '../helpers/password.helper';
-import { signPayload } from '../helpers/jwt.helper';
+import { signAccessToken } from '../helpers/jwt.helper';
 import { NextFunction } from 'express';
 
 export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise<RegisterReturn | void> => {
@@ -26,7 +26,7 @@ export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise
       const savedUser = await newUser.save();
       const { id, name, email, created_at } = savedUser;
 
-      const token = await signPayload({ id });
+      const token = await signAccessToken({ id });
 
       return new Promise<RegisterReturn>((resolve) =>
         resolve({

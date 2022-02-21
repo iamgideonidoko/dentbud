@@ -20,6 +20,7 @@ import connectRedisClient from './config/redis.config';
 config();
 
 (async () => {
+  // connect to redis
   await connectRedisClient();
 })();
 
