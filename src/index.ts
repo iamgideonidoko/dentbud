@@ -13,8 +13,15 @@ import mongoose from 'mongoose';
 import constants from './config/constants.config';
 // Routes Import
 import userRoute from './api/v1/routes/user.route';
+import connectRedisClient from './config/redis.config';
+
+// console.log('Client => ', client);
 
 config();
+
+(async () => {
+  await connectRedisClient();
+})();
 
 // boostrap the express application
 const app: Application = express();
