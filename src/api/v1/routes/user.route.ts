@@ -6,11 +6,11 @@ import validateDto from '../middlewares/validateDto.middleware';
 const userRoute = Router();
 
 /*
-@route          POST /api/v1/user)
+@route          POST /api/v1/user/register (register user)
 @description    Register a new user.
 @access         Public
 */
 
-userRoute.post('/user', validateDto(newUserAjvValidate), registerUser);
+userRoute.post('/user/register', validateDto(newUserAjvValidate), registerUser);
 
 export default userRoute;

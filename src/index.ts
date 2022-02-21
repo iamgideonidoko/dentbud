@@ -13,6 +13,7 @@ import mongoose from 'mongoose';
 import constants from './config/constants.config';
 // Routes Import
 import userRoute from './api/v1/routes/user.route';
+import authRoute from './api/v1/routes/auth.route';
 import connectRedisClient from './config/redis.config';
 
 // console.log('Client => ', client);
@@ -87,6 +88,7 @@ app.get(constants.v1Base, (_req: Request, res: Response) => {
 });
 
 app.use(constants.v1Base, userRoute);
+app.use(constants.v1Base, authRoute);
 
 // Error for unhandled routes
 app.use((req: Request, res: Response, next: NextFunction) => {

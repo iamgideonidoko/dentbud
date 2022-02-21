@@ -1,6 +1,8 @@
 use('dentbud_db')
 
-db.users.find().limit(2);
+// db.users.find().limit(2);
 
 // Deletes all records in a db.
-db.users.remove({});    
+// db.users.remove({}); 
+
+db.users.deleteMany({});
