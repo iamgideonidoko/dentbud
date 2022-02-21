@@ -10,7 +10,8 @@ export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise
   //Check for existing user in that model through password
   const user = await User.findOne({ email });
   if (user) {
-    return next(createError(406, 'User already exists'));
+    throw createError(406, 'User already exists');
+    // return next(createError(406, 'User already exists'));
   } else {
     //create new user from the model
     const newUser = new User({
@@ -39,7 +40,7 @@ export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise
         }),
       );
     } catch (err) {
-      throw err;
+      return next(err);
     }
   }
 };

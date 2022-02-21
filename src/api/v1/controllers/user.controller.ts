@@ -16,9 +16,12 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
     return next(createError(400, 'Passwords must be same'));
   }
 
-  const registeredUser = await addUserToDb(next, req.body);
-
-  if (registeredUser) {
-    return createSuccess(res, 200, 'User registered successfully', { user: registeredUser });
+  try {
+    const registeredUser = await addUserToDb(next, req.body);
+    if (registeredUser) {
+      return createSuccess(res, 200, 'User registered successfully', { user: registeredUser });
+    }
+  } catch (err) {
+    return next(err);
   }
 };
