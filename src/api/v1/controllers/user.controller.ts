@@ -17,7 +17,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
   }
 
   try {
-    const registeredUser = await addUserToDb(next, req.body);
+    const registeredUser = await addUserToDb(req.body);
     if (registeredUser) {
       return createSuccess(res, 200, 'User registered successfully', { user: registeredUser });
     }

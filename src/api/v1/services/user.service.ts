@@ -3,15 +3,13 @@ import User from '../models/user.model';
 import { NewUser, RegisterReturn } from '../interfaces/user.interface';
 import { hashPassword } from '../helpers/password.helper';
 import { signAccessToken } from '../helpers/jwt.helper';
-import { NextFunction } from 'express';
 
-export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise<RegisterReturn | void> => {
+export const addUserToDb = async (newUser: NewUser): Promise<RegisterReturn | void> => {
   const { name, email, password } = newUser;
   //Check for existing user in that model through password
   const user = await User.findOne({ email });
   if (user) {
     throw createError(406, 'User already exists');
-    // return next(createError(406, 'User already exists'));
   } else {
     //create new user from the model
     const newUser = new User({
@@ -26,11 +24,11 @@ export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise
       const savedUser = await newUser.save();
       const { id, name, email, created_at } = savedUser;
 
-      const token = await signAccessToken(id);
+      const accessToken = await signAccessToken({ id });
 
       return new Promise<RegisterReturn>((resolve) =>
         resolve({
-          token,
+          accessToken,
           user: {
             id,
             name,
@@ -40,7 +38,6 @@ export const addUserToDb = async (next: NextFunction, newUser: NewUser): Promise
         }),
       );
     } catch (err) {
-      // return next(err);
       throw err;
     }
   }
