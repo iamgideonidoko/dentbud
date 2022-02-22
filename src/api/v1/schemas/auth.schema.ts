@@ -1,6 +1,6 @@
 import ajvInstance from './ajvInstance';
 import { JSONSchemaType } from 'ajv';
-import { LoginUser } from '../interfaces/auth.interface';
+import { LoginUser, RefreshToken } from '../interfaces/auth.interface';
 
 const loginUserSchema: JSONSchemaType<LoginUser> = {
   type: 'object',
@@ -14,3 +14,15 @@ const loginUserSchema: JSONSchemaType<LoginUser> = {
 
 // export a validate function
 export const loginUserAjvValidate = ajvInstance.compile(loginUserSchema);
+
+const refreshTokenSchema: JSONSchemaType<RefreshToken> = {
+  type: 'object',
+  properties: {
+    refreshToken: { type: 'string', nullable: false },
+  },
+  required: ['refreshToken'],
+  additionalProperties: false,
+};
+
+// export a validate function
+export const refreshTokenAjvValidate = ajvInstance.compile(refreshTokenSchema);

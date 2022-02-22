@@ -45,7 +45,8 @@ export const verifyAccessToken = async (accessToken: string): Promise<string | J
   });
 };
 
-export const verifyRefreshToken = async (refreshToken: string): Promise<string | JwtPayload | undefined> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const verifyRefreshToken = async (refreshToken: string): Promise<any> => {
   return new Promise<string | JwtPayload | undefined>((resolve, reject) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     jwt.verify(refreshToken, constants.refreshTokenSecret, async (err, decoded: any) => {

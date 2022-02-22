@@ -2,7 +2,7 @@ import createError from 'http-errors';
 import User from '../models/user.model';
 import { RegisterReturn } from '../interfaces/user.interface';
 import { validatePassword } from '../helpers/password.helper';
-import { signAccessToken } from '../helpers/jwt.helper';
+import { signAccessToken, verifyRefreshToken, signRefreshToken } from '../helpers/jwt.helper';
 
 export const getUserFromDb = async (userEmail: string, userPassword: string): Promise<RegisterReturn | void> => {
   //Check for existing user in that model through password
@@ -34,5 +34,20 @@ export const getUserFromDb = async (userEmail: string, userPassword: string): Pr
     } catch (err) {
       throw err;
     }
+  }
+};
+
+export const getNewTokens = async (refreshToken: string): Promise<object | undefined> => {
+  try {
+    const decoded = await verifyRefreshToken(refreshToken);
+
+    const accessToken = await signAccessToken(decoded?.id);
+    const refToken = await signRefreshToken(decoded?.id);
+
+    return new Promise((resolve) => {
+      resolve({ accessToken, refreshToken: refToken });
+    });
+  } catch (err) {
+    throw err;
   }
 };
