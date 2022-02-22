@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import createError from 'http-errors';
-import { getNewTokens, getUserFromDb } from '../services/auth.service';
+import { delRefreshToken, getNewTokens, getUserFromDb } from '../services/auth.service';
 import { createSuccess } from '../helpers/http.helper';
 
 export const loginUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -34,6 +34,24 @@ export const refreshUserToken = async (req: Request, res: Response, next: NextFu
     const tokens = await getNewTokens(refreshToken);
     if (tokens) {
       return createSuccess(res, 200, 'Token refreshed successfully', tokens);
+    }
+  } catch (err) {
+    return next(err);
+  }
+};
+
+export const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { refreshToken } = req.body;
+
+  //check if all input fields have value
+  if (!refreshToken) {
+    return next(createError(400, 'Please, enter all fields'));
+  }
+
+  try {
+    const value = await delRefreshToken(refreshToken);
+    if (value) {
+      return createSuccess(res, 200, 'User logged out successfully', value);
     }
   } catch (err) {
     return next(err);

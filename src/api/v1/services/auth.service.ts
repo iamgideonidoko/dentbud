@@ -3,6 +3,9 @@ import User from '../models/user.model';
 import { RegisterReturn } from '../interfaces/user.interface';
 import { validatePassword } from '../helpers/password.helper';
 import { signAccessToken, verifyRefreshToken, signRefreshToken } from '../helpers/jwt.helper';
+import { getRedisClient } from '../../../config/redis.config';
+
+const client = getRedisClient();
 
 export const getUserFromDb = async (userEmail: string, userPassword: string): Promise<RegisterReturn | void> => {
   //Check for existing user in that model through password
@@ -46,6 +49,20 @@ export const getNewTokens = async (refreshToken: string): Promise<object | undef
 
     return new Promise((resolve) => {
       resolve({ accessToken, refreshToken: refToken });
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const delRefreshToken = async (refreshToken: string): Promise<number | undefined> => {
+  try {
+    const decoded = await verifyRefreshToken(refreshToken);
+
+    const value = await client.del(decoded?.id);
+
+    return new Promise((resolve) => {
+      resolve(value);
     });
   } catch (err) {
     throw err;
