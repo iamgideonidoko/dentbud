@@ -12,7 +12,7 @@ Content-Type: application/json; charset=utf-8
 
 {
   "sender": "tunde@musty.com",
-  "text": "good",
+  "text": "goodbye",
   "metadata": {
       "accessToken": "love"
   } 

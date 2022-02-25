@@ -25,6 +25,7 @@ responses:
 
   utter_goodbye:
   - text: "Bye"
+  - text: "Yeah"
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
