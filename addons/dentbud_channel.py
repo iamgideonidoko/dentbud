@@ -41,17 +41,12 @@ class DentBudInput(InputChannel):
         @dentbud_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
             sender_id = request.json.get("sender") # method to get sender_id 
-            text = request.json.get("text") # method to fetch message from payload
+            text = request.json.get("text") # method to fetch text from payload
             input_channel = self.name() # method to fetch input channel
             metadata = self.get_metadata(request) # method to get metadata
 
+            # the default implementation for collecting output channel
             collector = CollectingOutputChannel()
-
-            print("sender_id => ", sender_id)
-            print("text => ", text)
-            print("input_channel =>", input_channel)
-            print("metadata => ", metadata)
-            print("collector => ", collector)
 
             if not sender_id or not text:
                 return response.json({ 
