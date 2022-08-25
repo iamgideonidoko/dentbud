@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "DentBud.app"
-               BlueprintName = "DentBud"
-               ReferencedContainer = "container:DentBud.xcodeproj">
+               BuildableName = "Dentbud.app"
+               BlueprintName = "Dentbud"
+               ReferencedContainer = "container:Dentbud.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "DentBudTests.xctest"
-               BlueprintName = "DentBudTests"
-               ReferencedContainer = "container:DentBud.xcodeproj">
+               BuildableName = "DentbudTests.xctest"
+               BlueprintName = "DentbudTests"
+               ReferencedContainer = "container:Dentbud.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "DentBud.app"
-            BlueprintName = "DentBud"
-            ReferencedContainer = "container:DentBud.xcodeproj">
+            BuildableName = "Dentbud.app"
+            BlueprintName = "Dentbud"
+            ReferencedContainer = "container:Dentbud.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "DentBud.app"
-            BlueprintName = "DentBud"
-            ReferencedContainer = "container:DentBud.xcodeproj">
+            BuildableName = "Dentbud.app"
+            BlueprintName = "Dentbud"
+            ReferencedContainer = "container:Dentbud.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
