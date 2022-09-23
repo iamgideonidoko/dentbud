@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     color: 'black',
     // fontWeight: "",
-    fontFamily: 'Euclid Circular A Medium',
+    fontFamily: 'FontMedium',
     fontSize: 25,
   },
 });

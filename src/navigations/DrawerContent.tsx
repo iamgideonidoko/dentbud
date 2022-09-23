@@ -112,12 +112,12 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
 const styles = StyleSheet.create({
   appName: {
     color: 'black',
-    fontFamily: 'Euclid Circular A SemiBold',
+    fontFamily: 'FontMedium',
     fontSize: 28,
     marginTop: 10,
   },
   miniAppName: {
-    fontFamily: 'Euclid Circular A Regular',
+    fontFamily: 'FontRegular',
     marginTop: 2,
   },
   profileCard: {
@@ -131,12 +131,12 @@ const styles = StyleSheet.create({
   },
   profileCardTitle: {
     color: 'white',
-    fontFamily: 'Euclid Circular A Regular',
+    fontFamily: 'FontRegular',
     fontSize: 15,
     marginBottom: 5,
   },
   fullname: {
-    fontFamily: 'Euclid Circular A Medium',
+    fontFamily: 'FontMedium',
     color: 'white',
     fontSize: 20,
   },
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   username: {
     color: 'black',
-    fontFamily: 'Euclid Circular A Bold',
+    fontFamily: 'FontBold',
   },
   navItemsWrapper: {
     flex: 1,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   navItemText: {
-    fontFamily: 'Euclid Circular A Bold',
+    fontFamily: 'FontBold',
     marginTop: 5,
     marginBottom: 5,
     color: '#00000090',
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   navItemBtnText: {
-    fontFamily: 'Euclid Circular A Medium',
+    fontFamily: 'FontMedium',
   },
 });
 

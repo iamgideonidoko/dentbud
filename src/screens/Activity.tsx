@@ -10,7 +10,7 @@ const Activity: React.FC<DrawerScreenProps> = ({ navigation }) => {
       <ScrollView style={{ padding: 10 }}>
         <Text
           style={{
-            fontFamily: 'Euclid Circular A Regular',
+            fontFamily: 'FontRegular',
             color: '#00000090',
             fontSize: 16,
           }}

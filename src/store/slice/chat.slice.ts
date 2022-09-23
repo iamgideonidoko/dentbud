@@ -59,7 +59,7 @@ export const chatSlice = createSlice({
       //add to chat array
       state.chat = [...state.chat, action.payload];
     },
-    clearChat: (state, action) => {
+    clearChat: (state) => {
       state.chat = [];
     },
   },

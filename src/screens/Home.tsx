@@ -57,7 +57,7 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
                       style={{
                         color: '#fff',
                         fontSize: 16,
-                        fontFamily: 'Euclid Circular A Regular',
+                        fontFamily: 'FontRegular',
                       }}
                     >
                       {item.message}
@@ -68,7 +68,7 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
                         fontSize: 12,
                         alignSelf: 'flex-end',
                         marginTop: 4,
-                        fontFamily: 'Euclid Circular A Regular',
+                        fontFamily: 'FontRegular',
                       }}
                     >
                       {item.time}
@@ -83,7 +83,7 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
             <View style={styles.messageInputView}>
               <TextInput
                 defaultValue={inputMessage}
-                style={[styles.messageInput, { fontFamily: 'Euclid Circular A Regular', color: '#00000090' }]}
+                style={[styles.messageInput, { fontFamily: 'FontRegular', color: '#00000090' }]}
                 placeholder="Message"
                 onChangeText={(text) => setInputMessage(text)}
                 onSubmitEditing={() => {
@@ -96,7 +96,7 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   sendMessage();
                 }}
               >
-                <Text style={{ fontFamily: 'Euclid Circular A Regular' }}>
+                <Text style={{ fontFamily: 'FontRegular' }}>
                   <PlaneIcon style={{ opacity: 0.7 }} />
                 </Text>
               </TouchableOpacity>

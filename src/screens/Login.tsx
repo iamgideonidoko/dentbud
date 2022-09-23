@@ -119,14 +119,14 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 15,
     color: 'black',
-    fontFamily: 'Euclid Circular A Medium',
+    fontFamily: 'FontMedium',
     textAlign: 'center',
   },
   loginTitleText: {
     fontSize: 22,
     marginTop: 10,
     color: 'black',
-    fontFamily: 'Euclid Circular A Medium',
+    fontFamily: 'FontMedium',
     //   textAlign: "center"
   },
   hr: {
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 6,
     color: 'black',
-    fontFamily: 'Euclid Circular A Regular',
+    fontFamily: 'FontRegular',
   },
   input: {
     width: '100%',
@@ -161,21 +161,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontSize: 20,
-    fontFamily: 'Euclid Circular A Regular',
+    fontFamily: 'FontRegular',
   },
   registerText: {
     textAlign: 'center',
     marginTop: 20,
     fontSize: 14,
     color: 'black',
-    fontFamily: 'Euclid Circular A Regular',
+    fontFamily: 'FontRegular',
   },
   forgotPasswordText: {
     textAlign: 'center',
     marginTop: 12,
     fontSize: 16,
     color: 'black',
-    fontFamily: 'Euclid Circular A Regular',
+    fontFamily: 'FontRegular',
   },
 });
 

@@ -36,7 +36,7 @@ const Timetable: React.FC<DrawerScreenProps> = ({ navigation }) => {
       <Tab.Navigator
         screenOptions={{
           tabBarLabelStyle: {
-            fontFamily: 'Euclid Circular A Regular',
+            fontFamily: 'FontRegular',
             fontSize: 12,
           },
           tabBarIndicatorStyle: {
