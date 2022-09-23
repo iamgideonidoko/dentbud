@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
+import { DrawerScreenProps } from '../interfaces/helper.interface';
 
-const Course = ({navigation}) => {
+const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
   return (
     <View>
       <CustomHeader navigation={navigation} />

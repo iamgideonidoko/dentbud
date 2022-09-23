@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { DrawerScreenProps } from '../interfaces/helper.interface';
 const Tab = createMaterialTopTabNavigator();
 
 function TabA() {
@@ -26,9 +27,9 @@ function TabC() {
   );
 }
 
-const Timetable = ({navigation}) => {
+const Timetable: React.FC<DrawerScreenProps> = ({ navigation }) => {
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <CustomHeader navigation={navigation} title="Timetable" />
       {/* <Text>Hi from Timetable Page</Text> */}
 
@@ -43,7 +44,8 @@ const Timetable = ({navigation}) => {
           },
           tabBarPressColor: '#4845D220',
           tabBarScrollEnabled: true,
-        }}>
+        }}
+      >
         <Tab.Screen name="Monday" component={TabA} />
         <Tab.Screen name="Tuesday" component={TabB} />
         <Tab.Screen name="Wednesday" component={TabC} />

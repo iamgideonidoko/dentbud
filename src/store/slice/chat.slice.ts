@@ -1,4 +1,4 @@
-import {createSlice /* , createAsyncThunk */} from '@reduxjs/toolkit';
+import { createSlice /* , createAsyncThunk */ } from '@reduxjs/toolkit';
 // import axios from 'axios';
 // import {axiosHeaders} from '../../helper';
 
@@ -67,6 +67,6 @@ export const chatSlice = createSlice({
 });
 
 // export actions
-export const {addToChat, clearChat} = chatSlice.actions;
+export const { addToChat, clearChat } = chatSlice.actions;
 
 export default chatSlice.reducer;

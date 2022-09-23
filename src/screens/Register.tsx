@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import DentBudLogo from '../assets/images/dentbud-logo-md.png';
 
-const Register = ({navigation}) => {
+const Register = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -21,10 +21,7 @@ const Register = ({navigation}) => {
         <View style={styles.centerizedView}>
           <View style={styles.authBox}>
             <View style={styles.logoBox}>
-              <Image
-                source={DentBudLogo}
-                style={{width: 60, height: 60, borderRadius: 0}}
-              />
+              <Image source={DentBudLogo} style={{ width: 60, height: 60, borderRadius: 0 }} />
             </View>
             <Text style={[styles.appName]}>DentBud</Text>
             <Text style={styles.loginTitleText}>Register</Text>
@@ -68,9 +65,7 @@ const Register = ({navigation}) => {
               <Text style={styles.loginButtonText}>Register</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.registerText}>
-                Don't have an account? Register
-              </Text>
+              <Text style={styles.registerText}>Don't have an account? Register</Text>
             </TouchableOpacity>
             {/* <TouchableOpacity>
             <Text style={styles.forgotPasswordText}>Forgot Password?</Text>

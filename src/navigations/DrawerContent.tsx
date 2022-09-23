@@ -1,5 +1,5 @@
 import React from 'react';
-// import Container from '../components/Container'
+import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import {
   SafeAreaView,
   Text,
@@ -16,10 +16,10 @@ import CalendarIcon from '../assets/icons/Calendar.svg';
 import ChatIcon from '../assets/icons/Chat.svg';
 import BackIcon from '../assets/icons/Back.svg';
 
-const DrawerContent = ({navigation}) => {
+const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   return (
-    <SafeAreaView style={{borderWidth: 0, flex: 1}}>
-      <ScrollView style={{padding: 20}}>
+    <SafeAreaView style={{ borderWidth: 0, flex: 1 }}>
+      <ScrollView style={{ padding: 20 }}>
         <View
           style={{
             borderWidth: 0,
@@ -27,7 +27,8 @@ const DrawerContent = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
             padding: 20,
-          }}>
+          }}
+        >
           <View
             style={{
               borderWidth: 0,
@@ -35,24 +36,23 @@ const DrawerContent = ({navigation}) => {
               top: 0,
               right: -5,
               borderRadius: 100,
-            }}>
+            }}
+          >
             <TouchableWithoutFeedback
               onPress={() => navigation?.closeDrawer()}
-              style={{position: 'absolute', top: 20, left: 0}}>
+              style={{ position: 'absolute', top: 20, left: 0 }}
+            >
               <BackIcon />
             </TouchableWithoutFeedback>
           </View>
-          <Image source={DentBudLogo} style={{width: 100, height: 100}} />
+          <Image source={DentBudLogo} style={{ width: 100, height: 100 }} />
           <Text style={styles.appName}>DentBud</Text>
           <Text style={styles.miniAppName}>...your favourite assistant</Text>
         </View>
         <View style={styles.profileCard}>
           <Text style={styles.profileCardTitle}>Your Profile:</Text>
-          <View style={{alignItems: 'center'}}>
-            <Image
-              source={MaleAvatar}
-              style={{width: 50, height: 50, marginRight: 10}}
-            />
+          <View style={{ alignItems: 'center' }}>
+            <Image source={MaleAvatar} style={{ width: 50, height: 50, marginRight: 10 }} />
             <Text style={styles.fullname}>John Doe</Text>
           </View>
           <View style={styles.usernameWrapper}>
@@ -60,51 +60,47 @@ const DrawerContent = ({navigation}) => {
           </View>
         </View>
         <View style={styles.navItemsWrapper}>
-          <View style={[styles.navItem, {backgroundColor: '#4845D220'}]}>
+          <View style={[styles.navItem, { backgroundColor: '#4845D220' }]}>
             <ChatIcon />
             <Text style={[styles.navItemText]}>Chat your assistant</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('Home')}
-              style={[styles.navItemBtn, {backgroundColor: '#4845D230'}]}>
-              <Text style={[styles.navItemBtnText, {color: '#4845D2'}]}>
-                Chat
-              </Text>
+              style={[styles.navItemBtn, { backgroundColor: '#4845D230' }]}
+            >
+              <Text style={[styles.navItemBtnText, { color: '#4845D2' }]}>Chat</Text>
             </TouchableOpacity>
           </View>
-          <View style={[styles.navItem, {backgroundColor: '#21AD8020'}]}>
+          <View style={[styles.navItem, { backgroundColor: '#21AD8020' }]}>
             <CalendarIcon />
             <Text style={[styles.navItemText]}>Manage your Courses</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('Course')}
-              style={[styles.navItemBtn, {backgroundColor: '#21AD8030'}]}>
-              <Text style={[styles.navItemBtnText, {color: '#21AD80'}]}>
-                Courses
-              </Text>
+              style={[styles.navItemBtn, { backgroundColor: '#21AD8030' }]}
+            >
+              <Text style={[styles.navItemBtnText, { color: '#21AD80' }]}>Courses</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={[styles.navItemsWrapper, {paddingBottom: 50}]}>
-          <View style={[styles.navItem, {backgroundColor: '#4845D220'}]}>
+        <View style={[styles.navItemsWrapper, { paddingBottom: 50 }]}>
+          <View style={[styles.navItem, { backgroundColor: '#4845D220' }]}>
             <ChatIcon />
             <Text style={[styles.navItemText]}>Structure your timetable</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('Timetable')}
-              style={[styles.navItemBtn, {backgroundColor: '#4845D230'}]}>
-              <Text style={[styles.navItemBtnText, {color: '#4845D2'}]}>
-                Timetable
-              </Text>
+              style={[styles.navItemBtn, { backgroundColor: '#4845D230' }]}
+            >
+              <Text style={[styles.navItemBtnText, { color: '#4845D2' }]}>Timetable</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={[styles.navItem, {backgroundColor: '#21AD8020'}]}>
+          <View style={[styles.navItem, { backgroundColor: '#21AD8020' }]}>
             <CalendarIcon />
             <Text style={[styles.navItemText]}>All of your activites</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('Activity')}
-              style={[styles.navItemBtn, {backgroundColor: '#21AD8030'}]}>
-              <Text style={[styles.navItemBtnText, {color: '#21AD80'}]}>
-                Activities
-              </Text>
+              style={[styles.navItemBtn, { backgroundColor: '#21AD8030' }]}
+            >
+              <Text style={[styles.navItemBtnText, { color: '#21AD80' }]}>Activities</Text>
             </TouchableOpacity>
           </View>
         </View>

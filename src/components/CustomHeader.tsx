@@ -1,29 +1,18 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Button,
-  TouchableWithoutFeedback,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import { View, Text, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native';
 import MenuIcon from '../assets/icons/menu.svg';
 import DentBudLogo from '../assets/images/dentbud-logo-sm.png';
+import type { DrawerScreenProps } from '../interfaces/helper.interface';
 
-const CustomHeader = ({navigation, title}) => {
+const CustomHeader = ({ navigation, title }: Pick<DrawerScreenProps, 'navigation'> & { title?: string }) => {
   return (
     <View style={styles.wrapper}>
-      <View style={{flexDirection: 'row'}}>
-        <Image
-          source={DentBudLogo}
-          style={{width: 30, height: 30, borderRadius: 100, marginRight: 6}}
-        />
+      <View style={{ flexDirection: 'row' }}>
+        <Image source={DentBudLogo} style={{ width: 30, height: 30, borderRadius: 100, marginRight: 6 }} />
         <Text style={styles.welcomeText}>{title ? title : 'DentBud'}</Text>
       </View>
       <View>
-        <TouchableWithoutFeedback
-          title="Love"
-          onPress={() => navigation?.openDrawer()}>
+        <TouchableWithoutFeedback onPress={() => navigation?.openDrawer()}>
           <MenuIcon width={30} height={30} />
         </TouchableWithoutFeedback>
       </View>

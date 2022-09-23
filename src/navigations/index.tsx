@@ -1,8 +1,8 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {StatusBar} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
 import AuthNavigator from './AuthNavigator';
-// import DrawerNavigator from './DrawerNavigator';
+import DrawerNavigator from './DrawerNavigator';
 
 const AppNavContainer = () => {
   return (
@@ -17,8 +17,8 @@ const AppNavContainer = () => {
         hidden={false}
       />
 
-      <AuthNavigator />
-      {/* <DrawerNavigator /> */}
+      {/* <AuthNavigator /> */}
+      <DrawerNavigator />
     </NavigationContainer>
   );
 };

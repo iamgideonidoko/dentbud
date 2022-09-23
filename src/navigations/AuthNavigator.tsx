@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 
@@ -10,9 +10,10 @@ const AuthNavigator = () => {
     <AuthStack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        headerStyle: {backgroundColor: 'transparent'},
+        headerStyle: { backgroundColor: 'transparent' },
         headerShown: false, // remove the header in the screen
-      }}>
+      }}
+    >
       <AuthStack.Screen name="Login" component={Login} />
       <AuthStack.Screen name="Register" component={Register} />
     </AuthStack.Navigator>
