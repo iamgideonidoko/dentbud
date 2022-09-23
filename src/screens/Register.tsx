@@ -11,8 +11,9 @@ import {
   Keyboard,
 } from 'react-native';
 import DentBudLogo from '../assets/images/dentbud-logo-md.png';
+import { DrawerScreenProps } from '../interfaces/helper.interface';
 
-const Register = ({ navigation }) => {
+const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>

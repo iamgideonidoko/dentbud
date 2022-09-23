@@ -12,7 +12,7 @@ import { persistStore } from 'redux-persist';
 
 const persistor = persistStore(store);
 
-const App = () => {
+const App: React.FC = () => {
   // const isDarkMode = useColorScheme() === 'dark';
 
   // const backgroundStyle = {

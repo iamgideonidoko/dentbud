@@ -4,7 +4,7 @@ import MenuIcon from '../assets/icons/menu.svg';
 import DentBudLogo from '../assets/images/dentbud-logo-sm.png';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
 
-const CustomHeader = ({ navigation, title }: Pick<DrawerScreenProps, 'navigation'> & { title?: string }) => {
+const CustomHeader: React.FC<Pick<DrawerScreenProps, 'navigation'> & { title?: string }> = ({ navigation, title }) => {
   return (
     <View style={styles.wrapper}>
       <View style={{ flexDirection: 'row' }}>

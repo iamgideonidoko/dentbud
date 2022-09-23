@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
-import AuthNavigator from './AuthNavigator';
+// import AuthNavigator from './AuthNavigator';
 import DrawerNavigator from './DrawerNavigator';
 
-const AppNavContainer = () => {
+const AppNavContainer: React.FC = () => {
   return (
     <NavigationContainer>
       {/* Status bar is the part at the top where the notification dots are */}
