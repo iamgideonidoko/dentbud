@@ -1,4 +1,4 @@
-# DentBud Core BE
+# backend-express
 
 - Run dev server
 ```bash

@@ -1,6 +1,6 @@
-# DentBud AI built with the Rasa Framework
+# backend-rasa
 
-DentBud is a mobile interactive bot for students built with Rasa—an open-source machine learning framework for automated text and voice-based conversations.
+AI backend for DentBud
 
 ## Getting Started
 
