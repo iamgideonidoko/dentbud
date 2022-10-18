@@ -1,6 +1,6 @@
 # backend-rasa
 
-AI backend for DentBud
+AI backend for Dentbud
 
 ## Getting Started
 

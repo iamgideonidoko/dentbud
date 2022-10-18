@@ -116,7 +116,7 @@ nlu:
     - ok dentbud
     - ok, I behave now
     - ok, I understood
-    - ok, DentBud
+    - ok, Dentbud
     - ok, Dentbud
     - ok...
     - okay
@@ -498,7 +498,7 @@ nlu:
     - HEY
     - HEllo
     - HI
-    - HI DentBud
+    - HI Dentbud
     - HI Dentbud
     - Hallo
     - Hei
@@ -506,20 +506,20 @@ nlu:
     - Hello
     - Hello Bot
     - Hello Rasa
-    - Hello DentBud
+    - Hello Dentbud
     - Hello Dentbud
     - Hello dentbud
     - Hello!
     - Hey
-    - Hey DentBud
+    - Hey Dentbud
     - Hey Dentbud
     - Hey bot
     - Heya
     - Heylo
     - Hi
-    - Hi DentBud
     - Hi Dentbud
-    - Hi DentBud!
+    - Hi Dentbud
+    - Hi Dentbud!
     - Hi Dentbud!
     - Hi bot
     - Hi man
@@ -560,7 +560,7 @@ nlu:
     - hell9o
     - hellio
     - hello
-    - hello DentBud
+    - hello Dentbud
     - hello Dentbud
     - hello everybody
     - hello friend
@@ -695,7 +695,7 @@ nlu:
     - Cool. Thanks
     - Great, thanks
     - Thank you
-    - Thank you DentBud
+    - Thank you Dentbud
     - Thank you Dentbud
     - Thank you so much
     - Thank's!

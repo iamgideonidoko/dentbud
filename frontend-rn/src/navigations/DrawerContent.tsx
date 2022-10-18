@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
-import DentBudLogo from '../assets/images/dentbud-logo-md.png';
+import DentbudLogo from '../assets/images/dentbud-logo-md.png';
 import MaleAvatar from '../assets/images/male-avatar.png';
 import CalendarIcon from '../assets/icons/Calendar.svg';
 import ChatIcon from '../assets/icons/Chat.svg';
@@ -45,8 +45,8 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
               <BackIcon />
             </TouchableWithoutFeedback>
           </View>
-          <Image source={DentBudLogo} style={{ width: 100, height: 100 }} />
-          <Text style={styles.appName}>DentBud</Text>
+          <Image source={DentbudLogo} style={{ width: 100, height: 100 }} />
+          <Text style={styles.appName}>Dentbud</Text>
           <Text style={styles.miniAppName}>...your favourite assistant</Text>
         </View>
         <View style={styles.profileCard}>

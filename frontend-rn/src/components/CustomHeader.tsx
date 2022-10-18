@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native';
 import MenuIcon from '../assets/icons/menu.svg';
-import DentBudLogo from '../assets/images/dentbud-logo-sm.png';
+import DentbudLogo from '../assets/images/dentbud-logo-sm.png';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
 
 const CustomHeader: React.FC<Pick<DrawerScreenProps, 'navigation'> & { title?: string }> = ({ navigation, title }) => {
   return (
     <View style={styles.wrapper}>
       <View style={{ flexDirection: 'row' }}>
-        <Image source={DentBudLogo} style={{ width: 30, height: 30, borderRadius: 100, marginRight: 6 }} />
-        <Text style={styles.welcomeText}>{title ? title : 'DentBud'}</Text>
+        <Image source={DentbudLogo} style={{ width: 30, height: 30, borderRadius: 100, marginRight: 6 }} />
+        <Text style={styles.welcomeText}>{title ? title : 'Dentbud'}</Text>
       </View>
       <View>
         <TouchableWithoutFeedback onPress={() => navigation?.openDrawer()}>

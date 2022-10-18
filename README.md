@@ -1,3 +1,3 @@
-# DentBud
+# Dentbud
 
-DentBud is a mobile-based smart personal assistant (SPA) for students.
+Dentbud is a mobile-based smart personal assistant (SPA) for students.

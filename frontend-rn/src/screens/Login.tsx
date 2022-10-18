@@ -10,7 +10,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import DentBudLogo from '../assets/images/dentbud-logo-md.png';
+import DentbudLogo from '../assets/images/dentbud-logo-md.png';
 import { DrawerScreenProps } from '../interfaces/helper.interface';
 
 const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
@@ -22,9 +22,9 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
         <View style={styles.centerizedView}>
           <View style={styles.authBox}>
             <View style={styles.logoBox}>
-              <Image source={DentBudLogo} style={{ width: 60, height: 60, borderRadius: 0 }} />
+              <Image source={DentbudLogo} style={{ width: 60, height: 60, borderRadius: 0 }} />
             </View>
-            <Text style={[styles.appName]}>DentBud</Text>
+            <Text style={[styles.appName]}>Dentbud</Text>
             <Text style={styles.loginTitleText}>Login</Text>
             {/* <View style={styles.hr}></View> */}
             <View style={styles.inputBox}>

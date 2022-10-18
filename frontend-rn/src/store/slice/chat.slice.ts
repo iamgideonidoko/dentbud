@@ -7,7 +7,7 @@ export const chatSlice = createSlice({
   initialState: {
     chat: [
       {
-        sender: 'DentBud',
+        sender: 'Dentbud',
         message: 'Hello, how are you doing?',
         time: '6:02 PM',
       },
@@ -17,7 +17,7 @@ export const chatSlice = createSlice({
         time: '6:02 PM',
       },
       {
-        sender: 'DentBud',
+        sender: 'Dentbud',
         message: '😊😇',
         time: '6:02 PM',
       },
@@ -27,7 +27,7 @@ export const chatSlice = createSlice({
         time: '6:03 PM',
       },
       {
-        sender: 'DentBud',
+        sender: 'Dentbud',
         message: "That's great, when are you coming?",
         time: '6:03 PM',
       },
@@ -37,7 +37,7 @@ export const chatSlice = createSlice({
         time: '6:03 PM',
       },
       {
-        sender: 'DentBud',
+        sender: 'Dentbud',
         message: 'Around 4 to 6 PM.',
         time: '6:04 PM',
       },
@@ -47,7 +47,7 @@ export const chatSlice = createSlice({
         time: '6:05 PM',
       },
       {
-        sender: 'DentBud',
+        sender: 'Dentbud',
         message: 'Sure!',
         time: '6:05 PM',
       },

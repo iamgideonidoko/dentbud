@@ -1,7 +1,7 @@
 {
   "name": "dentbud-core",
   "version": "0.1.0",
-  "description": "Core Backend Service for DentBud",
+  "description": "Core Backend Service for Dentbud",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,7 @@
     "build": "tsc",
     "lint": "eslint src/**/*.ts --max-warnings=0",
     "format": "eslint src/**/*.ts --fix",
-    "prepare": "husky install",
+    "prepare": "cd ../ && npx husky install",
     "prettier-format": "prettier --config .prettierrc './src/**/*.ts' --write"
   },
   "keywords": [

@@ -1,6 +1,6 @@
 recipe: default.v1
 
-# DentBud uses english language
+# Dentbud uses english language
 language: en
 
 # Pipeline Configuration

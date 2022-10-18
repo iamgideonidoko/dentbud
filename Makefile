@@ -1,8 +1,8 @@
 #
-# DentBud Project
+# Dentbud Project
 #
 
-PROJECT = "DentBud Project"
+PROJECT = "Dentbud Project"
 
 
 all: install test server

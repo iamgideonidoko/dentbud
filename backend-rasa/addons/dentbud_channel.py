@@ -12,8 +12,8 @@ from rasa.core.channels.channel import (
     UserMessage,
 )
 
-class DentBudInput(InputChannel):
-    """ DentBud input channel implementation """
+class DentbudInput(InputChannel):
+    """ Dentbud input channel implementation """
 
     # returns the name of this channel (dentbud);
     def name(self) -> Text:
@@ -32,8 +32,8 @@ class DentBudInput(InputChannel):
         @dentbud_webhook.route("/", methods=["GET"])
         async def health(request: Request) -> HTTPResponse:
             return response.json({
-                "name": "DentBud AI",
-                "description": "AI Webhook for DentBud, an AI-powered mobile assistant for students.",
+                "name": "Dentbud AI",
+                "description": "AI Webhook for Dentbud, an AI-powered mobile assistant for students.",
                 "status": "ok"
 
             })
