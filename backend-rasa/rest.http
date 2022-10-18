@@ -1,0 +1,19 @@
+
+### Rasa 
+
+GET http://localhost:5005/
+
+### Rasa 
+GET http://localhost:5005/webhooks/dentbud
+
+### POST REQUEST TO DENTBUD AI WEBHOOK 
+POST http://localhost:5005/webhooks/dentbud/webhook
+Content-Type: application/json; charset=utf-8
+
+{
+  "sender": "tunde@musty.com",
+  "text": "goodbye",
+  "metadata": {
+      "accessToken": "love"
+  } 
+}
