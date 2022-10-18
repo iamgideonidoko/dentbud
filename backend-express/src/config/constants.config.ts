@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import { Secret } from 'jsonwebtoken';
+import type { Secret } from 'jsonwebtoken';
 
 config();
 

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import createError from 'http-errors';
 import { delRefreshToken, getNewTokens, getUserFromDb } from '../services/auth.service';
 import { createSuccess } from '../helpers/http.helper';

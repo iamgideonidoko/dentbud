@@ -1,6 +1,7 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import constants from '../../../config/constants.config';
-import { getRedisClient } from '../../../config/redis.config';
+import jwt from 'jsonwebtoken';
+import type { JwtPayload } from 'jsonwebtoken';
+import constants from '../config/constants.config';
+import { getRedisClient } from '../config/redis.config';
 import createError from 'http-errors';
 
 const client = getRedisClient();

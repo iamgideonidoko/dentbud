@@ -180,7 +180,7 @@ web_modules/
 # ============================== BACKEND-RASA ===================================
 # ==============================              ===================================
 # rasa specifi
-/models
+/backend-rasa/models
 /.rasa
 
 venv3/
@@ -189,7 +189,7 @@ docker-compose.override.yml
 .DS_Store
 *.pyc
 *.log
-models
+backend-rasa/models
 *.egg-info
 docker-compose.yml
 failed_stories.txt

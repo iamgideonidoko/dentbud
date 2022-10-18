@@ -3,7 +3,7 @@ import User from '../models/user.model';
 import { RegisterReturn } from '../interfaces/user.interface';
 import { validatePassword } from '../helpers/password.helper';
 import { signAccessToken, verifyRefreshToken, signRefreshToken } from '../helpers/jwt.helper';
-import { getRedisClient } from '../../../config/redis.config';
+import { getRedisClient } from '../config/redis.config';
 
 const client = getRedisClient();
 

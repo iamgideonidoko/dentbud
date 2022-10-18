@@ -1,6 +1,6 @@
 {
-  "name": "dentbud-core",
-  "version": "0.1.0",
+  "name": "dentbud-backend-express",
+  "version": "0.0.1",
   "description": "Core Backend Service for Dentbud",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,8 @@
     "server:prod": "cross-env NODE_ENV=production nodemon",
     "start": "node ./build/index.js",
     "build": "tsc",
-    "lint": "eslint src/**/*.ts --max-warnings=0",
-    "format": "eslint src/**/*.ts --fix",
-    "prepare": "cd ../ && npx husky install",
-    "prettier-format": "prettier --config .prettierrc './src/**/*.ts' --write"
+    "lint:check": "eslint src/**/*.ts --max-warnings=0",
+    "lint:fix": "eslint src/**/*.ts --fix"
   },
   "keywords": [
     "nodejs",

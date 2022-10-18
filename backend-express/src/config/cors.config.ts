@@ -1,4 +1,5 @@
-import cors, { CorsOptions } from 'cors';
+import cors from 'cors';
+import type { CorsOptions } from 'cors';
 // import createError from 'http-errors';
 
 const whitelist: string[] = ['http://localhost:5000', 'http://localhost:3000'];

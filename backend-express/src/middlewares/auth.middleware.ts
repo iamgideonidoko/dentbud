@@ -1,7 +1,7 @@
 import createError from 'http-errors';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import constants from '../../../config/constants.config';
+import constants from '../config/constants.config';
 
 interface AuthReq extends Request {
   user: string | JwtPayload;

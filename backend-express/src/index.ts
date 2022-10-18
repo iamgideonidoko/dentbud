@@ -3,7 +3,7 @@ import createError from 'http-errors';
 import { config } from 'dotenv';
 import morgan from 'morgan';
 import xss from 'xss-clean';
-import globalErrorHandler from './api/v1/middlewares/globalErrorHandler.middleware';
+import globalErrorHandler from './middlewares/globalErrorHandler.middleware';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
@@ -12,8 +12,8 @@ import appCors from './config/cors.config';
 import mongoose from 'mongoose';
 import constants from './config/constants.config';
 // Routes Import
-import userRoute from './api/v1/routes/user.route';
-import authRoute from './api/v1/routes/auth.route';
+import userRoute from './routes/user.route';
+import authRoute from './routes/auth.route';
 import connectRedisClient from './config/redis.config';
 
 // console.log('Client => ', client);
