@@ -36,3 +36,18 @@ conda activate rasa_env
 ```bash
 pip install -r requirements.txt
 ```
+
+7. Run rasa:
+
+   ```shell
+   rasa run --connector rest
+   ```
+
+   
+
+## Validate Data
+
+```shell
+rasa data validate
+```
+
