@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { DrawerScreenProps } from '../interfaces/helper.interface';
+import type { DrawerScreenProps } from '../interfaces/helper.interface';
 const Tab = createMaterialTopTabNavigator();
 
 function TabA() {

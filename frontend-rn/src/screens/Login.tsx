@@ -11,7 +11,7 @@ import {
   Keyboard,
 } from 'react-native';
 import DentbudLogo from '../assets/images/dentbud-logo-md.png';
-import { DrawerScreenProps } from '../interfaces/helper.interface';
+import type { DrawerScreenProps } from '../interfaces/helper.interface';
 
 const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
   return (

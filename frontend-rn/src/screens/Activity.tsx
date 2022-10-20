@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
-import { DrawerScreenProps } from '../interfaces/helper.interface';
+import type { DrawerScreenProps } from '../interfaces/helper.interface';
 
 const Activity: React.FC<DrawerScreenProps> = ({ navigation }) => {
   return (
