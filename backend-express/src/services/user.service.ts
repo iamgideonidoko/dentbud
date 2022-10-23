@@ -2,7 +2,7 @@ import createError from 'http-errors';
 import User from '../models/user.model';
 import { NewUser, RegisterReturn } from '../interfaces/user.interface';
 import { hashPassword } from '../helpers/password.helper';
-import { signAccessToken } from '../helpers/jwt.helper';
+import { signAccessToken, signRefreshToken } from '../helpers/jwt.helper';
 
 export const addUserToDb = async (newUser: NewUser): Promise<RegisterReturn | void> => {
   const { name, email, password } = newUser;
@@ -25,10 +25,12 @@ export const addUserToDb = async (newUser: NewUser): Promise<RegisterReturn | vo
       const { id, name, email, created_at } = savedUser;
 
       const accessToken = await signAccessToken({ id });
+      const refreshToken = await signRefreshToken({ id });
 
       return new Promise<RegisterReturn>((resolve) =>
         resolve({
           accessToken,
+          refreshToken,
           user: {
             id,
             name,

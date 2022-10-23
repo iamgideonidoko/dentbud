@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import type { JwtPayload } from 'jsonwebtoken';
 import constants from '../config/constants.config';
 import createError from 'http-errors';
+import { addRefreshTokenToDb, getRefreshTokenFromDb } from '../helpers/token.helper';
 
 interface JwtCustomPayload {
   id: string;
@@ -20,12 +21,10 @@ export const signAccessToken = async (payload: JwtCustomPayload): Promise<string
 
 export const signRefreshToken = async (payload: JwtCustomPayload): Promise<string | undefined> => {
   return new Promise<string>((resolve, reject) => {
-    jwt.sign(payload, constants.refreshTokenSecret, { expiresIn: constants.accessTokenSpan }, async (err, token) => {
+    jwt.sign(payload, constants.refreshTokenSecret, { expiresIn: constants.refreshTokenSpan }, async (err, token) => {
       if (err) reject(err);
       try {
-        // await client.set(payload.id, token as string, {
-        //   EX: 365 * 24 * 60 * 60,
-        // });
+        if (token) await addRefreshTokenToDb(payload.id, token);
         resolve(token as string);
       } catch (err) {
         reject(err);
@@ -51,8 +50,8 @@ export const verifyRefreshToken = async (refreshToken: string): Promise<any> => 
       if (err) return reject(err);
       try {
         /* fetch token */
-        // const value = await client.get(decoded?.id);
-        // if (refreshToken === value) return resolve(decoded);
+        const value = await getRefreshTokenFromDb(decoded?.id);
+        if (refreshToken === value) return resolve(decoded);
         reject(new createError.Unauthorized());
       } catch (err) {
         reject(err);

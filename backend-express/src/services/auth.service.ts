@@ -3,6 +3,7 @@ import User from '../models/user.model';
 import { RegisterReturn } from '../interfaces/user.interface';
 import { validatePassword } from '../helpers/password.helper';
 import { signAccessToken, verifyRefreshToken, signRefreshToken } from '../helpers/jwt.helper';
+import { deleteRefreshTokensByUserId } from '../helpers/token.helper';
 
 export const getUserFromDb = async (userEmail: string, userPassword: string): Promise<RegisterReturn | void> => {
   //Check for existing user in that model through password
@@ -17,9 +18,11 @@ export const getUserFromDb = async (userEmail: string, userPassword: string): Pr
 
       if (match) {
         const accessToken = await signAccessToken({ id });
+        const refreshToken = await signRefreshToken({ id });
         return new Promise<RegisterReturn>((resolve) =>
           resolve({
             accessToken,
+            refreshToken,
             user: {
               id,
               name,
@@ -41,8 +44,8 @@ export const getNewTokens = async (refreshToken: string): Promise<object | undef
   try {
     const decoded = await verifyRefreshToken(refreshToken);
 
-    const accessToken = await signAccessToken(decoded?.id);
-    const refToken = await signRefreshToken(decoded?.id);
+    const accessToken = await signAccessToken({ id: decoded?.id });
+    const refToken = await signRefreshToken({ id: decoded?.id });
 
     return new Promise((resolve) => {
       resolve({ accessToken, refreshToken: refToken });
@@ -57,7 +60,7 @@ export const delRefreshToken = async (refreshToken: string): Promise<number | un
     const decoded = await verifyRefreshToken(refreshToken);
 
     // delete id from database
-    // const value = await client.del(decoded?.id);
+    await deleteRefreshTokensByUserId(decoded?.id);
 
     return new Promise((resolve) => {
       // resolve(value);

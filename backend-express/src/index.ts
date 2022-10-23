@@ -62,8 +62,8 @@ mongoose
     useFindAndModify: false,
   } */,
   )
-  .then(() => console.log('MongoDB Connected...'))
-  .catch((err) => console.log('MONGODB CONNECTION ERROR: ' + err));
+  .then(() => console.log('😎 MongoDB Connected...'))
+  .catch((err) => console.log('😔 MONGODB CONNECTION ERROR: ' + err));
 
 // Routes
 app.get('/', (_req: Request, res: Response) => {
@@ -104,4 +104,4 @@ process.on('uncaughtException', (error: Error) => {
 
 const PORT: number = Number(process.env.PORT) || 5000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}.`));
+app.listen(PORT, () => console.log(`🚀 Server started on port ${PORT} here: http://localhost:${PORT}.`));
