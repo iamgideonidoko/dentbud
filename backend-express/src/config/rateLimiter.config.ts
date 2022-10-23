@@ -2,7 +2,7 @@ import rateLimit from 'express-rate-limit';
 import type { RateLimitRequestHandler } from 'express-rate-limit';
 
 // timeToReEntry is in minutes, it would be converted to seconds
-const limiter = (maxNumOfRequests = 100, timeToReEntry = 60): RateLimitRequestHandler =>
+const limiter = (maxNumOfRequests = 100, timeToReEntry = 2): RateLimitRequestHandler =>
   rateLimit({
     max: maxNumOfRequests,
     windowMs: timeToReEntry * 60 * 1000,

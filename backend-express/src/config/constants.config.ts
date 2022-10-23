@@ -9,7 +9,7 @@ type Constants = {
   refreshTokenSecret: Secret;
   accessTokenSpan: number | string;
   refreshTokenSpan: number | string;
-  v1Base: string;
+  apiBase: string;
 };
 
 const constants: Constants = {
@@ -18,7 +18,7 @@ const constants: Constants = {
   refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET as Secret,
   accessTokenSpan: '5h',
   refreshTokenSpan: '1y',
-  v1Base: '/api/v1',
+  apiBase: '/api',
 };
 
 export default constants;

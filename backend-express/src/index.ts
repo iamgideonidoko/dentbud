@@ -14,16 +14,10 @@ import constants from './config/constants.config';
 // Routes Import
 import userRoute from './routes/user.route';
 import authRoute from './routes/auth.route';
-import connectRedisClient from './config/redis.config';
 
 // console.log('Client => ', client);
 
 config();
-
-(async () => {
-  // connect to redis
-  await connectRedisClient();
-})();
 
 // boostrap the express application
 const app: Application = express();
@@ -79,16 +73,15 @@ app.get('/', (_req: Request, res: Response) => {
   });
 });
 
-app.get(constants.v1Base, (_req: Request, res: Response) => {
+app.get(constants.apiBase, (_req: Request, res: Response) => {
   res.status(200).json({
-    name: 'Dentbud Core v1',
-    description: 'Core service (v1) for Dentbud, an AI-powered mobile assistant for students.',
-    version: 'v1',
+    name: 'Dentbud Core',
+    description: 'Core service for Dentbud, an AI-powered mobile assistant for students.',
   });
 });
 
-app.use(constants.v1Base, userRoute);
-app.use(constants.v1Base, authRoute);
+app.use(constants.apiBase, userRoute);
+app.use(constants.apiBase, authRoute);
 
 // Error for unhandled routes
 app.use((req: Request, res: Response, next: NextFunction) => {
