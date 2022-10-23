@@ -51,3 +51,32 @@ pip install -r requirements.txt
 rasa data validate
 ```
 
+## Create MongoDB User for Tracker Store
+```shell
+   db.createUser({user:"admin", pwd:"notmypassword", roles:[{role:"root", db:"admin"}]})
+```
+The yaml file in your `endpoint.yml` should be like this:
+
+```yaml
+tracker_store:
+    type: mongod
+    url: mongodb://localhost:27017
+    db: dentbud_tracker_store
+    username: admin
+    password: password
+```
+
+
+
+## Select only the events needed in MongoDB
+```shell
+   db.conversations.aggregate( [
+       { $unwind : "$events"},
+       { $match: { $and:
+           [
+               {"sender_id": "default"},
+               { $or: [{ "events.event":"user"}, {"events.event":"bot"}]}
+           ]}},
+       { $project: { "sender_id": 1, "events.timestamp": 1, "events.event": 1, "events.text": 1}}
+   ]).pretty()
+```
