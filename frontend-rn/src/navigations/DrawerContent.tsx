@@ -62,7 +62,7 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
         <View style={styles.navItemsWrapper}>
           <View style={[styles.navItem, { backgroundColor: '#4845D220' }]}>
             <ChatIcon />
-            <Text style={[styles.navItemText]}>Chat your assistant</Text>
+            <Text style={[styles.navItemText]}>Interact with your assistant</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('Home')}
               style={[styles.navItemBtn, { backgroundColor: '#4845D230' }]}
@@ -84,23 +84,23 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
         <View style={[styles.navItemsWrapper, { paddingBottom: 50 }]}>
           <View style={[styles.navItem, { backgroundColor: '#4845D220' }]}>
             <ChatIcon />
-            <Text style={[styles.navItemText]}>Structure your timetable</Text>
+            <Text style={[styles.navItemText]}>Manage your activities</Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Timetable')}
+              onPress={() => navigation.navigate('Activity')}
               style={[styles.navItemBtn, { backgroundColor: '#4845D230' }]}
             >
-              <Text style={[styles.navItemBtnText, { color: '#4845D2' }]}>Timetable</Text>
+              <Text style={[styles.navItemBtnText, { color: '#4845D2' }]}>Activity</Text>
             </TouchableOpacity>
           </View>
 
           <View style={[styles.navItem, { backgroundColor: '#21AD8020' }]}>
             <CalendarIcon />
-            <Text style={[styles.navItemText]}>All of your activites</Text>
+            <Text style={[styles.navItemText]}>Configure app settings</Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Activity')}
+              onPress={() => navigation.navigate('Setting')}
               style={[styles.navItemBtn, { backgroundColor: '#21AD8030' }]}
             >
-              <Text style={[styles.navItemBtnText, { color: '#21AD80' }]}>Activities</Text>
+              <Text style={[styles.navItemBtnText, { color: '#21AD80' }]}>Setttings</Text>
             </TouchableOpacity>
           </View>
         </View>

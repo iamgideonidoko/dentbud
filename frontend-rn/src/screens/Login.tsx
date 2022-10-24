@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  ScrollView,
   Text,
   TextInput,
   Image,
@@ -19,43 +20,45 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.bigCircle} />
         <View style={styles.smallCircle} />
-        <View style={styles.centerizedView}>
-          <View style={styles.authBox}>
-            <View style={styles.logoBox}>
-              <Image source={DentbudLogo} style={{ width: 60, height: 60, borderRadius: 0 }} />
-            </View>
-            <Text style={[styles.appName]}>Dentbud</Text>
-            <Text style={styles.loginTitleText}>Login</Text>
-            {/* <View style={styles.hr}></View> */}
-            <View style={styles.inputBox}>
-              <Text style={styles.inputLabel}>Email</Text>
-              <TextInput
-                style={styles.input}
-                autoCapitalize={'none'}
-                keyboardType="email-address"
-                textContentType="emailAddress"
-              />
-            </View>
-            <View style={styles.inputBox}>
-              <Text style={styles.inputLabel}>Password</Text>
-              <TextInput
-                style={styles.input}
-                autoCapitalize={false}
-                secureTextEntry={true}
-                textContentType="password"
-              />
-            </View>
-            <TouchableOpacity style={styles.loginButton}>
-              <Text style={styles.loginButtonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-              <Text style={styles.registerText}>Don't have an account? Register</Text>
-            </TouchableOpacity>
-            {/* <TouchableOpacity>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+          <View style={styles.centerizedView}>
+            <View style={styles.authBox}>
+              <View style={styles.logoBox}>
+                <Image source={DentbudLogo} style={{ width: 60, height: 60, borderRadius: 0 }} />
+              </View>
+              <Text style={[styles.appName]}>Dentbud</Text>
+              <Text style={styles.loginTitleText}>Log in</Text>
+              {/* <View style={styles.hr}></View> */}
+              <View style={styles.inputBox}>
+                <Text style={styles.inputLabel}>Email</Text>
+                <TextInput
+                  style={styles.input}
+                  autoCapitalize={'none'}
+                  keyboardType="email-address"
+                  textContentType="emailAddress"
+                />
+              </View>
+              <View style={styles.inputBox}>
+                <Text style={styles.inputLabel}>Password</Text>
+                <TextInput
+                  style={styles.input}
+                  autoCapitalize="none"
+                  secureTextEntry={true}
+                  textContentType="password"
+                />
+              </View>
+              <TouchableOpacity style={styles.loginButton}>
+                <Text style={styles.loginButtonText}>Log in</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                <Text style={styles.registerText}>Don't have an account? Register</Text>
+              </TouchableOpacity>
+              {/* <TouchableOpacity>
             <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity> */}
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -86,7 +89,8 @@ const styles = StyleSheet.create({
   },
   centerizedView: {
     width: '100%',
-    top: '18%',
+    paddingTop: 30,
+    paddingBottom: 30,
   },
   authBox: {
     width: '85%',
@@ -127,6 +131,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: 'black',
     fontFamily: 'FontMedium',
+    textAlign: 'center',
     //   textAlign: "center"
   },
   hr: {
@@ -153,7 +158,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: '#4845D2',
-    marginTop: 20,
+    marginTop: 30,
     paddingVertical: 10,
     borderRadius: 4,
   },

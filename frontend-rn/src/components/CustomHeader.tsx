@@ -37,9 +37,8 @@ const styles = StyleSheet.create({
 
   welcomeText: {
     color: 'black',
-    // fontWeight: "",
     fontFamily: 'FontMedium',
-    fontSize: 25,
+    fontSize: 20,
   },
 });
 
