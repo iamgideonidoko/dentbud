@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 // import type { PayloadAction } from '@reduxjs/toolkit';
 import type { AuthState } from '../../interfaces/store.interface';
+import userApi from '../api/user.api';
 
 const initialState: AuthState = {
   userInfo: null,
@@ -12,7 +13,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
-  extraReducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(userApi.endpoints.registerUser.matchFulfilled, (state, { payload }) => {
+      console.log('register user response payload => ', payload);
+    });
+  },
 });
 
 // export actions

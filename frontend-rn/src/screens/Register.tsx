@@ -15,8 +15,11 @@ import DentbudLogo from '../assets/images/dentbud-logo-md.png';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
 // import { widthPercentageToDP as wp, height } from 'react-native-responsive-screen';
 import type { RegisterUserInput } from '../interfaces/store.interface';
+import { useRegisterUserMutation } from '../store/api/user.api';
+import { CORE_BE_HOST } from '@env';
 
 const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
+  const [registerUser, { isLoading: isRegistering }] = useRegisterUserMutation();
   const [input, setInput] = useState<RegisterUserInput>({
     name: '',
     email: '',
@@ -24,6 +27,7 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
     retype_password: '',
   });
 
+  console.log('CORE_BE_HOST => ', CORE_BE_HOST);
   console.log('input => ', input);
 
   return (
@@ -83,7 +87,17 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   onChangeText={(text) => setInput((prev) => ({ ...prev, retype_password: text }))}
                 />
               </View>
-              <TouchableOpacity style={styles.loginButton}>
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={async () => {
+                  try {
+                    console.log('button clicked!');
+                    await registerUser(input).unwrap();
+                  } catch (err) {
+                    console.log('err => ', err);
+                  }
+                }}
+              >
                 <Text style={styles.loginButtonText}>Register</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
