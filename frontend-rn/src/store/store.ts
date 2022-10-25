@@ -1,31 +1,39 @@
 import { configureStore } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import thunk from 'redux-thunk';
+// import { setupListeners } from '@reduxjs/toolkit/query';
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import chatReducer from './slice/chat.slice';
+import authReducer from './slice/auth.slice';
+import coreApi from './api/core.api';
 
-const reducers = combineReducers({
+export const rootReducer = combineReducers({
   chat: chatReducer,
+  auth: authReducer,
+  [coreApi.reducerPath]: coreApi.reducer,
 });
 
 const persistConfig = {
   key: 'dentbud_persist_store',
   storage: AsyncStorage,
-  whitelist: [],
+  blacklist: [coreApi.reducerPath], // add reducers that should not be persisted here
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  devTools: process.env.NODE_ENV !== 'production',
-  middleware: [thunk],
+  devTools: false,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch;
+// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
+// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
+// setupListeners(store.dispatch);
 
 export default store;

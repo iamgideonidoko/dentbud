@@ -1,3 +1,3 @@
 declare module '@env' {
-  export const API_BASE: string;
+  export const CORE_BE_HOST: string;
 }

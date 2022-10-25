@@ -1,34 +1,21 @@
-// import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+// import type { PayloadAction } from '@reduxjs/toolkit';
+import type { AuthState } from '../../interfaces/store.interface';
 
-// export const authSlice = createSlice({
-//   name: 'auth',
-//   initialState: {
-//     token: null,
-//     isAuthenticated: false,
-//     isLoading: false,
-//     user: null,
-//     isAttemtingLogin: false,
-//     isUserLoaded: false,
-//   },
-//   reducers: {
-//     loadUser: (state, action) => {
-//       // ADMIN_USER_LOADED
-//       // Failed? AUTH_ERROR
-//     },
-//     login: (state, action) => {
-//       //add to auth array
-//       state.auth = [...state.auth, action.payload];
-//     },
-//     logout: (state, action) => {
-//       // LOGOUT_SUCCESS
-//       state.auth = [];
-//     },
-//     register: () => {},
-//   },
-//   extraReducers: {},
-// });
+const initialState: AuthState = {
+  userInfo: null,
+  token: null,
+  isAuthenticated: false,
+};
 
-// // export actions
-// export const {login, logout, loadUser, register} = authSlice.actions;
+export const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {},
+  extraReducers: {},
+});
 
-// export default authSlice.reducer;
+// export actions
+// export const { loginUser, logoutUser, registerUser } = authSlice.actions;
+
+export default authSlice.reducer;

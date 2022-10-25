@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -14,8 +14,18 @@ import {
 import DentbudLogo from '../assets/images/dentbud-logo-md.png';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
 // import { widthPercentageToDP as wp, height } from 'react-native-responsive-screen';
+import type { RegisterUserInput } from '../interfaces/store.interface';
 
 const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
+  const [input, setInput] = useState<RegisterUserInput>({
+    name: '',
+    email: '',
+    password: '',
+    retype_password: '',
+  });
+
+  console.log('input => ', input);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -34,8 +44,10 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 <TextInput
                   style={styles.input}
                   autoCapitalize={'none'}
-                  keyboardType="email-address"
-                  textContentType="emailAddress"
+                  keyboardType="name-phone-pad"
+                  textContentType="name"
+                  value={input.name}
+                  onChangeText={(text) => setInput((prev) => ({ ...prev, name: text }))}
                 />
               </View>
               <View style={styles.inputBox}>
@@ -45,6 +57,8 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   autoCapitalize={'none'}
                   keyboardType="email-address"
                   textContentType="emailAddress"
+                  value={input.email}
+                  onChangeText={(text) => setInput((prev) => ({ ...prev, email: text }))}
                 />
               </View>
               <View style={styles.inputBox}>
@@ -54,6 +68,8 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   autoCapitalize="none"
                   secureTextEntry={true}
                   textContentType="password"
+                  value={input.password}
+                  onChangeText={(text) => setInput((prev) => ({ ...prev, password: text }))}
                 />
               </View>
               <View style={styles.inputBox}>
@@ -63,6 +79,8 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   autoCapitalize="none"
                   secureTextEntry={true}
                   textContentType="password"
+                  value={input.retype_password}
+                  onChangeText={(text) => setInput((prev) => ({ ...prev, retype_password: text }))}
                 />
               </View>
               <TouchableOpacity style={styles.loginButton}>
