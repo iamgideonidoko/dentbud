@@ -38,3 +38,8 @@ export interface RegisterUserInput {
 export type RegisterUserResponse = Token & {
   user: User;
 };
+
+export interface LogignUserInput {
+  email: string;
+  password: string;
+}

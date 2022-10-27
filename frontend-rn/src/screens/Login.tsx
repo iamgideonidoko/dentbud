@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -13,8 +13,30 @@ import {
 } from 'react-native';
 import DentbudLogo from '../assets/images/dentbud-logo-md.png';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
+import SimpleReactValidator from 'simple-react-validator';
+import type { LogignUserInput } from '../interfaces/store.interface';
 
 const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
+  const [input, setInput] = useState<LogignUserInput>({
+    email: '',
+    password: '',
+  });
+  const [, forceUpdate] = useState<boolean>(false);
+  const simpleValidator = useRef(
+    new SimpleReactValidator({
+      element: (message: string) => <Text style={styles.formErrorMsg}>{message}</Text>,
+    }),
+  );
+
+  const handleLogin = () => {
+    if (simpleValidator.current.allValid()) {
+      // should login user
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate((prev) => !prev);
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -37,6 +59,10 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   keyboardType="email-address"
                   textContentType="emailAddress"
                 />
+                {
+                  /* simple validation */
+                  simpleValidator.current.message('email', input.email, 'required|email|between:2,50')
+                }
               </View>
               <View style={styles.inputBox}>
                 <Text style={styles.inputLabel}>Password</Text>
@@ -46,8 +72,12 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   secureTextEntry={true}
                   textContentType="password"
                 />
+                {
+                  /* simple validation */
+                  simpleValidator.current.message('password', input.password, 'required|between:4,25')
+                }
               </View>
-              <TouchableOpacity style={styles.loginButton}>
+              <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
                 <Text style={styles.loginButtonText}>Log in</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Register')}>
@@ -181,6 +211,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     fontFamily: 'FontRegular',
+  },
+  formErrorMsg: {
+    color: '#a94442',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    marginTop: 8,
+    padding: 6,
+    borderColor: '#ebccd1',
+    backgroundColor: '#f2dede',
+    borderRadius: 6,
+    fontSize: 12,
   },
 });
 

@@ -18,6 +18,7 @@ import type { RegisterUserInput } from '../interfaces/store.interface';
 import { useRegisterUserMutation } from '../store/api/user.api';
 // import { CORE_BE_HOST } from '@env';
 import SimpleReactValidator from 'simple-react-validator';
+import { useToast } from 'react-native-toast-notifications';
 
 const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const [registerUser, { isLoading: isRegistering }] = useRegisterUserMutation();
@@ -28,6 +29,7 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
     retype_password: '',
   });
   const [, forceUpdate] = useState<boolean>(false);
+  const toast = useToast();
 
   const simpleValidator = useRef(
     new SimpleReactValidator({
@@ -42,16 +44,14 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
   );
 
   const handleRegister = async () => {
-    console.log('attempting to register');
     if (simpleValidator.current.allValid()) {
-      console.log('all good');
       try {
         await registerUser(input).unwrap();
       } catch (err) {
+        toast.show('An error occured 😔', { placement: 'top', type: 'danger' });
         console.log('err => ', err);
       }
     } else {
-      console.log('not valid');
       simpleValidator.current.showMessages();
       forceUpdate((prev) => !prev);
     }

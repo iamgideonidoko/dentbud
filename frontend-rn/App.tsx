@@ -10,6 +10,7 @@ import store from './src/store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { NetworkProvider } from 'react-native-offline';
+import { ToastProvider } from 'react-native-toast-notifications';
 
 const persistor = persistStore(store);
 
@@ -18,7 +19,9 @@ const App: React.FC = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NetworkProvider>
-          <AppNavContainer />
+          <ToastProvider>
+            <AppNavContainer />
+          </ToastProvider>
         </NetworkProvider>
       </PersistGate>
     </Provider>
