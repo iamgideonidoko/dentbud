@@ -15,8 +15,10 @@ import MaleAvatar from '../assets/images/male-avatar.png';
 import CalendarIcon from '../assets/icons/Calendar.svg';
 import ChatIcon from '../assets/icons/Chat.svg';
 import BackIcon from '../assets/icons/Back.svg';
+import { useAppSelector } from '../hooks/store.hook';
 
 const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
   return (
     <SafeAreaView style={{ borderWidth: 0, flex: 1 }}>
       <ScrollView style={{ padding: 20 }}>
@@ -53,10 +55,10 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
           <Text style={styles.profileCardTitle}>Your Profile:</Text>
           <View style={{ alignItems: 'center' }}>
             <Image source={MaleAvatar} style={{ width: 50, height: 50, marginRight: 10 }} />
-            <Text style={styles.fullname}>John Doe</Text>
+            <Text style={styles.fullname}>{userInfo?.name}</Text>
           </View>
           <View style={styles.usernameWrapper}>
-            <Text style={styles.username}>@johndoe</Text>
+            <Text style={styles.username}>{userInfo?.email}</Text>
           </View>
         </View>
         <View style={styles.navItemsWrapper}>
