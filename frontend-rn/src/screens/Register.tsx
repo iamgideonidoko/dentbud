@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -16,7 +16,8 @@ import type { DrawerScreenProps } from '../interfaces/helper.interface';
 // import { widthPercentageToDP as wp, height } from 'react-native-responsive-screen';
 import type { RegisterUserInput } from '../interfaces/store.interface';
 import { useRegisterUserMutation } from '../store/api/user.api';
-import { CORE_BE_HOST } from '@env';
+// import { CORE_BE_HOST } from '@env';
+import SimpleReactValidator from 'simple-react-validator';
 
 const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const [registerUser, { isLoading: isRegistering }] = useRegisterUserMutation();
@@ -26,9 +27,35 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
     password: '',
     retype_password: '',
   });
+  const [, forceUpdate] = useState<boolean>(false);
 
-  console.log('CORE_BE_HOST => ', CORE_BE_HOST);
-  console.log('input => ', input);
+  const simpleValidator = useRef(
+    new SimpleReactValidator({
+      element: (message: string) => <Text style={styles.formErrorMsg}>{message}</Text>,
+      validators: {
+        password_match: {
+          message: 'The :attribute must match password',
+          rule: (val, params) => val === params[0],
+        },
+      },
+    }),
+  );
+
+  const handleRegister = async () => {
+    console.log('attempting to register');
+    if (simpleValidator.current.allValid()) {
+      console.log('all good');
+      try {
+        await registerUser(input).unwrap();
+      } catch (err) {
+        console.log('err => ', err);
+      }
+    } else {
+      console.log('not valid');
+      simpleValidator.current.showMessages();
+      forceUpdate((prev) => !prev);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -53,6 +80,10 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   value={input.name}
                   onChangeText={(text) => setInput((prev) => ({ ...prev, name: text }))}
                 />
+                {
+                  /* simple validation */
+                  simpleValidator.current.message('name', input.name, 'required|alpha_space|between:4,25')
+                }
               </View>
               <View style={styles.inputBox}>
                 <Text style={styles.inputLabel}>Email</Text>
@@ -64,6 +95,10 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   value={input.email}
                   onChangeText={(text) => setInput((prev) => ({ ...prev, email: text }))}
                 />
+                {
+                  /* simple validation */
+                  simpleValidator.current.message('email', input.email, 'required|email|between:2,50')
+                }
               </View>
               <View style={styles.inputBox}>
                 <Text style={styles.inputLabel}>Password</Text>
@@ -75,6 +110,10 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   value={input.password}
                   onChangeText={(text) => setInput((prev) => ({ ...prev, password: text }))}
                 />
+                {
+                  /* simple validation */
+                  simpleValidator.current.message('password', input.password, 'required|between:4,25')
+                }
               </View>
               <View style={styles.inputBox}>
                 <Text style={styles.inputLabel}>Retype Password</Text>
@@ -86,19 +125,17 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   value={input.retype_password}
                   onChangeText={(text) => setInput((prev) => ({ ...prev, retype_password: text }))}
                 />
+                {
+                  /* simple validation */
+                  simpleValidator.current.message(
+                    'retyped password',
+                    input.retype_password,
+                    `required|between:4,25|password_match:${input.password}`,
+                  )
+                }
               </View>
-              <TouchableOpacity
-                style={styles.loginButton}
-                onPress={async () => {
-                  try {
-                    console.log('button clicked!');
-                    await registerUser(input).unwrap();
-                  } catch (err) {
-                    console.log('err => ', err);
-                  }
-                }}
-              >
-                <Text style={styles.loginButtonText}>Register</Text>
+              <TouchableOpacity style={styles.loginButton} onPress={handleRegister}>
+                <Text style={styles.loginButtonText}>{isRegistering ? 'Registering...' : 'Register'}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.registerText}>Have an account? Log in</Text>
@@ -230,6 +267,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     fontFamily: 'FontRegular',
+  },
+  formErrorMsg: {
+    color: '#a94442',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    marginTop: 8,
+    padding: 6,
+    borderColor: '#ebccd1',
+    backgroundColor: '#f2dede',
+    borderRadius: 6,
+    fontSize: 12,
   },
 });
 
