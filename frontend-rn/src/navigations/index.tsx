@@ -3,8 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import AuthNavigator from './AuthNavigator';
 import DrawerNavigator from './DrawerNavigator';
+import { useAppSelector } from '../hooks/store.hook';
 
 const AppNavContainer: React.FC = () => {
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   return (
     <NavigationContainer>
       {/* Status bar is the part at the top where the notification dots are */}
@@ -16,9 +18,7 @@ const AppNavContainer: React.FC = () => {
         // showHideTransition={statusBarTransition}
         hidden={false}
       />
-
-      <AuthNavigator />
-      {/* <DrawerNavigator /> */}
+      {isAuthenticated ? <DrawerNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 };

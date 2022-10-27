@@ -47,9 +47,12 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
     if (simpleValidator.current.allValid()) {
       try {
         await registerUser(input).unwrap();
+        toast.show('Registered successfully 😎', { placement: 'top', type: 'success' });
       } catch (err) {
-        toast.show('An error occured 😔', { placement: 'top', type: 'danger' });
-        console.log('err => ', err);
+        toast.show(`${(err as { data: { message: string } }).data?.message ?? 'Register failed'} 😔`, {
+          placement: 'top',
+          type: 'danger',
+        });
       }
     } else {
       simpleValidator.current.showMessages();
@@ -251,7 +254,7 @@ const styles = StyleSheet.create({
   loginButtonText: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'FontRegular',
   },
   registerText: {

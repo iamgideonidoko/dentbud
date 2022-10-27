@@ -14,6 +14,8 @@ import { ToastProvider } from 'react-native-toast-notifications';
 
 const persistor = persistStore(store);
 
+store.subscribe(() => console.log('AUTH STORE: ', store.getState().auth));
+
 const App: React.FC = () => {
   return (
     <Provider store={store}>

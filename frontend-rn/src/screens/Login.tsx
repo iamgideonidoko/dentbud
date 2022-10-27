@@ -14,23 +14,37 @@ import {
 import DentbudLogo from '../assets/images/dentbud-logo-md.png';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
 import SimpleReactValidator from 'simple-react-validator';
-import type { LogignUserInput } from '../interfaces/store.interface';
+import type { LoginUserInput } from '../interfaces/store.interface';
+import { useLoginUserMutation } from '../store/api/auth.api';
+import { useToast } from 'react-native-toast-notifications';
 
 const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
-  const [input, setInput] = useState<LogignUserInput>({
+  const [input, setInput] = useState<LoginUserInput>({
     email: '',
     password: '',
   });
   const [, forceUpdate] = useState<boolean>(false);
+  const [loginUser, { isLoading: isLoggingIn }] = useLoginUserMutation();
+  const toast = useToast();
+
   const simpleValidator = useRef(
     new SimpleReactValidator({
       element: (message: string) => <Text style={styles.formErrorMsg}>{message}</Text>,
     }),
   );
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (simpleValidator.current.allValid()) {
       // should login user
+      try {
+        await loginUser(input).unwrap();
+        toast.show('Logged in successfully 😎', { placement: 'top', type: 'success' });
+      } catch (err) {
+        toast.show(`${(err as { data: { message: string } }).data?.message ?? 'Login failed'} 😔`, {
+          placement: 'top',
+          type: 'danger',
+        });
+      }
     } else {
       simpleValidator.current.showMessages();
       forceUpdate((prev) => !prev);
@@ -58,6 +72,8 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   autoCapitalize={'none'}
                   keyboardType="email-address"
                   textContentType="emailAddress"
+                  value={input.email}
+                  onChangeText={(text) => setInput((prev) => ({ ...prev, email: text }))}
                 />
                 {
                   /* simple validation */
@@ -71,6 +87,8 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   autoCapitalize="none"
                   secureTextEntry={true}
                   textContentType="password"
+                  value={input.password}
+                  onChangeText={(text) => setInput((prev) => ({ ...prev, password: text }))}
                 />
                 {
                   /* simple validation */
@@ -78,7 +96,7 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 }
               </View>
               <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginButtonText}>Log in</Text>
+                <Text style={styles.loginButtonText}>{isLoggingIn ? 'Logging in...' : 'Log in'}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                 <Text style={styles.registerText}>Don't have an account? Register</Text>
@@ -195,7 +213,7 @@ const styles = StyleSheet.create({
   loginButtonText: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'FontRegular',
   },
   registerText: {
