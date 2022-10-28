@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { loginUser, logoutUser, refreshUserToken } from '../controllers/auth.controller';
 import validateDto from '../middlewares/validateDto.middleware';
-import { loginUserAjvValidate, refreshTokenAjvValidate } from '../schemas/auth.schema';
+import { loginUserAjvValidate, refreshTokenAjvValidate, logoutUserSchemaValidate } from '../schemas/auth.schema';
 
 const authRoute = Router();
 
@@ -17,7 +17,7 @@ authRoute.post('/auth/login', validateDto(loginUserAjvValidate), loginUser);
 @description 	logout user
 @access 		Public
 */
-authRoute.post('/auth/logout', validateDto(refreshTokenAjvValidate), logoutUser);
+authRoute.post('/auth/logout', validateDto(logoutUserSchemaValidate), logoutUser);
 
 /*
 @route 			POST /api/v1/auth/refresh (refresh token)

@@ -55,12 +55,10 @@ export const getNewTokens = async (refreshToken: string): Promise<object | undef
   }
 };
 
-export const delRefreshToken = async (refreshToken: string): Promise<number | undefined> => {
+export const delRefreshToken = async (user_id: string): Promise<number | undefined> => {
   try {
-    const decoded = await verifyRefreshToken(refreshToken);
-
     // delete id from database
-    await deleteRefreshTokensByUserId(decoded?.id);
+    await deleteRefreshTokensByUserId(user_id);
 
     return new Promise((resolve) => {
       // resolve(value);

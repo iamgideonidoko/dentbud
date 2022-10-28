@@ -6,3 +6,7 @@ export interface LoginUser {
 export interface RefreshToken {
   refreshToken: string;
 }
+
+export interface LogoutUser {
+  user_id: string;
+}

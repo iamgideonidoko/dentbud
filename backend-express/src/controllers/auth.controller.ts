@@ -41,18 +41,16 @@ export const refreshUserToken = async (req: Request, res: Response, next: NextFu
 };
 
 export const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { refreshToken } = req.body;
+  const { user_id } = req.body;
 
   //check if all input fields have value
-  if (!refreshToken) {
+  if (!user_id) {
     return next(createError(400, 'Please, enter all fields'));
   }
 
   try {
-    const value = await delRefreshToken(refreshToken);
-    if (value) {
-      return createSuccess(res, 200, 'User logged out successfully', value);
-    }
+    await delRefreshToken(user_id);
+    return createSuccess(res, 200, 'User logged out successfully', {});
   } catch (err) {
     return next(err);
   }
