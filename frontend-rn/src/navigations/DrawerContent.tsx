@@ -16,9 +16,24 @@ import CalendarIcon from '../assets/icons/Calendar.svg';
 import ChatIcon from '../assets/icons/Chat.svg';
 import BackIcon from '../assets/icons/Back.svg';
 import { useAppSelector } from '../hooks/store.hook';
+import { useLogoutUserMutation } from '../store/api/auth.api';
+import { useToast } from 'react-native-toast-notifications';
 
 const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const [logoutUser] = useLogoutUserMutation();
+  const toast = useToast();
+
+  const handleLogout = async () => {
+    console.log('attempting to log out');
+    try {
+      await logoutUser({ user_id: userInfo?.id as string }).unwrap();
+      toast.show('Logged out successfully 😎', { placement: 'top', type: 'success' });
+    } catch (err) {
+      console.log('could not log out => ', err);
+    }
+  };
+
   return (
     <SafeAreaView style={{ borderWidth: 0, flex: 1 }}>
       <ScrollView style={{ padding: 20 }}>
@@ -60,6 +75,9 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
           <View style={styles.usernameWrapper}>
             <Text style={styles.username}>{userInfo?.email}</Text>
           </View>
+          <Text style={styles.logoutText} onPress={handleLogout}>
+            Log out
+          </Text>
         </View>
         <View style={styles.navItemsWrapper}>
           <View style={[styles.navItem, { backgroundColor: '#4845D220' }]}>
@@ -123,7 +141,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   profileCard: {
-    height: 180,
+    height: 210,
     width: '100%',
     backgroundColor: '#4845D2',
     borderRadius: 15,
@@ -181,6 +199,10 @@ const styles = StyleSheet.create({
   },
   navItemBtnText: {
     fontFamily: 'FontMedium',
+  },
+  logoutText: {
+    margin: 13,
+    color: 'white',
   },
 });
 

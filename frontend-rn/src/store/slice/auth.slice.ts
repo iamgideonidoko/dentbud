@@ -27,6 +27,11 @@ export const authSlice = createSlice({
         state.token = { accessToken, refreshToken };
         state.userInfo = user;
         state.isAuthenticated = true;
+      })
+      .addMatcher(authApi.endpoints.logoutUser.matchFulfilled, (state) => {
+        state.isAuthenticated = false;
+        state.token = null;
+        state.userInfo = null;
       });
   },
 });

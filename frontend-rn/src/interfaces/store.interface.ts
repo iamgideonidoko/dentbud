@@ -45,3 +45,11 @@ export interface LoginUserInput {
 }
 
 export type LoginUserResponse = RegisterUserResponse;
+
+export interface LogoutUserInput {
+  user_id: string;
+}
+
+export interface LogoutUserResponse {
+  message: string;
+}
