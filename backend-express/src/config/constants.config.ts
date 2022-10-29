@@ -16,7 +16,8 @@ const constants: Constants = {
   mongodbURI: process.env.MONGODB_URI as string,
   accessTokenSecret: process.env.ACCESS_TOKEN_SECRET as Secret,
   refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET as Secret,
-  accessTokenSpan: '1d',
+  // accessTokenSpan: '1d',
+  accessTokenSpan: '1y',
   refreshTokenSpan: '1y',
   apiBase: '/api',
 };
