@@ -55,10 +55,22 @@ export interface LogoutUserResponse {
 }
 
 // CHAT SLICE
+
+export interface SingleChat {
+  sender: 'dentbud' | 'user';
+  message: string;
+  time: string;
+}
 export interface ChatState {
-  chat: Array<{
-    sender: string;
-    message: string;
-    time: string;
-  }>;
+  chat: Array<SingleChat>;
+}
+
+export interface ConverseRasaInput {
+  name: string;
+  email: string;
+  text: string;
+}
+
+export interface ConverseRasaResponse {
+  text: string;
 }

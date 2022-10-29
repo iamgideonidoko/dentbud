@@ -12,22 +12,48 @@ import {
 } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import PlaneIcon from '../assets/icons/Plane.svg';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../interfaces/store.interface';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, withRepeat } from 'react-native-reanimated';
 import DentbudTyping from '../components/DentbudTyping';
+import { useAppSelector, useAppDispatch } from '../hooks/store.hook';
+import { useConverseRasaMutation } from '../store/api/chat.api';
+import dayjs from 'dayjs';
+import { addToChat /* , undoLastChat */ } from '../store/slice/chat.slice';
 
 const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
-  const chats = useSelector<RootState, RootState['chat']['chat']>((state) => state.chat.chat);
+  const chats = useAppSelector((state) => state.chat.chat);
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+  const [converseRasa, { isLoading: isConverseRasaLoading }] = useConverseRasaMutation();
 
   const [inputMessage, setInputMessage] = useState<string>('');
 
-  // add message to the chat array
-  function sendMessage() {
-    console.log('Sending message');
+  const dispatch = useAppDispatch();
 
-    // setInputMessage('');
+  // add message to the chat array
+  async function sendMessage() {
+    try {
+      setInputMessage('');
+      dispatch(
+        addToChat({
+          sender: 'user',
+          message: inputMessage,
+          time: dayjs().toISOString(),
+        }),
+      );
+      await converseRasa({
+        name: userInfo?.name as string,
+        email: userInfo?.email as string,
+        text: inputMessage,
+      }).unwrap();
+    } catch (err) {
+      console.log('chat error => ', err);
+      dispatch(
+        addToChat({
+          sender: 'dentbud',
+          message: "Sorry, I can't provide a response at the moment.",
+          time: dayjs().toISOString(),
+        }),
+      );
+    }
   }
 
   return (
@@ -46,13 +72,13 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
                   <View
                     style={{
                       maxWidth: Dimensions.get('screen').width * 0.8,
-                      backgroundColor: item.sender === 'User' ? '#21AD80' : '#4845D2',
-                      alignSelf: item.sender === 'User' ? 'flex-end' : 'flex-start',
+                      backgroundColor: item.sender?.toLowerCase() === 'user' ? '#21AD80' : '#4845D2',
+                      alignSelf: item.sender?.toLowerCase() === 'user' ? 'flex-end' : 'flex-start',
                       marginHorizontal: 10,
                       padding: 10,
                       borderRadius: 10,
-                      borderBottomLeftRadius: item.sender === 'User' ? 10 : 0,
-                      borderBottomRightRadius: item.sender === 'User' ? 0 : 8,
+                      borderBottomLeftRadius: item.sender?.toLowerCase() === 'user' ? 10 : 0,
+                      borderBottomRightRadius: item.sender?.toLowerCase() === 'user' ? 0 : 8,
                     }}
                   >
                     <Text
@@ -73,30 +99,31 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
                         fontFamily: 'FontRegular',
                       }}
                     >
-                      {item.time}
+                      {dayjs(item.time).format('hh:mm')}
                     </Text>
                   </View>
                 </View>
               </TouchableWithoutFeedback>
             )}
           />
-          {/* <DentbudTyping delay={0} /> */}
+          {isConverseRasaLoading && <DentbudTyping delay={0} />}
 
           <View style={{ paddingVertical: 10, borderWidth: 0 }}>
             <View style={styles.messageInputView}>
               <TextInput
                 defaultValue={inputMessage}
+                value={inputMessage}
                 style={[styles.messageInput, { fontFamily: 'FontRegular', color: '#00000090' }]}
-                placeholder="Message"
+                placeholder="Start typing..."
                 onChangeText={(text) => setInputMessage(text)}
                 onSubmitEditing={() => {
-                  sendMessage();
+                  !isConverseRasaLoading && sendMessage();
                 }}
               />
               <TouchableOpacity
                 style={styles.messageSendView}
                 onPress={() => {
-                  sendMessage();
+                  !isConverseRasaLoading && sendMessage();
                 }}
               >
                 <Text style={{ fontFamily: 'FontRegular' }}>

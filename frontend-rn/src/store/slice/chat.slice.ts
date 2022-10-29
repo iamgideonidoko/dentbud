@@ -1,72 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { ChatState } from '../../interfaces/store.interface';
+import type { ChatState, SingleChat } from '../../interfaces/store.interface';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import chatApi from '../api/chat.api';
+import dayjs from 'dayjs';
 
 const initialState: ChatState = {
-  chat: [
-    {
-      sender: 'Dentbud',
-      message: 'Hello, how are you doing?',
-      time: '6:02 PM',
-    },
-    {
-      sender: 'User',
-      message: 'I am good, how about you?',
-      time: '6:02 PM',
-    },
-    {
-      sender: 'Dentbud',
-      message: '😊😇',
-      time: '6:02 PM',
-    },
-    {
-      sender: 'User',
-      message: "Can't wait to meet you.",
-      time: '6:03 PM',
-    },
-    {
-      sender: 'Dentbud',
-      message: "That's great, when are you coming?",
-      time: '6:03 PM',
-    },
-    {
-      sender: 'User',
-      message: 'This weekend.',
-      time: '6:03 PM',
-    },
-    {
-      sender: 'Dentbud',
-      message: 'Around 4 to 6 PM.',
-      time: '6:04 PM',
-    },
-    {
-      sender: 'User',
-      message: "Great, don't forget to bring me some mangoes.",
-      time: '6:05 PM',
-    },
-    {
-      sender: 'Dentbud',
-      message: 'Sure!',
-      time: '6:05 PM',
-    },
-  ],
+  chat: [],
 };
 
 export const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    addToChat: (state, action) => {
+    addToChat: (state, { payload }: PayloadAction<SingleChat>) => {
       //add to chat array
-      state.chat = [...state.chat, action.payload];
+      state.chat = [...state.chat, payload];
     },
     clearChat: (state) => {
       state.chat = [];
     },
+    setChat: (state, { payload }: PayloadAction<SingleChat[]>) => {
+      state.chat = payload;
+    },
+    undoLastChat: (state) => {
+      console.log('should undo last chat');
+      state.chat = [...state.chat].slice(0, -1);
+    },
   },
-  extraReducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(chatApi.endpoints.converseRasa.matchFulfilled, (state, { payload }) => {
+      console.log('Rasa response => ', payload);
+      state.chat = [...state.chat, { sender: 'dentbud', message: payload.text, time: dayjs().toISOString() }];
+    });
+  },
 });
 
 // export actions
-export const { addToChat, clearChat } = chatSlice.actions;
+export const { addToChat, clearChat, undoLastChat } = chatSlice.actions;
 
 export default chatSlice.reducer;
