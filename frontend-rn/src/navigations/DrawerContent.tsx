@@ -15,6 +15,8 @@ import MaleAvatar from '../assets/images/male-avatar.png';
 import CalendarIcon from '../assets/icons/Calendar.svg';
 import ChatIcon from '../assets/icons/Chat.svg';
 import BackIcon from '../assets/icons/Back.svg';
+import CogIcon from '../assets/icons/Cog.svg';
+import FolderIcon from '../assets/icons/Folder.svg';
 import { useAppSelector } from '../hooks/store.hook';
 import { useLogoutUserMutation } from '../store/api/auth.api';
 import { useToast } from 'react-native-toast-notifications';
@@ -91,7 +93,7 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
             </TouchableOpacity>
           </View>
           <View style={[styles.navItem, { backgroundColor: '#21AD8020' }]}>
-            <CalendarIcon />
+            <FolderIcon />
             <Text style={[styles.navItemText]}>Manage your Courses</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('Course')}
@@ -103,7 +105,7 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
         </View>
         <View style={[styles.navItemsWrapper, { paddingBottom: 50 }]}>
           <View style={[styles.navItem, { backgroundColor: '#4845D220' }]}>
-            <ChatIcon />
+            <CalendarIcon />
             <Text style={[styles.navItemText]}>Manage your activities</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('Activity')}
@@ -114,7 +116,7 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
           </View>
 
           <View style={[styles.navItem, { backgroundColor: '#21AD8020' }]}>
-            <CalendarIcon />
+            <CogIcon />
             <Text style={[styles.navItemText]}>Configure app settings</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('Setting')}
@@ -178,7 +180,7 @@ const styles = StyleSheet.create({
     flewWrap: 'wrap',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: 35,
   },
   navItem: {
     width: '45%',
