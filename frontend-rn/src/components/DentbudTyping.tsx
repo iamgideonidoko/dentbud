@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import type { FC } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -24,9 +24,9 @@ const DentbudTyping: FC<{ delay: number }> = ({ delay }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Animated.View style={[styles.animatedView, offsetStyle]}>
-      <Image source={DentbudLogo} style={{ width: 30, height: 30, borderRadius: 100, marginRight: 6 }} />
-    </Animated.View>
+    <View style={[styles.animatedView]}>
+      <Animated.Image source={DentbudLogo} style={[styles.dentbudImage, offsetStyle]} />
+    </View>
   );
 };
 
@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
   animatedView: {
     marginTop: 5,
     paddingHorizontal: 10,
+  },
+  dentbudImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+    marginRight: 6,
   },
 });
 
