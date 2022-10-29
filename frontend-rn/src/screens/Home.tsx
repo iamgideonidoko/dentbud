@@ -13,8 +13,10 @@ import {
 import CustomHeader from '../components/CustomHeader';
 import PlaneIcon from '../assets/icons/Plane.svg';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../store/store';
+import type { RootState } from '../interfaces/store.interface';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, withRepeat } from 'react-native-reanimated';
+import DentbudTyping from '../components/DentbudTyping';
 
 const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const chats = useSelector<RootState, RootState['chat']['chat']>((state) => state.chat.chat);
@@ -78,6 +80,7 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
               </TouchableWithoutFeedback>
             )}
           />
+          {/* <DentbudTyping delay={0} /> */}
 
           <View style={{ paddingVertical: 10, borderWidth: 0 }}>
             <View style={styles.messageInputView}>
