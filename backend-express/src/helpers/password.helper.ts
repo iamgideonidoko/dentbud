@@ -29,7 +29,6 @@ export const hashPassword = async (password: string): Promise<string> => {
 export const validatePassword = async (userPassword: string, dbPassword: string): Promise<boolean> => {
   return new Promise<boolean>((resolve) => {
     bcrypt.compare(userPassword, dbPassword).then((isMatch) => {
-      console.log(path.basename(__filename) + 'isMatch => ', isMatch);
       resolve(isMatch);
     });
   });

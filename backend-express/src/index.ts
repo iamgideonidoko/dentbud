@@ -14,6 +14,8 @@ import constants from './config/constants.config';
 // Routes Import
 import userRoute from './routes/user.route';
 import authRoute from './routes/auth.route';
+// proxy
+import proxyRoute from './routes/proxy.route';
 
 // console.log('Client => ', client);
 
@@ -82,6 +84,7 @@ app.get(constants.apiBase, (_req: Request, res: Response) => {
 
 app.use(constants.apiBase, userRoute);
 app.use(constants.apiBase, authRoute);
+app.use(constants.proxyBase, proxyRoute);
 
 // Error for unhandled routes
 app.use((req: Request, res: Response, next: NextFunction) => {

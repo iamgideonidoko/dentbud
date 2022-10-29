@@ -53,3 +53,12 @@ export interface LogoutUserInput {
 export interface LogoutUserResponse {
   message: string;
 }
+
+// CHAT SLICE
+export interface ChatState {
+  chat: Array<{
+    sender: string;
+    message: string;
+    time: string;
+  }>;
+}

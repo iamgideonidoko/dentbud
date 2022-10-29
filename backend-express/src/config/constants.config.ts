@@ -10,6 +10,8 @@ type Constants = {
   accessTokenSpan: number | string;
   refreshTokenSpan: number | string;
   apiBase: string;
+  proxyBase: string;
+  rasaHost: string;
 };
 
 const constants: Constants = {
@@ -20,6 +22,8 @@ const constants: Constants = {
   accessTokenSpan: '1y',
   refreshTokenSpan: '1y',
   apiBase: '/api',
+  proxyBase: '/api/proxy',
+  rasaHost: process.env.RASA_HOST as string,
 };
 
 export default constants;
