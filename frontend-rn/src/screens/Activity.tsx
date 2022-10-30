@@ -5,20 +5,20 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
 const Tab = createMaterialTopTabNavigator();
 
-function TabA() {
+function AllTasks() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Task</Text>
+      <Text style={styles.text}>All Tasks</Text>
     </View>
   );
 }
-function TabB() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Exam</Text>
-    </View>
-  );
-}
+// function TabB() {
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.text}>Exam</Text>
+//     </View>
+//   );
+// }
 
 const Activity: React.FC<DrawerScreenProps> = ({ navigation }) => {
   return (
@@ -39,8 +39,8 @@ const Activity: React.FC<DrawerScreenProps> = ({ navigation }) => {
           tabBarScrollEnabled: false,
         }}
       >
-        <Tab.Screen name="Task" component={TabA} />
-        <Tab.Screen name="Exam" component={TabB} />
+        <Tab.Screen name="All Tasks" component={AllTasks} />
+        {/* <Tab.Screen name="Exam" component={TabB} /> */}
       </Tab.Navigator>
     </View>
   );
