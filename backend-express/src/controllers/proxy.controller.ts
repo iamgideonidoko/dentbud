@@ -10,8 +10,10 @@ export const converseRasa = async (req: Request, res: Response, next: NextFuncti
   try {
     const rasaRes = await callRasa({ sender: email, text });
     console.log('rasaRes => ', rasaRes);
-    const textToSend = rasaRes.text;
-    return createSuccess(res, 200, 'Dentbud responded successfully', { text: textToSend });
+    const textToSend = rasaRes?.text;
+    return createSuccess(res, 200, 'Dentbud responded successfully', {
+      text: textToSend ?? `Sorry ${(name?.split(' ')?.[0] ?? '').trim()}, I can't provide a response at the moment.`,
+    });
   } catch (err) {
     return next(err);
   }
