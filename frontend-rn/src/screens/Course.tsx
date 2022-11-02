@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import type { DrawerScreenProps, AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
@@ -9,6 +9,8 @@ import NotificationIcon from '../assets/icons/Notification.svg';
 import NotificationActiveIcon from '../assets/icons/NotificationActive.svg';
 import TrashIcon from '../assets/icons/Trash.svg';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import Modal from 'react-native-modalbox';
+import CourseActionModal from '../components/CourseActionModal';
 
 const courseSectionTitle: AccordionRenderFC = (_, __, index) => {
   if (index !== 0) return <></>;
@@ -105,6 +107,7 @@ const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
       content: 'Third Lorem ipsum...',
     },
   ]);
+  const actionModal = useRef<Modal>(null);
 
   const handleAccordionChange = (newActiveSections: number[]) => {
     setActiveSections(newActiveSections);
@@ -123,6 +126,8 @@ const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
           onChange={handleAccordionChange}
         />
       </ScrollView>
+
+      <CourseActionModal actionModal={actionModal} />
     </View>
   );
 };
