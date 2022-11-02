@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, RefObject } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import type { DrawerScreenProps, AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
@@ -12,12 +12,12 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Modal from 'react-native-modalbox';
 import CourseActionModal from '../components/CourseActionModal';
 
-const courseSectionTitle: AccordionRenderFC = (_, __, index) => {
+const courseSectionTitle: AccordionRenderFC<{ actionModal: RefObject<Modal> }> = ({ actionModal }, __, index) => {
   if (index !== 0) return <></>;
   return (
     <View style={styles.sectionTitle}>
       <Text>Here are all your courses:</Text>
-      <TouchableWithoutFeedback onPress={() => console.log('add courses')}>
+      <TouchableWithoutFeedback onPress={() => actionModal.current?.open()}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
     </View>
@@ -80,7 +80,7 @@ const courseContent: AccordionRenderFC = (_, section) => {
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Exam Stops</Text>
+          <Text>Exam Ends</Text>
           <Text>: </Text>
         </View>
         <Text style={styles.listItemChild2}>
@@ -120,7 +120,7 @@ const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
         <Accordion
           sections={sections}
           activeSections={activeSections}
-          renderSectionTitle={(...args) => courseSectionTitle({}, ...args)}
+          renderSectionTitle={(...args) => courseSectionTitle({ actionModal }, ...args)}
           renderHeader={(...args) => courseHeader({}, ...args)}
           renderContent={(...args) => courseContent({}, ...args)}
           onChange={handleAccordionChange}
