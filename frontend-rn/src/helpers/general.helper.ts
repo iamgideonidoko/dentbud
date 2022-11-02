@@ -33,3 +33,12 @@ export const getGreetTimeOfDay = () => {
   // Between dawn and noon
   return 'morning';
 };
+
+/**
+ * {greet_time} shows great time of day ('morning' | 'afternoon' | 'evening')
+ * {user_name} shows the name of the currently logged in user
+ */
+export const starterMessages = [
+  'Good {greet_time} {user_name}, your fav assistant here. Kindly interact with me using the text field below',
+  'Welcome {user_name}, is there anything I can do for you today? Kindly respond with the text field below',
+];

@@ -1,17 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import type { DrawerScreenProps } from '../interfaces/helper.interface';
+import Task from './Task';
+
 const Tab = createMaterialTopTabNavigator();
 
-function AllTasks() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>All Tasks</Text>
-    </View>
-  );
-}
 // function TabB() {
 //   return (
 //     <View style={styles.container}>
@@ -39,23 +34,11 @@ const Activity: React.FC<DrawerScreenProps> = ({ navigation }) => {
           tabBarScrollEnabled: false,
         }}
       >
-        <Tab.Screen name="All Tasks" component={AllTasks} />
+        <Tab.Screen name="Task" component={Task} />
         {/* <Tab.Screen name="Exam" component={TabB} /> */}
       </Tab.Navigator>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-});
 
 export default Activity;

@@ -11,6 +11,7 @@
     "lint:fix": "eslint ./**/*.{js,jsx,ts,tsx} --fix"
   },
   "dependencies": {
+    "@notifee/react-native": "^7.0.4",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-community/blur": "^4.2.0",
     "@react-native-community/checkbox": "^0.5.12",
@@ -25,8 +26,8 @@
     "react": "18.0.0",
     "react-native": "0.69.4",
     "react-native-collapsible": "^1.6.0",
+    "react-native-date-picker": "^4.2.5",
     "react-native-gesture-handler": "^2.5.0",
-    "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-markdown-display": "^7.0.0-alpha.2",
     "react-native-modalbox": "^2.0.2",
     "react-native-offline": "^6.0.0",

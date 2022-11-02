@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from 'react-native';
-import CustomHeader from '../components/CustomHeader';
-import type { DrawerScreenProps, AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
+import { ScrollView, Text, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import type { AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
 import Accordion from 'react-native-collapsible/Accordion';
+import type { FC } from 'react';
 import PlusIcon from '../assets/icons/Plus.svg';
 import EditIcon from '../assets/icons/Edit.svg';
 import NotificationIcon from '../assets/icons/Notification.svg';
@@ -10,11 +10,11 @@ import NotificationActiveIcon from '../assets/icons/NotificationActive.svg';
 import TrashIcon from '../assets/icons/Trash.svg';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-const courseSectionTitle: AccordionRenderFC = (_, __, index) => {
+const taskSectionTitle: AccordionRenderFC = (_, __, index) => {
   if (index !== 0) return <></>;
   return (
     <View style={styles.sectionTitle}>
-      <Text>Here are all your courses:</Text>
+      <Text>Here are all your tasks:</Text>
       <TouchableWithoutFeedback onPress={() => console.log('add courses')}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
@@ -22,7 +22,7 @@ const courseSectionTitle: AccordionRenderFC = (_, __, index) => {
   );
 };
 
-const courseHeader: AccordionRenderFC = (_, section, __, isActive) => {
+const taskHeader: AccordionRenderFC = (_, section, __, isActive) => {
   return (
     <View style={[styles.header, { backgroundColor: isActive ? '#4845d2' : '#dadaf6' }]}>
       <Text style={[styles.headerText, { color: isActive ? 'white' : '#070715' }]}>{section.title}</Text>
@@ -45,13 +45,13 @@ const courseHeader: AccordionRenderFC = (_, section, __, isActive) => {
   );
 };
 
-const courseContent: AccordionRenderFC = (_, section) => {
+const taskContent: AccordionRenderFC = (_, section) => {
   return (
     <View style={styles.content}>
       {/* <Text>{section.content}</Text> */}
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Course Name</Text>
+          <Text>Title</Text>
           <Text>: </Text>
         </View>
         <Text style={styles.listItemChild2}>
@@ -60,16 +60,16 @@ const courseContent: AccordionRenderFC = (_, section) => {
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Course Code</Text>
+          <Text>Description</Text>
           <Text>: </Text>
         </View>
         <Text style={styles.listItemChild2}>
-          <Text>CSC404</Text>
+          <Text>Lorem, ipsum dolor sit amet consectetur adipisicing!</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Exam Starts</Text>
+          <Text>Starts</Text>
           <Text>: </Text>
         </View>
         <Text style={styles.listItemChild2}>
@@ -78,7 +78,7 @@ const courseContent: AccordionRenderFC = (_, section) => {
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Exam Stops</Text>
+          <Text>Stops</Text>
           <Text>: </Text>
         </View>
         <Text style={styles.listItemChild2}>
@@ -89,7 +89,7 @@ const courseContent: AccordionRenderFC = (_, section) => {
   );
 };
 
-const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
+const Task: FC = () => {
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [sections] = useState<AccordionSection[]>([
     {
@@ -109,21 +109,17 @@ const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const handleAccordionChange = (newActiveSections: number[]) => {
     setActiveSections(newActiveSections);
   };
-
   return (
-    <View>
-      <CustomHeader navigation={navigation} title="Course" />
-      <ScrollView style={styles.scrollView}>
-        <Accordion
-          sections={sections}
-          activeSections={activeSections}
-          renderSectionTitle={(...args) => courseSectionTitle({}, ...args)}
-          renderHeader={(...args) => courseHeader({}, ...args)}
-          renderContent={(...args) => courseContent({}, ...args)}
-          onChange={handleAccordionChange}
-        />
-      </ScrollView>
-    </View>
+    <ScrollView style={styles.scrollView}>
+      <Accordion
+        sections={sections}
+        activeSections={activeSections}
+        renderSectionTitle={(...args) => taskSectionTitle({}, ...args)}
+        renderHeader={(...args) => taskHeader({}, ...args)}
+        renderContent={(...args) => taskContent({}, ...args)}
+        onChange={handleAccordionChange}
+      />
+    </ScrollView>
   );
 };
 
@@ -149,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#edecfb',
   },
   scrollView: {
-    marginBottom: 60,
+    // marginBottom: 60,
   },
   sectionTitle: {
     padding: 15,
@@ -183,4 +179,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Course;
+export default Task;

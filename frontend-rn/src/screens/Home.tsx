@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -18,6 +18,7 @@ import { useAppSelector, useAppDispatch } from '../hooks/store.hook';
 import { useConverseRasaMutation } from '../store/api/chat.api';
 import dayjs from 'dayjs';
 import { addToChat /* , undoLastChat */ } from '../store/slice/chat.slice';
+import { getGreetTimeOfDay, starterMessages } from '../helpers/general.helper';
 
 const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const chats = useAppSelector((state) => state.chat.chat);
@@ -55,6 +56,21 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
       );
     }
   }
+
+  useEffect(() => {
+    if (chats.length === 0) {
+      dispatch(
+        addToChat({
+          sender: 'dentbud',
+          message: starterMessages[Math.floor(Math.random() * chats.length)]
+            ?.replace('{user_name}', userInfo?.name?.split(' ')?.[0] ?? '')
+            .replace('{greet_time}', getGreetTimeOfDay()),
+          time: dayjs().toISOString(),
+        }),
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
