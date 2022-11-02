@@ -4,7 +4,7 @@ services:
   dentbud_backend_rasa:
     build: .
     restart: always
-    command: bash -c "rm -rf models/* && rasa train && rasa run --enable-api --cors \"*\" -p 8080"
+    command: bash -c "rm -rf models/* && rasa train && rasa run --enable-api --port 8080 --cors \"*\""
     ports:
       - "5006:8080"
     public: true
