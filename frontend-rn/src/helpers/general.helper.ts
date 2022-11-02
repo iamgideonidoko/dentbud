@@ -17,3 +17,19 @@
 
 //   return axiosConfig;
 // };
+
+export const getGreetTimeOfDay = () => {
+  const splitAfternoon = 12, // 24hr time to split the afternoon
+    splitEvening = 16, // 24hr time to split the evening
+    currentHour = parseFloat(new Date().getHours().toString());
+
+  if (currentHour >= splitAfternoon && currentHour <= splitEvening) {
+    // Between 12 PM and 5PM
+    return 'afternoon';
+  } else if (currentHour >= splitEvening) {
+    // Between 5PM and Midnight
+    return 'evening';
+  }
+  // Between dawn and noon
+  return 'morning';
+};
