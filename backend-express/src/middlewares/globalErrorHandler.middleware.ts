@@ -15,7 +15,7 @@ const handleDevError: ErrorRequestHandler = (err, _req: Request, res: Response) 
 
 // Error handler for Production Environment
 const handleProdError: ErrorRequestHandler = (err, req: Request, res: Response) => {
-  if (req.originalUrl.startsWith('/api/v1')) {
+  if (req.originalUrl.startsWith('/api')) {
     // Operational, trusted error: send message to client
     if (err.isOperational) {
       return res.status(err.statusCode).json({

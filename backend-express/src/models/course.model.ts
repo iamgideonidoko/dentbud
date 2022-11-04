@@ -1,15 +1,7 @@
 import { Schema, model } from 'mongoose';
-
-interface Course {
-  course_name: string;
-  course_code: string;
-  exam_starts: Date;
-  exam_ends: Date;
-  created_at: Date;
-}
-
+import type { ICourse } from '../interfaces/course.interface';
 // Define Course schema
-const courseSchema: Schema = new Schema<Course>({
+const courseSchema: Schema = new Schema<ICourse>({
   course_name: {
     type: String,
     required: true,
@@ -20,7 +12,6 @@ const courseSchema: Schema = new Schema<Course>({
   },
   exam_starts: {
     type: Date,
-    required: true,
   },
   exam_ends: {
     type: Date,
@@ -32,6 +23,6 @@ const courseSchema: Schema = new Schema<Course>({
 });
 
 // Create Course model
-const Course = model<Course>('Course', courseSchema);
+const Course = model<ICourse>('Course', courseSchema);
 
 export default Course;

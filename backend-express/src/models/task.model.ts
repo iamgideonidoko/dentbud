@@ -1,16 +1,8 @@
 import { Schema, model } from 'mongoose';
-
-interface Task {
-  title: string;
-  description: string;
-  starts: Date;
-  ends: Date;
-  done: boolean;
-  created_at: Date;
-}
+import type { ITask } from '../interfaces/task.interface';
 
 // Define Task schema
-const taskSchema: Schema = new Schema<Task>({
+const taskSchema: Schema = new Schema<ITask>({
   title: {
     type: String,
     required: true,
@@ -26,6 +18,7 @@ const taskSchema: Schema = new Schema<Task>({
   },
   done: {
     type: Boolean,
+    default: false,
   },
   created_at: {
     type: Date,
@@ -34,6 +27,6 @@ const taskSchema: Schema = new Schema<Task>({
 });
 
 // Create Task model
-const Task = model<Task>('Task', taskSchema);
+const Task = model<ITask>('Task', taskSchema);
 
 export default Task;

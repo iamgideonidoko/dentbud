@@ -6,21 +6,21 @@ import { loginUserAjvValidate, refreshTokenAjvValidate, logoutUserSchemaValidate
 const authRoute = Router();
 
 /*
-@route 			POST /api/v1/auth/login (login user)
+@route 			POST /api/auth/login (login user)
 @description 	authenticate user.
 @access 		Public
 */
 authRoute.post('/auth/login', validateDto(loginUserAjvValidate), loginUser);
 
 /*
-@route 			POST /api/v1/auth/login (logout user)
+@route 			POST /api/auth/login (logout user)
 @description 	logout user
 @access 		Public
 */
 authRoute.post('/auth/logout', validateDto(logoutUserSchemaValidate), logoutUser);
 
 /*
-@route 			POST /api/v1/auth/refresh (refresh token)
+@route 			POST /api/auth/refresh (refresh token)
 @description 	refresh user token
 @access 		Public
 */
