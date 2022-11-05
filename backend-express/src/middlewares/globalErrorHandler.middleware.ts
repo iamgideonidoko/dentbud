@@ -3,9 +3,7 @@ import logger from '../config/logger.config';
 
 // Error handler for development environment
 const handleDevError: ErrorRequestHandler = (err, _req: Request, res: Response) => {
-  logger.error({
-    message: `[globalErrorHandler.middleware.ts] (line 7) - ${err.message}`,
-  });
+  logger.error(`Global Error Handler - ${err.message}`);
 
   return res.status(err.statusCode).json({
     ...err,
@@ -26,7 +24,7 @@ const handleProdError: ErrorRequestHandler = (err, req: Request, res: Response) 
 
     // Programming or other unknown error: don't leak error details
     // 1) Log error
-    logger.error(`[globalErrorHandler.middleware.ts] (line 31) - ${err.message}`);
+    logger.error(`Global Error Handler - ${err.message}`);
 
     // 2) Send generic message
     return res.status(500).json({
@@ -37,7 +35,7 @@ const handleProdError: ErrorRequestHandler = (err, req: Request, res: Response) 
 
   // Programming or other unknown error: don't leak error details
   // 1) Log error
-  logger.error(`[globalErrorHandler.middleware.ts] (line 42) - ${err.message}`);
+  logger.error(`Global Error Handler - ${err.message}`);
 };
 
 const globalErrorHandler: ErrorRequestHandler = (err, req: Request, res: Response, next: NextFunction) => {

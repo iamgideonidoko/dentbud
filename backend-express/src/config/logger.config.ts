@@ -1,61 +1,24 @@
-import path from 'path';
-import { createLogger, format, transports } from 'winston';
+import { ILogger } from '../interfaces/config.interface';
 
-const { combine, timestamp: timestampFn, printf, prettyPrint } = format;
-
-// Format function
-const myFormat = printf(({ level, message, timestamp }) => `${timestamp} - ${level}: ${message}`);
-
-// Transport for writing error logs
-const errorTransport = new transports.File({
-  filename: path.join(__dirname, '../logs/errors.log'),
-  level: 'error',
-});
-
-// Transport for writing info logs
-const infoTransport = new transports.File({
-  filename: path.join(__dirname, '../logs/info.log'),
-  level: 'info',
-});
-
-// Transport for writing uncaught exception logs
-const exceptionsTransport = new transports.File({
-  filename: path.join(__dirname, '../logs/exceptions.log'),
-  handleExceptions: true,
-});
-
-// Transport for writing unhandled rejection logs
-const rejectionsTransport = new transports.File({
-  filename: path.join(__dirname, '../logs/rejections.log'),
-});
-
-const logger = createLogger({
-  format: combine(
-    timestampFn(),
-    myFormat,
-    prettyPrint(),
-    format.colorize(),
-    format.json({
-      space: 2,
-    }),
-  ),
-});
-
-// If we're not in production then log to the `console` with the format:
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new transports.Console({
-      handleExceptions: true,
-      format: combine(timestampFn(), myFormat),
-    }),
-  );
-}
-
-if (process.env.NODE_ENV === 'production') {
-  logger.add(errorTransport).add(infoTransport).add(exceptionsTransport).add(rejectionsTransport);
-}
-
-// Log any errors the logger, itself, might have, to prevent uncaught exceptions
-logger.on('error', (err) => console.error(err.message));
+const logger: ILogger = {
+  success(message: string, data?: unknown) {
+    console.log('\x1b[32m%s\x1b[0m', `\n${message} ${data ?? ''}\n`);
+  },
+  error(message: string, data?: unknown) {
+    console.log('\x1b[31m%s\x1b[0m', `\n${message} ${data ?? ''}\n`);
+  },
+  info(message: string, data?: unknown) {
+    console.log('\x1b[34m%s\x1b[0m', `\n${message} ${data ?? ''}\n`);
+  },
+  successBg(message: string, data?: unknown) {
+    console.log('\x1b[42m%s\x1b[0m', `\n${message} ${data ?? ''}\n`);
+  },
+  errorBg(message: string, data?: unknown) {
+    console.log('\x1b[41m%s\x1b[0m', `\n${message} ${data ?? ''}\n`);
+  },
+  infoBg(message: string, data?: unknown) {
+    console.log('\x1b[44m%s\x1b[0m', `\n${message} ${data ?? ''}\n`);
+  },
+};
 
 export default logger;
