@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint:check": "eslint ./**/*.{js,jsx,ts,tsx} --max-warnings=0",
-    "lint:fix": "eslint ./**/*.{js,jsx,ts,tsx} --fix"
+    "lint:fix": "eslint ./**/*.{js,jsx,ts,tsx} --fix",
+    "bundle:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
   },
   "dependencies": {
     "@notifee/react-native": "^7.0.4",
@@ -27,6 +28,7 @@
     "react-native": "0.69.4",
     "react-native-collapsible": "^1.6.0",
     "react-native-date-picker": "^4.2.5",
+    "react-native-exception-handler": "^2.10.10",
     "react-native-gesture-handler": "^2.5.0",
     "react-native-markdown-display": "^7.0.0-alpha.2",
     "react-native-modalbox": "^2.0.2",
