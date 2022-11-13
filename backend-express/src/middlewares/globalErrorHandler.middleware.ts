@@ -15,9 +15,10 @@ const handleDevError: ErrorRequestHandler = (err, _req: Request, res: Response) 
 const handleProdError: ErrorRequestHandler = (err, req: Request, res: Response) => {
   if (req.originalUrl.startsWith('/api')) {
     // Operational, trusted error: send message to client
-    if (err.isOperational) {
+    console.log('Error object => ', err);
+    if (err.isOperational || err.statusCode?.toString()?.startsWith('4')) {
       return res.status(err.statusCode).json({
-        status: err.status,
+        ...err,
         message: err.message,
       });
     }
@@ -45,14 +46,9 @@ const globalErrorHandler: ErrorRequestHandler = (err, req: Request, res: Respons
   // the node environment has to be declared
   if (process.env.NODE_ENV === 'development') {
     handleDevError(err, req, res, next);
-  } else if (process.env.NODE_ENV === 'production') {
-    const error = {
-      ...err,
-    };
-
-    error.message = err.message;
-
-    handleProdError(error, req, res, next);
+  } else {
+    // production or others
+    handleProdError(err, req, res, next);
   }
 };
 
