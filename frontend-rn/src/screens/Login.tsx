@@ -17,6 +17,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import type { LoginUserInput } from '../interfaces/store.interface';
 import { useLoginUserMutation } from '../store/api/auth.api';
 import { useToast } from 'react-native-toast-notifications';
+import globalStyles from '../styles/global.style';
 
 const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const [input, setInput] = useState<LoginUserInput>({
@@ -62,13 +63,13 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
               <View style={styles.logoBox}>
                 <Image source={DentbudLogo} style={{ width: 60, height: 60, borderRadius: 0 }} />
               </View>
-              <Text style={[styles.appName]}>Dentbud</Text>
-              <Text style={styles.loginTitleText}>Log in</Text>
+              <Text style={[globalStyles.text, styles.appName]}>Dentbud</Text>
+              <Text style={[globalStyles.text, styles.loginTitleText]}>Log in</Text>
               {/* <View style={styles.hr}></View> */}
               <View style={styles.inputBox}>
-                <Text style={styles.inputLabel}>Email</Text>
+                <Text style={[globalStyles.text, styles.inputLabel]}>Email</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[globalStyles.text, styles.input]}
                   autoCapitalize={'none'}
                   keyboardType="email-address"
                   textContentType="emailAddress"
@@ -81,9 +82,9 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 }
               </View>
               <View style={styles.inputBox}>
-                <Text style={styles.inputLabel}>Password</Text>
+                <Text style={[globalStyles.text, styles.inputLabel]}>Password</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[globalStyles.text, styles.input]}
                   autoCapitalize="none"
                   secureTextEntry={true}
                   textContentType="password"
@@ -96,10 +97,12 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 }
               </View>
               <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginButtonText}>{isLoggingIn ? 'Logging in...' : 'Log in'}</Text>
+                <Text style={[globalStyles.text, styles.loginButtonText]}>
+                  {isLoggingIn ? 'Logging in...' : 'Log in'}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                <Text style={styles.registerText}>Don't have an account? Register</Text>
+                <Text style={[globalStyles.text, styles.registerText]}>Don't have an account? Register</Text>
               </TouchableOpacity>
               {/* <TouchableOpacity>
             <Text style={styles.forgotPasswordText}>Forgot Password?</Text>

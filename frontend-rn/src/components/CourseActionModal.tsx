@@ -10,9 +10,11 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import CloseIcon from '../assets/icons/Close.svg';
+import globalStyles from '../styles/global.style';
 
 const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({ actionModal, ...restProps }) => {
   const [examStarts, setExamStarts] = useState(new Date());
@@ -22,45 +24,47 @@ const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({
     console.log('action is to be made');
   };
   return (
-    <Modal style={[styles.actionModal]} ref={actionModal} coverScreen position="bottom" {...restProps}>
-      <View style={styles.modalHeader}>
-        <Text style={styles.modalTitle}>Add course</Text>
-        <TouchableWithoutFeedback onPress={() => actionModal.current?.close()}>
-          <CloseIcon width={25} height={25} />
-        </TouchableWithoutFeedback>
-      </View>
-      <ScrollView style={styles.modalScroll}>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Course Name</Text>
-          <TextInput
-            style={styles.input}
-            autoCapitalize={'none'}
-            keyboardType="name-phone-pad"
-            textContentType="name"
-          />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <Modal style={[styles.actionModal]} ref={actionModal} coverScreen position="bottom" {...restProps}>
+        <View style={styles.modalHeader}>
+          <Text style={[globalStyles.text, styles.modalTitle]}>Add course</Text>
+          <TouchableWithoutFeedback onPress={() => actionModal.current?.close()}>
+            <CloseIcon width={25} height={25} />
+          </TouchableWithoutFeedback>
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Course Code</Text>
-          <TextInput
-            style={styles.input}
-            autoCapitalize={'none'}
-            keyboardType="name-phone-pad"
-            textContentType="name"
-          />
-        </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Exam Starts</Text>
-          <DatePicker date={examStarts} onDateChange={setExamStarts} />
-        </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Exam Ends</Text>
-          <DatePicker date={examEnds} onDateChange={setExamEnds} />
-        </View>
-        <TouchableOpacity style={styles.button} onPress={handleAction}>
-          <Text style={styles.buttonText}>Add</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </Modal>
+        <ScrollView style={styles.modalScroll}>
+          <View style={styles.inputBox}>
+            <Text style={[globalStyles.text, styles.inputLabel]}>Course Name</Text>
+            <TextInput
+              style={[globalStyles.text, styles.input]}
+              autoCapitalize={'none'}
+              keyboardType="name-phone-pad"
+              textContentType="name"
+            />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={[globalStyles.text, styles.inputLabel]}>Course Code</Text>
+            <TextInput
+              style={[globalStyles.text, styles.input]}
+              autoCapitalize={'none'}
+              keyboardType="name-phone-pad"
+              textContentType="name"
+            />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={[globalStyles.text, styles.inputLabel]}>Exam Starts</Text>
+            <DatePicker date={examStarts} onDateChange={setExamStarts} textColor="black" />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={[globalStyles.text, styles.inputLabel]}>Exam Ends</Text>
+            <DatePicker date={examEnds} onDateChange={setExamEnds} textColor="black" />
+          </View>
+          <TouchableOpacity style={styles.button} onPress={handleAction}>
+            <Text style={[globalStyles.text, styles.buttonText]}>Add</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </Modal>
+    </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({

@@ -20,6 +20,7 @@ import FolderIcon from '../assets/icons/Folder.svg';
 import { useAppSelector } from '../hooks/store.hook';
 import { useLogoutUserMutation } from '../store/api/auth.api';
 import { useToast } from 'react-native-toast-notifications';
+import globalStyles from '../styles/global.style';
 
 const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   const userInfo = useAppSelector((state) => state.auth.userInfo);
@@ -65,64 +66,72 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
             </TouchableWithoutFeedback>
           </View>
           <Image source={DentbudLogo} style={{ width: 100, height: 100 }} />
-          <Text style={styles.appName}>Dentbud</Text>
-          <Text style={styles.miniAppName}>...your favourite assistant</Text>
+          <Text style={[globalStyles.text, styles.appName]}>Dentbud</Text>
+          <Text style={[globalStyles.text, styles.miniAppName]}>...your favourite assistant</Text>
         </View>
         <View style={styles.profileCard}>
-          <Text style={styles.profileCardTitle}>Your Profile:</Text>
+          <Text style={[globalStyles.text, styles.profileCardTitle]}>Your Profile:</Text>
           <View style={{ alignItems: 'center' }}>
             <Image source={MaleAvatar} style={{ width: 50, height: 50, marginRight: 10 }} />
-            <Text style={styles.fullname}>{userInfo?.name}</Text>
+            <Text style={[globalStyles.text, styles.fullname]}>{userInfo?.name}</Text>
           </View>
           <View style={styles.usernameWrapper}>
-            <Text style={styles.username}>{userInfo?.email}</Text>
+            <Text style={[globalStyles.text, styles.username]}>{userInfo?.email}</Text>
           </View>
-          <Text style={styles.logoutText} onPress={handleLogout}>
+          <Text style={[globalStyles.text, styles.logoutText]} onPress={handleLogout}>
             Log out
           </Text>
         </View>
         <View style={styles.navItemsWrapper}>
           <View style={[styles.navItem, { backgroundColor: '#4845D220' }]}>
-            <ChatIcon />
-            <Text style={[styles.navItemText]}>Interact with your assistant</Text>
+            <View>
+              <ChatIcon />
+              <Text style={[globalStyles.text, styles.navItemText]}>Interact with your assistant</Text>
+            </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('Home')}
               style={[styles.navItemBtn, { backgroundColor: '#4845D230' }]}
             >
-              <Text style={[styles.navItemBtnText, { color: '#4845D2' }]}>Chat</Text>
+              <Text style={[globalStyles.text, styles.navItemBtnText, { color: '#4845D2' }]}>Chat</Text>
             </TouchableOpacity>
           </View>
           <View style={[styles.navItem, { backgroundColor: '#21AD8020' }]}>
-            <FolderIcon />
-            <Text style={[styles.navItemText]}>Manage your Courses</Text>
+            <View>
+              <FolderIcon />
+              <Text style={[globalStyles.text, styles.navItemText]}>Manage your Courses</Text>
+            </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('Course')}
               style={[styles.navItemBtn, { backgroundColor: '#21AD8030' }]}
             >
-              <Text style={[styles.navItemBtnText, { color: '#21AD80' }]}>Courses</Text>
+              <Text style={[globalStyles.text, styles.navItemBtnText, { color: '#21AD80' }]}>Courses</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={[styles.navItemsWrapper, { paddingBottom: 50 }]}>
           <View style={[styles.navItem, { backgroundColor: '#4845D220' }]}>
-            <CalendarIcon />
-            <Text style={[styles.navItemText]}>Manage your activities</Text>
+            <View>
+              <CalendarIcon />
+              <Text style={[globalStyles.text, styles.navItemText]}>Manage your activities</Text>
+            </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('Activity')}
               style={[styles.navItemBtn, { backgroundColor: '#4845D230' }]}
             >
-              <Text style={[styles.navItemBtnText, { color: '#4845D2' }]}>Activity</Text>
+              <Text style={[globalStyles.text, styles.navItemBtnText, { color: '#4845D2' }]}>Activity</Text>
             </TouchableOpacity>
           </View>
 
           <View style={[styles.navItem, { backgroundColor: '#21AD8020' }]}>
-            <CogIcon />
-            <Text style={[styles.navItemText]}>Configure app settings</Text>
+            <View>
+              <CogIcon />
+              <Text style={[globalStyles.text, styles.navItemText]}>Configure app settings</Text>
+            </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('Setting')}
               style={[styles.navItemBtn, { backgroundColor: '#21AD8030' }]}
             >
-              <Text style={[styles.navItemBtnText, { color: '#21AD80' }]}>Setttings</Text>
+              <Text style={[globalStyles.text, styles.navItemBtnText, { color: '#21AD80' }]}>Setttings</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -181,11 +190,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     marginTop: 35,
+    maxWidth: 380,
+    width: '100%',
+    alignSelf: 'center',
   },
   navItem: {
+    // width: '45%',
     width: '45%',
     padding: 20,
     borderRadius: 15,
+    height: '100%',
+    justifyContent: 'space-between',
   },
   navItemText: {
     fontFamily: 'FontBold',

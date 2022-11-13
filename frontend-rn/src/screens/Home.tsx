@@ -19,6 +19,7 @@ import { useConverseRasaMutation } from '../store/api/chat.api';
 import dayjs from 'dayjs';
 import { addToChat /* , undoLastChat */ } from '../store/slice/chat.slice';
 import { getGreetTimeOfDay, starterMessages } from '../helpers/general.helper';
+import globalStyles from '../styles/global.style';
 
 const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const chats = useAppSelector((state) => state.chat.chat);
@@ -129,7 +130,7 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
               <TextInput
                 defaultValue={inputMessage}
                 value={inputMessage}
-                style={[styles.messageInput, { fontFamily: 'FontRegular', color: '#00000090' }]}
+                style={[globalStyles.text, styles.messageInput]}
                 placeholder="Start typing..."
                 onChangeText={(text) => setInputMessage(text)}
                 onSubmitEditing={() => {

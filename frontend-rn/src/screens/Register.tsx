@@ -16,9 +16,9 @@ import type { DrawerScreenProps } from '../interfaces/helper.interface';
 // import { widthPercentageToDP as wp, height } from 'react-native-responsive-screen';
 import type { RegisterUserInput } from '../interfaces/store.interface';
 import { useRegisterUserMutation } from '../store/api/user.api';
-// import { CORE_BE_HOST } from '@env';
 import SimpleReactValidator from 'simple-react-validator';
 import { useToast } from 'react-native-toast-notifications';
+import globalStyles from '../styles/global.style';
 
 const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const [registerUser, { isLoading: isRegistering }] = useRegisterUserMutation();
@@ -71,12 +71,12 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
               <View style={styles.logoBox}>
                 <Image source={DentbudLogo} style={{ width: 60, height: 60, borderRadius: 0 }} />
               </View>
-              <Text style={[styles.appName]}>Dentbud</Text>
-              <Text style={styles.loginTitleText}>Register</Text>
+              <Text style={[globalStyles.text, styles.appName]}>Dentbud</Text>
+              <Text style={[globalStyles.text, styles.loginTitleText]}>Register</Text>
               <View style={styles.inputBox}>
-                <Text style={styles.inputLabel}>Name</Text>
+                <Text style={[globalStyles.text, styles.inputLabel]}>Name</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[globalStyles.text, styles.input]}
                   autoCapitalize={'none'}
                   keyboardType="name-phone-pad"
                   textContentType="name"
@@ -89,9 +89,9 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 }
               </View>
               <View style={styles.inputBox}>
-                <Text style={styles.inputLabel}>Email</Text>
+                <Text style={[globalStyles.text, styles.inputLabel]}>Email</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[globalStyles.text, styles.input]}
                   autoCapitalize={'none'}
                   keyboardType="email-address"
                   textContentType="emailAddress"
@@ -104,9 +104,9 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 }
               </View>
               <View style={styles.inputBox}>
-                <Text style={styles.inputLabel}>Password</Text>
+                <Text style={[globalStyles.text, styles.inputLabel]}>Password</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[globalStyles.text, styles.input]}
                   autoCapitalize="none"
                   secureTextEntry={true}
                   textContentType="password"
@@ -119,9 +119,9 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 }
               </View>
               <View style={styles.inputBox}>
-                <Text style={styles.inputLabel}>Retype Password</Text>
+                <Text style={[globalStyles.text, styles.inputLabel]}>Retype Password</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[globalStyles.text, styles.input]}
                   autoCapitalize="none"
                   secureTextEntry={true}
                   textContentType="password"
@@ -138,13 +138,15 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 }
               </View>
               <TouchableOpacity style={styles.loginButton} onPress={handleRegister}>
-                <Text style={styles.loginButtonText}>{isRegistering ? 'Registering...' : 'Register'}</Text>
+                <Text style={[globalStyles.text, styles.loginButtonText]}>
+                  {isRegistering ? 'Registering...' : 'Register'}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.registerText}>Have an account? Log in</Text>
+                <Text style={[globalStyles.text, styles.registerText]}>Have an account? Log in</Text>
               </TouchableOpacity>
               {/* <TouchableOpacity>
-            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+            <Text style={[globalStyles.text, styles.forgotPasswordText]}>Forgot Password?</Text>
           </TouchableOpacity> */}
             </View>
           </View>

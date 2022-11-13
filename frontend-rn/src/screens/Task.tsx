@@ -9,12 +9,13 @@ import NotificationIcon from '../assets/icons/Notification.svg';
 import NotificationActiveIcon from '../assets/icons/NotificationActive.svg';
 import TrashIcon from '../assets/icons/Trash.svg';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import globalStyles from '../styles/global.style';
 
 const taskSectionTitle: AccordionRenderFC = (_, __, index) => {
   if (index !== 0) return <></>;
   return (
     <View style={styles.sectionTitle}>
-      <Text>Here are all your tasks:</Text>
+      <Text style={[globalStyles.text]}>Here are all your tasks:</Text>
       <TouchableWithoutFeedback onPress={() => console.log('add courses')}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
@@ -25,7 +26,9 @@ const taskSectionTitle: AccordionRenderFC = (_, __, index) => {
 const taskHeader: AccordionRenderFC = (_, section, __, isActive) => {
   return (
     <View style={[styles.header, { backgroundColor: isActive ? '#4845d2' : '#dadaf6' }]}>
-      <Text style={[styles.headerText, { color: isActive ? 'white' : '#070715' }]}>{section.title}</Text>
+      <Text style={[globalStyles.text, styles.headerText, { color: isActive ? 'white' : '#070715' }]}>
+        {section.title}
+      </Text>
       <View style={styles.headerActions}>
         <TouchableWithoutFeedback onPress={() => console.log('trigger notification')}>
           {true ? (
@@ -48,41 +51,41 @@ const taskHeader: AccordionRenderFC = (_, section, __, isActive) => {
 const taskContent: AccordionRenderFC = (_, section) => {
   return (
     <View style={styles.content}>
-      {/* <Text>{section.content}</Text> */}
+      {/* <Text style={[globalStyles.text]}>{section.content}</Text> */}
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Title</Text>
-          <Text>: </Text>
+          <Text style={[globalStyles.text]}>Title</Text>
+          <Text style={[globalStyles.text]}>: </Text>
         </View>
-        <Text style={styles.listItemChild2}>
-          <Text>Operating System</Text>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>Operating System</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Description</Text>
-          <Text>: </Text>
+          <Text style={[globalStyles.text]}>Description</Text>
+          <Text style={[globalStyles.text]}>: </Text>
         </View>
-        <Text style={styles.listItemChild2}>
-          <Text>Lorem, ipsum dolor sit amet consectetur adipisicing!</Text>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>Lorem, ipsum dolor sit amet consectetur adipisicing!</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Starts</Text>
-          <Text>: </Text>
+          <Text style={[globalStyles.text]}>Starts</Text>
+          <Text style={[globalStyles.text]}>: </Text>
         </View>
-        <Text style={styles.listItemChild2}>
-          <Text>10-10-2022 by 11:30am</Text>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>10-10-2022 by 11:30am</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Stops</Text>
-          <Text>: </Text>
+          <Text style={[globalStyles.text]}>Stops</Text>
+          <Text style={[globalStyles.text]}>: </Text>
         </View>
-        <Text style={styles.listItemChild2}>
-          <Text>10-10-2022 by 11:30am</Text>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>10-10-2022 by 11:30am</Text>
         </Text>
       </View>
     </View>

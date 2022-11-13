@@ -11,12 +11,13 @@ import TrashIcon from '../assets/icons/Trash.svg';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Modal from 'react-native-modalbox';
 import CourseActionModal from '../components/CourseActionModal';
+import globalStyles from '../styles/global.style';
 
 const courseSectionTitle: AccordionRenderFC<{ actionModal: RefObject<Modal> }> = ({ actionModal }, __, index) => {
   if (index !== 0) return <></>;
   return (
     <View style={styles.sectionTitle}>
-      <Text>Here are all your courses:</Text>
+      <Text style={[globalStyles.text]}>Here are all your courses:</Text>
       <TouchableWithoutFeedback onPress={() => actionModal.current?.open()}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
@@ -27,7 +28,9 @@ const courseSectionTitle: AccordionRenderFC<{ actionModal: RefObject<Modal> }> =
 const courseHeader: AccordionRenderFC = (_, section, __, isActive) => {
   return (
     <View style={[styles.header, { backgroundColor: isActive ? '#4845d2' : '#dadaf6' }]}>
-      <Text style={[styles.headerText, { color: isActive ? 'white' : '#070715' }]}>{section.title}</Text>
+      <Text style={[globalStyles.text, styles.headerText, { color: isActive ? 'white' : '#070715' }]}>
+        {section.title}
+      </Text>
       <View style={styles.headerActions}>
         <TouchableWithoutFeedback onPress={() => console.log('trigger notification')}>
           {true ? (
@@ -50,41 +53,41 @@ const courseHeader: AccordionRenderFC = (_, section, __, isActive) => {
 const courseContent: AccordionRenderFC = (_, section) => {
   return (
     <View style={styles.content}>
-      {/* <Text>{section.content}</Text> */}
+      {/* <Text style={[globalStyles.text]}>{section.content}</Text> */}
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Course Name</Text>
-          <Text>: </Text>
+          <Text style={[globalStyles.text]}>Course Name</Text>
+          <Text style={[globalStyles.text]}>: </Text>
         </View>
-        <Text style={styles.listItemChild2}>
-          <Text>Operating System</Text>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>Operating System</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Course Code</Text>
-          <Text>: </Text>
+          <Text style={[globalStyles.text]}>Course Code</Text>
+          <Text style={[globalStyles.text]}>: </Text>
         </View>
-        <Text style={styles.listItemChild2}>
-          <Text>CSC404</Text>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>CSC404</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Exam Starts</Text>
-          <Text>: </Text>
+          <Text style={[globalStyles.text]}>Exam Starts</Text>
+          <Text style={[globalStyles.text]}>: </Text>
         </View>
-        <Text style={styles.listItemChild2}>
-          <Text>10-10-2022 by 11:30am</Text>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>10-10-2022 by 11:30am</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
-          <Text>Exam Ends</Text>
-          <Text>: </Text>
+          <Text style={[globalStyles.text]}>Exam Ends</Text>
+          <Text style={[globalStyles.text]}>: </Text>
         </View>
-        <Text style={styles.listItemChild2}>
-          <Text>10-10-2022 by 11:30am</Text>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>10-10-2022 by 11:30am</Text>
         </Text>
       </View>
     </View>

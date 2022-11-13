@@ -13,6 +13,7 @@ import { NetworkProvider } from 'react-native-offline';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { setJSExceptionHandler, setNativeExceptionHandler } from 'react-native-exception-handler';
 import { Alert } from 'react-native';
+import { CORE_BE_HOST } from '@env';
 
 setJSExceptionHandler((error, isFatal) => {
   console.log(error, isFatal);
@@ -25,7 +26,8 @@ setNativeExceptionHandler((errorString) => {
 
 const persistor = persistStore(store);
 
-store.subscribe(() => console.log('AUTH STORE: ', store.getState().auth));
+store.subscribe(() => console.log('📦 AUTH STORE: ', store.getState().auth));
+console.log('🌐 CORE_BE_HOST: ', CORE_BE_HOST);
 
 const App: React.FC = () => {
   return (
