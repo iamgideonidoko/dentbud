@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ScrollView, Text, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import type { AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
 import Accordion from 'react-native-collapsible/Accordion';
-import type { FC } from 'react';
+import type { FC, RefObject } from 'react';
 import PlusIcon from '../assets/icons/Plus.svg';
 import EditIcon from '../assets/icons/Edit.svg';
 import NotificationIcon from '../assets/icons/Notification.svg';
@@ -10,13 +10,15 @@ import NotificationActiveIcon from '../assets/icons/NotificationActive.svg';
 import TrashIcon from '../assets/icons/Trash.svg';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import globalStyles from '../styles/global.style';
+import TaskActionModal from '../components/TaskActionModal';
+import Modal from 'react-native-modalbox';
 
-const taskSectionTitle: AccordionRenderFC = (_, __, index) => {
+const taskSectionTitle: AccordionRenderFC<{ actionModal: RefObject<Modal> }> = ({ actionModal }, __, index) => {
   if (index !== 0) return <></>;
   return (
     <View style={styles.sectionTitle}>
       <Text style={[globalStyles.text]}>Here are all your tasks:</Text>
-      <TouchableWithoutFeedback onPress={() => console.log('add courses')}>
+      <TouchableWithoutFeedback onPress={() => actionModal.current?.open()}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
     </View>
@@ -108,21 +110,25 @@ const Task: FC = () => {
       content: 'Third Lorem ipsum...',
     },
   ]);
+  const actionModal = useRef<Modal>(null);
 
   const handleAccordionChange = (newActiveSections: number[]) => {
     setActiveSections(newActiveSections);
   };
   return (
-    <ScrollView style={styles.scrollView}>
-      <Accordion
-        sections={sections}
-        activeSections={activeSections}
-        renderSectionTitle={(...args) => taskSectionTitle({}, ...args)}
-        renderHeader={(...args) => taskHeader({}, ...args)}
-        renderContent={(...args) => taskContent({}, ...args)}
-        onChange={handleAccordionChange}
-      />
-    </ScrollView>
+    <>
+      <ScrollView style={styles.scrollView}>
+        <Accordion
+          sections={sections}
+          activeSections={activeSections}
+          renderSectionTitle={(...args) => taskSectionTitle({ actionModal }, ...args)}
+          renderHeader={(...args) => taskHeader({}, ...args)}
+          renderContent={(...args) => taskContent({}, ...args)}
+          onChange={handleAccordionChange}
+        />
+      </ScrollView>
+      <TaskActionModal actionModal={actionModal} />
+    </>
   );
 };
 
