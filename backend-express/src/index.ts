@@ -29,6 +29,8 @@ const app: Application = express();
 // for development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
+} else {
+  app.use(morgan('common'));
 }
 
 //  limit request payload size
