@@ -5,13 +5,14 @@ import type { NewTask, UpdateTask } from '../interfaces/task.interface';
 const newTaskSchema: JSONSchemaType<NewTask> = {
   type: 'object',
   properties: {
+    user_id: { type: 'string', nullable: false },
     title: { type: 'string', nullable: false, minLength: 2 },
     description: { type: 'string', nullable: true, minLength: 2 },
     starts: { type: 'string', nullable: true },
     ends: { type: 'string', nullable: true },
     done: { type: 'boolean', nullable: true },
   },
-  required: ['title'],
+  required: ['title', 'user_id'],
   additionalProperties: false,
 };
 
@@ -21,6 +22,7 @@ export const newTaskAjvValidate = ajvInstance.compile(newTaskSchema);
 const updateTaskSchema: JSONSchemaType<UpdateTask> = {
   type: 'object',
   properties: {
+    user_id: { type: 'string', nullable: true },
     title: { type: 'string', nullable: true, minLength: 2 },
     description: { type: 'string', nullable: true, minLength: 2 },
     starts: { type: 'string', nullable: true },

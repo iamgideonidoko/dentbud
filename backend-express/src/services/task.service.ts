@@ -17,13 +17,9 @@ export const saveTaskToDb = (task: NewTask): Promise<ITask & { _id: string }> =>
 export const removeTaskFromDb = (taskId: string): Promise<boolean> => {
   return new Promise<boolean>(async (resolve, reject) => {
     try {
-      const task = await Task.findById(taskId);
-      if (task) {
-        await task.remove();
-        resolve(true);
-      } else {
-        reject(new createError.NotFound('Task with id could not be found'));
-      }
+      const res = await Task.findByIdAndDelete(taskId);
+      if (res) resolve(true);
+      reject(new createError.NotFound('Task not found'));
     } catch (err) {
       reject(err);
     }

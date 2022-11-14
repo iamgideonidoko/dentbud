@@ -14,15 +14,29 @@ export const getCourses = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+export const getCoursesByUserId = async (req: Request, res: Response, next: NextFunction) => {
+  // get courses
+  const { user_id } = req.params;
+  if (!user_id) return next(new createError.BadRequest('User ID is required'));
+  try {
+    const courses = await Course.find({ user_id }).sort({ created_at: -1 });
+    return createSuccess(res, 200, 'Course fetched successfully', { courses });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 export const createCourse = async (req: Request, res: Response, next: NextFunction) => {
   // create course
-  const { course_name, course_code, exam_starts, exam_ends } = req.body;
+  const { user_id, course_name, course_code, exam_starts, exam_ends } = req.body;
+
+  if (!user_id) return next(new createError.BadRequest('No user ID provided'));
 
   if (!course_name || !course_code) {
     return next(createError(400, "The 'course_name' and 'course_code' fields are required."));
   }
   try {
-    const courseExists = await checkIfCourseExists(course_code);
+    const courseExists = await checkIfCourseExists(course_code, user_id);
     if (courseExists) {
       return next(
         createError(
@@ -37,6 +51,7 @@ export const createCourse = async (req: Request, res: Response, next: NextFuncti
       );
     }
     const newCourse = {
+      user_id,
       course_name,
       course_code,
       exam_starts,
@@ -53,12 +68,13 @@ export const updateCourse = async (req: Request, res: Response, next: NextFuncti
   // update course
   const { id } = req.params;
   const newCourseCode = req.query?.new_course_code?.toString();
-  if (!id) return next(createError(400, 'No `id` provided'));
-  const { course_code } = req.body;
+  if (!id) return next(createError(400, 'No course ID provided'));
+  const { course_code, user_id } = req.body;
+  if (!user_id) return next(new createError.BadRequest('User ID is required'));
   const newUpdate = req.body;
   try {
     if (course_code && newCourseCode === 'true') {
-      const courseExists = await checkIfCourseExists(course_code);
+      const courseExists = await checkIfCourseExists(course_code, user_id);
       if (courseExists)
         return next(
           createError(
@@ -82,7 +98,7 @@ export const updateCourse = async (req: Request, res: Response, next: NextFuncti
 export const deleteCourse = async (req: Request, res: Response, next: NextFunction) => {
   // delete course
   const { id } = req.params;
-  if (!id) return next(createError(400, 'No `id` provided'));
+  if (!id) return next(createError(400, 'No courseId provided'));
   try {
     await removeCourseFromDb(id);
     return createSuccess(res, 200, 'Course deleted successfully', { deleted: true });

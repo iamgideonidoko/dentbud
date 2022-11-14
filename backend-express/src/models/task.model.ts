@@ -3,6 +3,11 @@ import type { ITask } from '../interfaces/task.interface';
 
 // Define Task schema
 const taskSchema: Schema = new Schema<ITask>({
+  user_id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    index: true,
+  },
   title: {
     type: String,
     required: true,

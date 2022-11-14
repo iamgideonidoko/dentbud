@@ -1,16 +1,23 @@
 import { Router } from 'express';
-import { getTasks, createTask, updateTask, deleteTask } from '../controllers/task.controller';
+import { getTasks, getTasksByUserId, createTask, updateTask, deleteTask } from '../controllers/task.controller';
 import validateDto from '../middlewares/validateDto.middleware';
 import { newTaskAjvValidate, updateTaskAjvValidate } from '../schemas/task.schema';
 
 const taskRoute = Router();
 
 /*
-@route 			GET /api/task/login (get tasks)
+@route 			GET /api/tasks (get tasks)
 @description 	get tasks
 @access 		Public
 */
 taskRoute.get('/tasks', getTasks);
+
+/*
+@route 			GET /api/tasks/user/:id (get tasks by a user)
+@description 	get tasks
+@access 		Public
+*/
+taskRoute.get('/tasks/user/:user_id', getTasksByUserId);
 
 /*
 @route 			POST /api/task/create (create task)

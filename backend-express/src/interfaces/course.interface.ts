@@ -1,6 +1,7 @@
-import type { Document } from 'mongoose';
+import type { Document, Schema } from 'mongoose';
 
 export interface NewCourse {
+  user_id: string;
   course_name: string;
   course_code: string;
   exam_starts?: Date | string;
@@ -8,6 +9,7 @@ export interface NewCourse {
 }
 
 export interface ICourse extends Document {
+  user_id: Schema.Types.ObjectId;
   course_name: string;
   course_code: string;
   exam_starts: Date;

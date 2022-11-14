@@ -1,6 +1,7 @@
-import type { Document } from 'mongoose';
+import type { Document, Schema } from 'mongoose';
 
 export interface NewTask {
+  user_id: string;
   title: string;
   description: string;
   starts: Date | string;
@@ -9,6 +10,7 @@ export interface NewTask {
 }
 
 export interface ITask extends Document {
+  user_id: Schema.Types.ObjectId;
   title: string;
   description: string;
   starts: Date;

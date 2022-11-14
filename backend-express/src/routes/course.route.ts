@@ -13,6 +13,13 @@ const courseRoute = Router();
 courseRoute.get('/courses', getCourses);
 
 /*
+@route 			GET /api/courses/user/:user_id (get courses)
+@description 	get courses
+@access 		Public
+*/
+courseRoute.get('/courses/user/:user_id', getCourses);
+
+/*
 @route 			POST /api/course (create course)
 @description 	add new course
 @access 		Public
