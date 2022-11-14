@@ -85,11 +85,17 @@ export type Task = {
 };
 export type AddTaskInput = Task & { user_id: string };
 
-export type AddTaskResponse = Task & {
+export type TaskResponse = Task & {
   user_id: string;
   _id: string;
   created_at: Date | string;
 };
+
+export type AddTaskResponse = TaskResponse;
+
+export type GetTasksResponse = Array<TaskResponse>;
+
+export type GetTaskResponse = TaskResponse;
 
 // COURSE
 export type Course = {
@@ -98,10 +104,25 @@ export type Course = {
   exam_starts: Date | string;
   exam_ends: Date | string;
 };
-export type AddCourseInput = Course & { user_id: string };
 
-export type AddCourseResponse = Course & {
+export type CourseResponse = Course & {
   user_id: string;
   _id: string;
   created_at: Date | string;
 };
+
+// ADD COURSE
+export type AddCourseInput = Course & { user_id: string };
+export type AddCourseResponse = CourseResponse;
+
+// GET COURSE
+export type GetCoursesResponse = Array<CourseResponse>;
+
+export type GetCourseResponse = CourseResponse;
+
+// UPDATE COURSE
+export type UpdateCourseResponse = CourseResponse;
+export type UpdateCourseInput = Partial<Course> & { user_id: string; id: string };
+
+// DELETE COURSE
+export type DeleteCourseResponse = { deleted: boolean };

@@ -24,7 +24,7 @@ const coreApi = createApi({
    *  Tag types must be defined in the original API definition
    * for any tags that would be provided by injected endpoints.
    * */
-  tagTypes: [],
+  tagTypes: ['Courses', 'Tasks'],
   endpoints: () => ({}),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {

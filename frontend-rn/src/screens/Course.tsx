@@ -12,6 +12,8 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Modal from 'react-native-modalbox';
 import CourseActionModal from '../components/CourseActionModal';
 import globalStyles from '../styles/global.style';
+import { useGetCoursesQuery } from '../store/api/course.api';
+import { useAppSelector } from '../hooks/store.hook';
 
 const courseSectionTitle: AccordionRenderFC<{ actionModal: RefObject<Modal> }> = ({ actionModal }, __, index) => {
   if (index !== 0) return <></>;
@@ -95,6 +97,7 @@ const courseContent: AccordionRenderFC = (_, section) => {
 };
 
 const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
+  const user_id = useAppSelector((state) => state.auth.userInfo?.id as string);
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [sections] = useState<AccordionSection[]>([
     {
@@ -111,12 +114,14 @@ const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
     },
   ]);
   const actionModal = useRef<Modal>(null);
+  const { data, isFetching, isLoading } = useGetCoursesQuery({ user_id });
 
   const handleAccordionChange = (newActiveSections: number[]) => {
     setActiveSections(newActiveSections);
   };
 
   console.log('Course Screen');
+  console.log('data => ', data);
 
   return (
     <View>
