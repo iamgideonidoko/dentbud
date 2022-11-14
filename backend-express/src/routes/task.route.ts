@@ -1,5 +1,12 @@
 import { Router } from 'express';
-import { getTasks, getTasksByUserId, createTask, updateTask, deleteTask } from '../controllers/task.controller';
+import {
+  getTasks,
+  getTasksByUserId,
+  createTask,
+  updateTask,
+  deleteTask,
+  getSingleTaskByUserId,
+} from '../controllers/task.controller';
 import validateDto from '../middlewares/validateDto.middleware';
 import { newTaskAjvValidate, updateTaskAjvValidate } from '../schemas/task.schema';
 
@@ -18,6 +25,13 @@ taskRoute.get('/tasks', getTasks);
 @access 		Public
 */
 taskRoute.get('/tasks/user/:user_id', getTasksByUserId);
+
+/*
+@route 			GET /api/task/:id/user/:user_id (get tasks by a user)
+@description 	get single task by a user
+@access 		Public
+*/
+taskRoute.get('/task/:id/user/:user_id', getSingleTaskByUserId);
 
 /*
 @route 			POST /api/task/create (create task)

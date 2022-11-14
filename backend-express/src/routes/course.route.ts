@@ -1,5 +1,12 @@
 import { Router } from 'express';
-import { getCourses, createCourse, updateCourse, deleteCourse } from '../controllers/course.controller';
+import {
+  getCourses,
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  getCoursesByUserId,
+  getSingleCourseByUserId,
+} from '../controllers/course.controller';
 import validateDto from '../middlewares/validateDto.middleware';
 import { newCourseAjvValidate, updateCourseAjvValidate } from '../schemas/course.schema';
 
@@ -17,7 +24,14 @@ courseRoute.get('/courses', getCourses);
 @description 	get courses
 @access 		Public
 */
-courseRoute.get('/courses/user/:user_id', getCourses);
+courseRoute.get('/courses/user/:user_id', getCoursesByUserId);
+
+/*
+@route 			GET /api/course/:id/user/:user_id (get courses)
+@description 	get courses
+@access 		Public
+*/
+courseRoute.get('/course/:id/user/:user_id', getSingleCourseByUserId);
 
 /*
 @route 			POST /api/course (create course)

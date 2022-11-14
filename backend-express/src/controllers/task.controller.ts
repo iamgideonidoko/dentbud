@@ -26,6 +26,19 @@ export const getTasksByUserId = async (req: Request, res: Response, next: NextFu
   }
 };
 
+export const getSingleTaskByUserId = async (req: Request, res: Response, next: NextFunction) => {
+  // get tasks that belongs to single user
+  const { id, user_id } = req.params;
+  if (!user_id || !id) return next(new createError.BadRequest('User ID and Task ID are required'));
+  try {
+    const task = await Task.findOne({ id, user_id });
+    if (!task) throw new createError.NotFound('Task not found');
+    return createSuccess(res, 200, 'Task fetched successfully', { task });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 export const createTask = async (req: Request, res: Response, next: NextFunction) => {
   // create task
   const { user_id, title, description, starts, ends, done } = req.body;

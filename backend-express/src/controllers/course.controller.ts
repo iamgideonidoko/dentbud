@@ -26,6 +26,19 @@ export const getCoursesByUserId = async (req: Request, res: Response, next: Next
   }
 };
 
+export const getSingleCourseByUserId = async (req: Request, res: Response, next: NextFunction) => {
+  // get courses
+  const { id, user_id } = req.params;
+  if (!user_id || !id) return next(new createError.BadRequest('User ID and Course ID are required'));
+  try {
+    const course = await Course.findOne({ id, user_id });
+    if (!course) throw new createError.NotFound('Course not found');
+    return createSuccess(res, 200, 'Course fetched successfully', { course });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 export const createCourse = async (req: Request, res: Response, next: NextFunction) => {
   // create course
   const { user_id, course_name, course_code, exam_starts, exam_ends } = req.body;
