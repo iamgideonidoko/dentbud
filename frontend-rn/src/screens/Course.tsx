@@ -116,6 +116,8 @@ const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
     setActiveSections(newActiveSections);
   };
 
+  console.log('Course Screen');
+
   return (
     <View>
       <CustomHeader navigation={navigation} title="Course" />

@@ -16,7 +16,8 @@ export const rootReducer = combineReducers({
 const persistConfig = {
   key: 'dentbud_persist_store',
   storage: AsyncStorage,
-  blacklist: [coreApi.reducerPath, 'chat'], // add reducers that should not be persisted here
+  // blacklist: [coreApi.reducerPath, 'chat'], // add reducers that should not be persisted here
+  blacklist: ['chat'], // add reducers that should not be persisted here
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

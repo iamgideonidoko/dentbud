@@ -30,7 +30,7 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
 
   const simpleValidator = useRef(
     new SimpleReactValidator({
-      element: (message: string) => <Text style={styles.formErrorMsg}>{message}</Text>,
+      element: (message: string) => <Text style={globalStyles.formErrorMsg}>{message}</Text>,
     }),
   );
 
@@ -232,17 +232,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     fontFamily: 'FontRegular',
-  },
-  formErrorMsg: {
-    color: '#a94442',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    marginTop: 8,
-    padding: 6,
-    borderColor: '#ebccd1',
-    backgroundColor: '#f2dede',
-    borderRadius: 6,
-    fontSize: 12,
   },
 });
 

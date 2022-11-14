@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import type { FC, RefObject } from 'react';
 import Modal from 'react-native-modalbox';
 import type { ModalProps } from 'react-native-modalbox';
@@ -15,13 +15,54 @@ import {
 import DatePicker from 'react-native-date-picker';
 import CloseIcon from '../assets/icons/Close.svg';
 import globalStyles from '../styles/global.style';
+import type { AddCourseInput } from '../interfaces/store.interface';
+import { useAppSelector } from '../hooks/store.hook';
+import SimpleReactValidator from 'simple-react-validator';
+import { useToast } from 'react-native-toast-notifications';
+import { useAddCourseMutation } from '../store/api/course.api';
 
 const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({ actionModal, ...restProps }) => {
-  const [examStarts, setExamStarts] = useState(new Date());
-  const [examEnds, setExamEnds] = useState(new Date());
+  const [addCourse, { isLoading: isAdding }] = useAddCourseMutation();
+  const user_id = useAppSelector((state) => state.auth.userInfo?.id as string);
+  const [courseInput, setCourseInput] = useState<AddCourseInput>({
+    user_id,
+    course_name: '',
+    course_code: '',
+    exam_starts: new Date(),
+    exam_ends: new Date(),
+  });
+  const [, forceUpdate] = useState<boolean>(false);
+  const toast = useToast();
 
-  const handleAction = () => {
-    console.log('action is to be made');
+  const simpleValidator = useRef(
+    new SimpleReactValidator({
+      element: (message: string) => <Text style={globalStyles.formErrorMsg}>{message}</Text>,
+    }),
+  );
+
+  const handleAction = async () => {
+    if (simpleValidator.current.allValid()) {
+      try {
+        await addCourse(courseInput).unwrap();
+        setCourseInput((prev) => ({
+          ...prev,
+          course_name: '',
+          course_code: '',
+          exam_starts: new Date(),
+          exam_ends: new Date(),
+        }));
+        actionModal.current?.close();
+        toast.show('Course added ✅', { placement: 'top', type: 'success' });
+      } catch (err) {
+        toast.show(`${(err as { data: { message: string } }).data?.message ?? 'Could not add course'} 😔`, {
+          placement: 'top',
+          type: 'danger',
+        });
+      }
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate((prev) => !prev);
+    }
   };
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -40,7 +81,17 @@ const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({
               autoCapitalize={'none'}
               keyboardType="name-phone-pad"
               textContentType="name"
+              value={courseInput.course_name}
+              onChangeText={(text) => setCourseInput((prev) => ({ ...prev, course_name: text }))}
             />
+            {
+              /* simple validation */
+              simpleValidator.current.message(
+                'course name',
+                courseInput.course_name,
+                'required|alpha_num_space|between:2,100',
+              )
+            }
           </View>
           <View style={styles.inputBox}>
             <Text style={[globalStyles.text, styles.inputLabel]}>Course Code</Text>
@@ -49,18 +100,36 @@ const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({
               autoCapitalize={'none'}
               keyboardType="name-phone-pad"
               textContentType="name"
+              value={courseInput.course_code}
+              onChangeText={(text) => setCourseInput((prev) => ({ ...prev, course_code: text }))}
             />
+            {
+              /* simple validation */
+              simpleValidator.current.message(
+                'course name',
+                courseInput.course_code,
+                'required|alpha_num|between:2,100',
+              )
+            }
           </View>
           <View style={styles.inputBox}>
             <Text style={[globalStyles.text, styles.inputLabel]}>Exam Starts</Text>
-            <DatePicker date={examStarts} onDateChange={setExamStarts} textColor="black" />
+            <DatePicker
+              date={courseInput.exam_starts as Date}
+              onDateChange={(date) => setCourseInput((prev) => ({ ...prev, exam_starts: date }))}
+              textColor="black"
+            />
           </View>
           <View style={styles.inputBox}>
             <Text style={[globalStyles.text, styles.inputLabel]}>Exam Ends</Text>
-            <DatePicker date={examEnds} onDateChange={setExamEnds} textColor="black" />
+            <DatePicker
+              date={courseInput.exam_ends as Date}
+              onDateChange={(date) => setCourseInput((prev) => ({ ...prev, exam_ends: date }))}
+              textColor="black"
+            />
           </View>
-          <TouchableOpacity style={styles.button} onPress={handleAction}>
-            <Text style={[globalStyles.text, styles.buttonText]}>Add</Text>
+          <TouchableOpacity style={styles.button} disabled={isAdding} onPress={handleAction}>
+            <Text style={[globalStyles.text, styles.buttonText]}>{isAdding ? 'Adding...' : 'Add'}</Text>
           </TouchableOpacity>
         </ScrollView>
       </Modal>

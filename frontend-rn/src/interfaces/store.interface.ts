@@ -74,3 +74,34 @@ export interface ConverseRasaInput {
 export interface ConverseRasaResponse {
   text: string;
 }
+
+// TASK
+export type Task = {
+  title: string;
+  description: string;
+  starts: Date | string;
+  ends: Date | string;
+  done: boolean;
+};
+export type AddTaskInput = Task & { user_id: string };
+
+export type AddTaskResponse = Task & {
+  user_id: string;
+  _id: string;
+  created_at: Date | string;
+};
+
+// COURSE
+export type Course = {
+  course_name: string;
+  course_code: string;
+  exam_starts: Date | string;
+  exam_ends: Date | string;
+};
+export type AddCourseInput = Course & { user_id: string };
+
+export type AddCourseResponse = Course & {
+  user_id: string;
+  _id: string;
+  created_at: Date | string;
+};
