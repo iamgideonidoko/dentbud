@@ -7,6 +7,7 @@ import { useAppSelector } from '../hooks/store.hook';
 import { BlurView } from '@react-native-community/blur';
 import DentbudLogo from '../assets/images/dentbud-logo-sm.png';
 import { useIsConnected } from 'react-native-offline';
+import globalStyles from '../styles/global.style';
 
 const AppNavContainer: React.FC = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
@@ -29,7 +30,9 @@ const AppNavContainer: React.FC = () => {
           <View style={styles.notifWrapper}>
             <View style={styles.notif}>
               <Image source={DentbudLogo} style={{ width: 30, height: 30, borderRadius: 100, marginRight: 6 }} />
-              <Text style={styles.notifText}>You need an active internet connection to use Dentbud.</Text>
+              <Text style={[globalStyles.text, styles.notifText]}>
+                You need an active internet connection to use Dentbud.
+              </Text>
             </View>
           </View>
         </>

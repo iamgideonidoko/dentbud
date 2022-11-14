@@ -105,7 +105,7 @@ const Login: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 <Text style={[globalStyles.text, styles.registerText]}>Don't have an account? Register</Text>
               </TouchableOpacity>
               {/* <TouchableOpacity>
-            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+            <Text style={[globalStyles.text, styles.forgotPasswordText]}>Forgot Password?</Text>
           </TouchableOpacity> */}
             </View>
           </View>
