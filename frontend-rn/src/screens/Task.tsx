@@ -17,18 +17,15 @@ import { useAppSelector } from '../hooks/store.hook';
 import type { GetTaskResponse } from '../interfaces/store.interface';
 import dayjs from 'dayjs';
 
-const taskSectionTitle: AccordionRenderFC<
-  {
-    actionModal: RefObject<Modal>;
-    actionModalPayload: RefObject<{
-      actionMode: 'create' | 'edit';
-      taskInfo: GetTaskResponse | null;
-    }>;
-    setShouldUpdate: Dispatch<SetStateAction<boolean>>;
-  },
-  GetTaskResponse
-> = ({ actionModal, actionModalPayload, setShouldUpdate }, __, index) => {
-  if (index !== 0) return <></>;
+const TaskHeader: FC<{
+  actionModal: RefObject<Modal>;
+  actionModalPayload: RefObject<{
+    actionMode: 'create' | 'edit';
+    taskInfo: GetTaskResponse | null;
+  }>;
+  setShouldUpdate: Dispatch<SetStateAction<boolean>>;
+  hasTask: boolean;
+}> = ({ actionModal, actionModalPayload, setShouldUpdate, hasTask }) => {
   const handleModalOpen = () => {
     if (actionModalPayload.current) {
       actionModalPayload.current.actionMode = 'create';
@@ -39,7 +36,9 @@ const taskSectionTitle: AccordionRenderFC<
   };
   return (
     <View style={styles.sectionTitle}>
-      <Text style={[globalStyles.text]}>Here are all your tasks:</Text>
+      <Text style={[globalStyles.text, { width: wp('100%') - 80 }]}>
+        {hasTask ? 'Here are all your tasks:' : 'You do not have any task, use the plus button to add one.'}
+      </Text>
       <TouchableWithoutFeedback onPress={() => handleModalOpen()}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
@@ -178,13 +177,17 @@ const Task: FC = () => {
           <ActivityIndicator color="#4845D2" />
         </View>
       )}
+      <TaskHeader
+        actionModal={actionModal}
+        actionModalPayload={actionModalPayload}
+        setShouldUpdate={setShouldUpdate}
+        hasTask={Array.isArray(data) && data.length > 0}
+      />
       <ScrollView style={styles.scrollView}>
         <Accordion
           sections={sections}
           activeSections={activeSections}
-          renderSectionTitle={(...args) =>
-            taskSectionTitle({ actionModal, actionModalPayload, setShouldUpdate }, ...args)
-          }
+          renderSectionTitle={() => <></>}
           renderHeader={(...args) =>
             taskHeader({ handleDeleteTask, actionModalPayload, actionModal, setShouldUpdate }, ...args)
           }
