@@ -24,6 +24,7 @@ import globalStyles from '../styles/global.style';
 import Markdown from 'react-native-markdown-display';
 
 const allMarkdownRuleStyles = [
+  'body',
   'heading1',
   'heading2',
   'heading3',
@@ -61,8 +62,7 @@ const allMarkdownRuleStyles = [
 ];
 
 const markdownStyles = {
-  body: globalStyles.text,
-  ...allMarkdownRuleStyles.reduce((prev, curr) => ({ ...prev, [curr]: { color: 'white' } }), {}),
+  ...allMarkdownRuleStyles.reduce((prev, curr) => ({ ...prev, [curr]: [globalStyles.text, { color: 'white' }] }), {}),
 };
 
 const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
@@ -73,13 +73,6 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const [inputMessage, setInputMessage] = useState<string>('');
 
   const dispatch = useAppDispatch();
-
-  const copy = `# h1 Heading 8-)
- 
-**This is some bold text!**
- 
-This is normal text
-`;
 
   // add message to the chat array
   async function sendMessage() {
