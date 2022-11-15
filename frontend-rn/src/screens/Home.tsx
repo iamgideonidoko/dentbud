@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
@@ -20,6 +21,49 @@ import dayjs from 'dayjs';
 import { addToChat /* , undoLastChat */ } from '../store/slice/chat.slice';
 import { getGreetTimeOfDay, starterMessages } from '../helpers/general.helper';
 import globalStyles from '../styles/global.style';
+import Markdown from 'react-native-markdown-display';
+
+const allMarkdownRuleStyles = [
+  'heading1',
+  'heading2',
+  'heading3',
+  'heading4',
+  'heading5',
+  'heading6',
+  'hr',
+  'strong',
+  'em',
+  's',
+  'blockquote',
+  'bullet_list',
+  'ordered_list',
+  'list_item',
+  'code_inline',
+  'code_block',
+  'fence',
+  'table',
+  'thead',
+  'tbody',
+  'th',
+  'tr',
+  'td',
+  'link',
+  'blocklink',
+  'image',
+  'text',
+  'textgroup',
+  'paragraph',
+  'hardbreak',
+  'softbreak',
+  'pre',
+  'inline',
+  'span',
+];
+
+const markdownStyles = {
+  body: globalStyles.text,
+  ...allMarkdownRuleStyles.reduce((prev, curr) => ({ ...prev, [curr]: { color: 'white' } }), {}),
+};
 
 const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const chats = useAppSelector((state) => state.chat.chat);
@@ -29,6 +73,13 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const [inputMessage, setInputMessage] = useState<string>('');
 
   const dispatch = useAppDispatch();
+
+  const copy = `# h1 Heading 8-)
+ 
+**This is some bold text!**
+ 
+This is normal text
+`;
 
   // add message to the chat array
   async function sendMessage() {
@@ -98,15 +149,20 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
                       borderBottomRightRadius: item.sender?.toLowerCase() === 'user' ? 0 : 8,
                     }}
                   >
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 16,
-                        fontFamily: 'FontRegular',
-                      }}
-                    >
-                      {item.message}
-                    </Text>
+                    {item.sender?.toLowerCase() === 'user' ? (
+                      <Text
+                        style={{
+                          color: '#fff',
+                          fontFamily: 'FontRegular',
+                        }}
+                      >
+                        {item.message}
+                      </Text>
+                    ) : (
+                      /* @ts-ignore */
+                      <Markdown style={markdownStyles}>{`${item.message}`}</Markdown>
+                    )}
+
                     <Text
                       style={{
                         color: '#dfe4ea',
