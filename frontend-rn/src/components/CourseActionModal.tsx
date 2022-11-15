@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import type { FC, RefObject } from 'react';
 import Modal from 'react-native-modalbox';
 import type { ModalProps } from 'react-native-modalbox';
@@ -15,14 +15,24 @@ import {
 import DatePicker from 'react-native-date-picker';
 import CloseIcon from '../assets/icons/Close.svg';
 import globalStyles from '../styles/global.style';
-import type { AddCourseInput } from '../interfaces/store.interface';
+import type { AddCourseInput, GetCourseResponse } from '../interfaces/store.interface';
 import { useAppSelector } from '../hooks/store.hook';
 import SimpleReactValidator from 'simple-react-validator';
 import { useToast } from 'react-native-toast-notifications';
-import { useAddCourseMutation } from '../store/api/course.api';
+import { useAddCourseMutation, useUpdateCourseMutation } from '../store/api/course.api';
 
-const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({ actionModal, ...restProps }) => {
+const CourseActionModal: FC<
+  ModalProps & {
+    actionModal: RefObject<Modal>;
+    actionModalPayload: RefObject<{
+      actionMode: 'create' | 'edit';
+      courseInfo: GetCourseResponse | null;
+    }>;
+    shouldUpdate: boolean;
+  }
+> = ({ actionModal, actionModalPayload, shouldUpdate, ...restProps }) => {
   const [addCourse, { isLoading: isAdding }] = useAddCourseMutation();
+  const [updateCourse, { isLoading: isUpdating }] = useUpdateCourseMutation();
   const user_id = useAppSelector((state) => state.auth.userInfo?.id as string);
   const [courseInput, setCourseInput] = useState<AddCourseInput>({
     user_id,
@@ -32,6 +42,7 @@ const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({
     exam_ends: new Date(),
   });
   const [, forceUpdate] = useState<boolean>(false);
+  const [actionMode, setActionMode] = useState<'create' | 'edit'>('create');
   const toast = useToast();
 
   const simpleValidator = useRef(
@@ -40,24 +51,61 @@ const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({
     }),
   );
 
+  useEffect(() => {
+    if (actionModalPayload.current) {
+      const { actionMode: mode, courseInfo } = actionModalPayload.current;
+      setActionMode(mode);
+      setCourseInput((prev) => ({
+        ...prev,
+        course_name: courseInfo?.course_name ?? '',
+        course_code: courseInfo?.course_code ?? '',
+        exam_starts: courseInfo?.exam_starts ? new Date(courseInfo?.exam_starts) : new Date(),
+        exam_ends: courseInfo?.exam_ends ? new Date(courseInfo?.exam_ends) : new Date(),
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldUpdate]);
+
   const handleAction = async () => {
     if (simpleValidator.current.allValid()) {
-      try {
-        await addCourse(courseInput).unwrap();
-        setCourseInput((prev) => ({
-          ...prev,
-          course_name: '',
-          course_code: '',
-          exam_starts: new Date(),
-          exam_ends: new Date(),
-        }));
-        actionModal.current?.close();
-        toast.show('Course added ✅', { placement: 'top', type: 'success' });
-      } catch (err) {
-        toast.show(`${(err as { data: { message: string } }).data?.message ?? 'Could not add course'} 😔`, {
-          placement: 'top',
-          type: 'danger',
-        });
+      if (actionMode === 'create') {
+        try {
+          await addCourse(courseInput).unwrap();
+          setCourseInput((prev) => ({
+            ...prev,
+            course_name: '',
+            course_code: '',
+            exam_starts: new Date(),
+            exam_ends: new Date(),
+          }));
+          actionModal.current?.close();
+          toast.show('Course added ✅', { placement: 'top', type: 'success' });
+        } catch (err) {
+          toast.show(`${(err as { data: { message: string } }).data?.message ?? 'Could not add course'} 😔`, {
+            placement: 'top',
+            type: 'danger',
+          });
+        }
+      } else if (actionMode === 'edit') {
+        try {
+          const { course_name, course_code, exam_starts, exam_ends } = courseInput;
+          await updateCourse({
+            id: actionModalPayload.current?.courseInfo?._id ?? '',
+            new_course_code: actionModalPayload.current?.courseInfo?.course_code !== course_code,
+            user_id,
+            course_name,
+            course_code,
+            exam_starts,
+            exam_ends,
+          }).unwrap();
+          actionModal.current?.close();
+          toast.show('Course updated ✅', { placement: 'top', type: 'success' });
+        } catch (err) {
+          toast.show(`${(err as { data: { message: string } }).data?.message ?? 'Could not update course'} 😔`, {
+            placement: 'top',
+            type: 'danger',
+          });
+        }
       }
     } else {
       simpleValidator.current.showMessages();
@@ -68,7 +116,11 @@ const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Modal style={[styles.actionModal]} ref={actionModal} coverScreen position="bottom" {...restProps}>
         <View style={styles.modalHeader}>
-          <Text style={[globalStyles.text, styles.modalTitle]}>Add course</Text>
+          <Text style={[globalStyles.text, styles.modalTitle]}>
+            {actionMode === 'edit'
+              ? `Update Course: ${actionModalPayload.current?.courseInfo?.course_code ?? ''}`.trim()
+              : 'Add Course'}
+          </Text>
           <TouchableWithoutFeedback onPress={() => actionModal.current?.close()}>
             <CloseIcon width={25} height={25} />
           </TouchableWithoutFeedback>
@@ -129,7 +181,9 @@ const CourseActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({
             />
           </View>
           <TouchableOpacity style={styles.button} disabled={isAdding} onPress={handleAction}>
-            <Text style={[globalStyles.text, styles.buttonText]}>{isAdding ? 'Adding...' : 'Add'}</Text>
+            <Text style={[globalStyles.text, styles.buttonText]}>
+              {actionMode === 'edit' ? (isUpdating ? 'Updating...' : 'Update') : isAdding ? 'Adding...' : 'Add'}
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       </Modal>

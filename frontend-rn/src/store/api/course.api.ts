@@ -25,12 +25,12 @@ const courseApi = coreApi.injectEndpoints({
       invalidatesTags: ['Courses'],
     }),
     updateCourse: builder.mutation<UpdateCourseResponse, UpdateCourseInput>({
-      query: ({ id, ...body }) => ({
-        url: `course/${id}`,
+      query: ({ id, new_course_code, ...body }) => ({
+        url: `course/${id}?new_course_code=${new_course_code ? 'true' : 'false'}`,
         method: 'PUT',
         body,
       }),
-      transformResponse: (response: { data: { course: AddCourseResponse } }) => response.data.course,
+      transformResponse: (response: { data: { course: UpdateCourseResponse } }) => response.data.course,
       invalidatesTags: ['Courses'],
     }),
     deleteCourse: builder.mutation<DeleteCourseResponse, { id: string }>({
@@ -44,6 +44,6 @@ const courseApi = coreApi.injectEndpoints({
   }),
 });
 
-export const { useAddCourseMutation, useGetCoursesQuery } = courseApi;
+export const { useAddCourseMutation, useGetCoursesQuery, useDeleteCourseMutation, useUpdateCourseMutation } = courseApi;
 
 export default courseApi;

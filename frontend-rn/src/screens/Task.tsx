@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     margin: 0,
+    width: wp('100%') - 135,
   },
   content: {
     paddingHorizontal: 20,
@@ -181,6 +182,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    width: 95,
   },
   headerActionBtn: {
     marginLeft: 15,

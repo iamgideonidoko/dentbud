@@ -1,5 +1,5 @@
-import React, { useState, useRef, RefObject } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import React, { useState, useRef, RefObject, Dispatch, SetStateAction } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import type { DrawerScreenProps, AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
 import Accordion from 'react-native-collapsible/Accordion';
@@ -12,27 +12,64 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Modal from 'react-native-modalbox';
 import CourseActionModal from '../components/CourseActionModal';
 import globalStyles from '../styles/global.style';
-import { useGetCoursesQuery } from '../store/api/course.api';
+import { useGetCoursesQuery, useDeleteCourseMutation } from '../store/api/course.api';
 import { useAppSelector } from '../hooks/store.hook';
+import type { GetCourseResponse } from '../interfaces/store.interface';
+import dayjs from 'dayjs';
 
-const courseSectionTitle: AccordionRenderFC<{ actionModal: RefObject<Modal> }> = ({ actionModal }, __, index) => {
+const courseSectionTitle: AccordionRenderFC<
+  {
+    actionModal: RefObject<Modal>;
+    actionModalPayload: RefObject<{
+      actionMode: 'create' | 'edit';
+      courseInfo: GetCourseResponse | null;
+    }>;
+    setShouldUpdate: Dispatch<SetStateAction<boolean>>;
+  },
+  GetCourseResponse
+> = ({ actionModal, actionModalPayload, setShouldUpdate }, __, index) => {
   if (index !== 0) return <></>;
+  const handleModalOpen = () => {
+    if (actionModalPayload.current) {
+      actionModalPayload.current.actionMode = 'create';
+      actionModalPayload.current.courseInfo = null;
+      setShouldUpdate((prev) => !prev);
+      actionModal.current?.open();
+    }
+  };
   return (
     <View style={styles.sectionTitle}>
       <Text style={[globalStyles.text]}>Here are all your courses:</Text>
-      <TouchableWithoutFeedback onPress={() => actionModal.current?.open()}>
+      <TouchableWithoutFeedback onPress={() => handleModalOpen()}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
     </View>
   );
 };
 
-const courseHeader: AccordionRenderFC = (_, section, __, isActive) => {
+const courseHeader: AccordionRenderFC<
+  {
+    handleDeleteCourse: (id: string) => void;
+    actionModalPayload: RefObject<{
+      actionMode: 'create' | 'edit';
+      courseInfo: GetCourseResponse | null;
+    }>;
+    actionModal: RefObject<Modal>;
+    setShouldUpdate: Dispatch<SetStateAction<boolean>>;
+  },
+  GetCourseResponse
+> = ({ handleDeleteCourse, actionModalPayload, actionModal, setShouldUpdate }, { title, content }, __, isActive) => {
+  const handleEditPress = () => {
+    if (actionModalPayload.current) {
+      actionModalPayload.current.actionMode = 'edit';
+      actionModalPayload.current.courseInfo = content;
+      setShouldUpdate((prev) => !prev);
+      actionModal.current?.open();
+    }
+  };
   return (
     <View style={[styles.header, { backgroundColor: isActive ? '#4845d2' : '#dadaf6' }]}>
-      <Text style={[globalStyles.text, styles.headerText, { color: isActive ? 'white' : '#070715' }]}>
-        {section.title}
-      </Text>
+      <Text style={[globalStyles.text, styles.headerText, { color: isActive ? 'white' : '#070715' }]}>{title}</Text>
       <View style={styles.headerActions}>
         <TouchableWithoutFeedback onPress={() => console.log('trigger notification')}>
           {true ? (
@@ -41,10 +78,10 @@ const courseHeader: AccordionRenderFC = (_, section, __, isActive) => {
             <NotificationActiveIcon style={styles.headerActionBtn} width={20} height={20} />
           )}
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => console.log('trigger edit')}>
+        <TouchableWithoutFeedback onPress={() => handleEditPress()}>
           <EditIcon style={styles.headerActionBtn} width={20} height={20} />
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => console.log('trigger delete')}>
+        <TouchableWithoutFeedback onPress={() => handleDeleteCourse(content._id)}>
           <TrashIcon style={styles.headerActionBtn} width={20} height={20} />
         </TouchableWithoutFeedback>
       </View>
@@ -52,17 +89,16 @@ const courseHeader: AccordionRenderFC = (_, section, __, isActive) => {
   );
 };
 
-const courseContent: AccordionRenderFC = (_, section) => {
+const courseContent: AccordionRenderFC<object, GetCourseResponse> = (_, { content }) => {
   return (
     <View style={styles.content}>
-      {/* <Text style={[globalStyles.text]}>{section.content}</Text> */}
       <View style={styles.listItem}>
         <View style={styles.listItemChild1}>
           <Text style={[globalStyles.text]}>Course Name</Text>
           <Text style={[globalStyles.text]}>: </Text>
         </View>
         <Text style={[globalStyles.text, styles.listItemChild2]}>
-          <Text style={[globalStyles.text]}>Operating System</Text>
+          <Text style={[globalStyles.text]}>{content.course_name}</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
@@ -71,7 +107,7 @@ const courseContent: AccordionRenderFC = (_, section) => {
           <Text style={[globalStyles.text]}>: </Text>
         </View>
         <Text style={[globalStyles.text, styles.listItemChild2]}>
-          <Text style={[globalStyles.text]}>CSC404</Text>
+          <Text style={[globalStyles.text]}>{content.course_code}</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
@@ -80,7 +116,7 @@ const courseContent: AccordionRenderFC = (_, section) => {
           <Text style={[globalStyles.text]}>: </Text>
         </View>
         <Text style={[globalStyles.text, styles.listItemChild2]}>
-          <Text style={[globalStyles.text]}>10-10-2022 by 11:30am</Text>
+          <Text style={[globalStyles.text]}>{dayjs(content.exam_starts).format('DD-MM-YYYY by hh:mma')}</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
@@ -89,7 +125,7 @@ const courseContent: AccordionRenderFC = (_, section) => {
           <Text style={[globalStyles.text]}>: </Text>
         </View>
         <Text style={[globalStyles.text, styles.listItemChild2]}>
-          <Text style={[globalStyles.text]}>10-10-2022 by 11:30am</Text>
+          <Text style={[globalStyles.text]}>{dayjs(content.exam_ends).format('DD-MM-YYYY by hh:mma')}</Text>
         </Text>
       </View>
     </View>
@@ -99,45 +135,61 @@ const courseContent: AccordionRenderFC = (_, section) => {
 const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
   const user_id = useAppSelector((state) => state.auth.userInfo?.id as string);
   const [activeSections, setActiveSections] = useState<number[]>([]);
-  const [sections] = useState<AccordionSection[]>([
-    {
-      title: 'First',
-      content: 'First Lorem ipsum...',
-    },
-    {
-      title: 'Second',
-      content: 'Second Lorem ipsum...',
-    },
-    {
-      title: 'Third',
-      content: 'Third Lorem ipsum...',
-    },
-  ]);
   const actionModal = useRef<Modal>(null);
   const { data, isFetching, isLoading } = useGetCoursesQuery({ user_id });
+  const [deleteCourse] = useDeleteCourseMutation();
+  const actionModalPayload = useRef<{
+    actionMode: 'create' | 'edit';
+    courseInfo: GetCourseResponse | null;
+  }>({
+    actionMode: 'create',
+    courseInfo: null,
+  });
+  const [shouldUpdate, setShouldUpdate] = useState<boolean>(false);
 
   const handleAccordionChange = (newActiveSections: number[]) => {
     setActiveSections(newActiveSections);
   };
 
-  console.log('Course Screen');
-  console.log('data => ', data);
+  const sections: AccordionSection<GetCourseResponse>[] = data
+    ? data.map((item) => ({
+        title: item.course_code,
+        content: item,
+      }))
+    : [];
+
+  const handleDeleteCourse = (id: string) => {
+    deleteCourse({ id });
+  };
 
   return (
     <View>
       <CustomHeader navigation={navigation} title="Course" />
+      {(isFetching || isLoading) && (
+        <View style={{ marginVertical: 10 }}>
+          <ActivityIndicator color="#4845D2" />
+        </View>
+      )}
       <ScrollView style={styles.scrollView}>
         <Accordion
           sections={sections}
           activeSections={activeSections}
-          renderSectionTitle={(...args) => courseSectionTitle({ actionModal }, ...args)}
-          renderHeader={(...args) => courseHeader({}, ...args)}
+          renderSectionTitle={(...args) =>
+            courseSectionTitle({ actionModal, actionModalPayload, setShouldUpdate }, ...args)
+          }
+          renderHeader={(...args) =>
+            courseHeader({ handleDeleteCourse, actionModalPayload, actionModal, setShouldUpdate }, ...args)
+          }
           renderContent={(...args) => courseContent({}, ...args)}
           onChange={handleAccordionChange}
         />
       </ScrollView>
 
-      <CourseActionModal actionModal={actionModal} />
+      <CourseActionModal
+        actionModal={actionModal}
+        actionModalPayload={actionModalPayload}
+        shouldUpdate={shouldUpdate}
+      />
     </View>
   );
 };
@@ -156,6 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     margin: 0,
+    width: wp('100%') - 135,
   },
   content: {
     paddingHorizontal: 20,
@@ -191,6 +244,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    width: 95,
   },
   headerActionBtn: {
     marginLeft: 15,

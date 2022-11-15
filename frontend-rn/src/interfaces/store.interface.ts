@@ -83,7 +83,6 @@ export type Task = {
   ends: Date | string;
   done: boolean;
 };
-export type AddTaskInput = Task & { user_id: string };
 
 export type TaskResponse = Task & {
   user_id: string;
@@ -91,11 +90,23 @@ export type TaskResponse = Task & {
   created_at: Date | string;
 };
 
+// ADD TASK
+export type AddTaskInput = Task & { user_id: string };
 export type AddTaskResponse = TaskResponse;
 
+// GET TASK
 export type GetTasksResponse = Array<TaskResponse>;
 
 export type GetTaskResponse = TaskResponse;
+
+// UPDATE TASK
+export type UpdateTaskResponse = TaskResponse;
+export type UpdateTaskInput = Partial<Task> & { user_id: string; id: string };
+
+// DELETE TASK
+export type DeleteTaskResponse = { deleted: boolean };
+
+// --
 
 // COURSE
 export type Course = {
@@ -122,7 +133,7 @@ export type GetCourseResponse = CourseResponse;
 
 // UPDATE COURSE
 export type UpdateCourseResponse = CourseResponse;
-export type UpdateCourseInput = Partial<Course> & { user_id: string; id: string };
+export type UpdateCourseInput = Partial<Course> & { user_id: string; id: string; new_course_code: boolean };
 
 // DELETE COURSE
 export type DeleteCourseResponse = { deleted: boolean };

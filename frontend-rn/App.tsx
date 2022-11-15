@@ -11,18 +11,18 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { NetworkProvider } from 'react-native-offline';
 import { ToastProvider } from 'react-native-toast-notifications';
-import { setJSExceptionHandler, setNativeExceptionHandler } from 'react-native-exception-handler';
-import { Alert } from 'react-native';
+// import { setJSExceptionHandler, setNativeExceptionHandler } from 'react-native-exception-handler';
+// import { Alert } from 'react-native';
 import { CORE_BE_HOST } from '@env';
 
-setJSExceptionHandler((error, isFatal) => {
-  console.log(error, isFatal);
-  Alert.alert(`${isFatal ? 'Fatal: ' : 'Not Fatal: '} ${error.name}`, error.message);
-}, true);
+// setJSExceptionHandler((error, isFatal) => {
+//   console.log(error, isFatal);
+//   Alert.alert(`${isFatal ? 'Fatal: ' : 'Not Fatal: '} ${error.name}`, error.message);
+// }, true);
 
-setNativeExceptionHandler((errorString) => {
-  console.log(errorString);
-}, true);
+// setNativeExceptionHandler((errorString) => {
+//   console.log(errorString);
+// }, true);
 
 const persistor = persistStore(store);
 
