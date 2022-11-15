@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import type { FC, RefObject } from 'react';
 import Modal from 'react-native-modalbox';
 import type { ModalProps } from 'react-native-modalbox';
@@ -15,14 +15,108 @@ import {
 import DatePicker from 'react-native-date-picker';
 import CloseIcon from '../assets/icons/Close.svg';
 import globalStyles from '../styles/global.style';
+import CheckBox from '@react-native-community/checkbox';
+import type { AddTaskInput, GetTaskResponse } from '../interfaces/store.interface';
+import { useAppSelector } from '../hooks/store.hook';
+import SimpleReactValidator from 'simple-react-validator';
+import { useToast } from 'react-native-toast-notifications';
+import { useAddTaskMutation, useUpdateTaskMutation } from '../store/api/task.api';
 
-const TaskActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({ actionModal, ...restProps }) => {
-  const [examStarts, setExamStarts] = useState(new Date());
-  const [examEnds, setExamEnds] = useState(new Date());
+const TaskActionModal: FC<
+  ModalProps & {
+    actionModal: RefObject<Modal>;
+    actionModalPayload: RefObject<{
+      actionMode: 'create' | 'edit';
+      taskInfo: GetTaskResponse | null;
+    }>;
+    shouldUpdate: boolean;
+  }
+> = ({ actionModal, actionModalPayload, shouldUpdate, ...restProps }) => {
+  const [addTask, { isLoading: isAdding }] = useAddTaskMutation();
+  const [updateTask, { isLoading: isUpdating }] = useUpdateTaskMutation();
+  const user_id = useAppSelector((state) => state.auth.userInfo?.id as string);
+  const [taskInput, setTaskInput] = useState<AddTaskInput>({
+    user_id,
+    title: '',
+    description: '',
+    done: false,
+    starts: new Date(),
+    ends: new Date(),
+  });
+  const [, forceUpdate] = useState<boolean>(false);
+  const [actionMode, setActionMode] = useState<'create' | 'edit'>('create');
+  const toast = useToast();
 
-  const handleAction = () => {
-    console.log('action is to be made');
+  const simpleValidator = useRef(
+    new SimpleReactValidator({
+      element: (message: string) => <Text style={globalStyles.formErrorMsg}>{message}</Text>,
+    }),
+  );
+
+  useEffect(() => {
+    if (actionModalPayload.current) {
+      const { actionMode: mode, taskInfo } = actionModalPayload.current;
+      setActionMode(mode);
+      setTaskInput((prev) => ({
+        ...prev,
+        title: taskInfo?.title ?? '',
+        description: taskInfo?.description ?? '',
+        done: taskInfo?.done ?? false,
+        starts: taskInfo?.starts ? new Date(taskInfo?.starts) : new Date(),
+        ends: taskInfo?.ends ? new Date(taskInfo?.ends) : new Date(),
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldUpdate]);
+
+  const handleAction = async () => {
+    if (simpleValidator.current.allValid()) {
+      if (actionMode === 'create') {
+        try {
+          await addTask(taskInput).unwrap();
+          setTaskInput((prev) => ({
+            ...prev,
+            title: '',
+            description: '',
+            done: false,
+            starts: new Date(),
+            ends: new Date(),
+          }));
+          actionModal.current?.close();
+          toast.show('Task added ✅', { placement: 'top', type: 'success' });
+        } catch (err) {
+          toast.show(`${(err as { data: { message: string } }).data?.message ?? 'Could not add task'} 😔`, {
+            placement: 'top',
+            type: 'danger',
+          });
+        }
+      } else if (actionMode === 'edit') {
+        try {
+          const { title, description, done, starts, ends } = taskInput;
+          await updateTask({
+            id: actionModalPayload.current?.taskInfo?._id ?? '',
+            user_id,
+            title,
+            description,
+            done,
+            starts,
+            ends,
+          }).unwrap();
+          actionModal.current?.close();
+          toast.show('Task updated ✅', { placement: 'top', type: 'success' });
+        } catch (err) {
+          toast.show(`${(err as { data: { message: string } }).data?.message ?? 'Could not update task'} 😔`, {
+            placement: 'top',
+            type: 'danger',
+          });
+        }
+      }
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate((prev) => !prev);
+    }
   };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Modal style={[styles.actionModal]} ref={actionModal} coverScreen position="bottom" {...restProps}>
@@ -40,7 +134,13 @@ const TaskActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({ a
               autoCapitalize={'none'}
               keyboardType="name-phone-pad"
               textContentType="name"
+              value={taskInput.title}
+              onChangeText={(text) => setTaskInput((prev) => ({ ...prev, title: text }))}
             />
+            {
+              /* simple validation */
+              simpleValidator.current.message('title', taskInput.title, 'required|alpha_num_dash_space|between:2,100')
+            }
           </View>
           <View style={styles.inputBox}>
             <Text style={[globalStyles.text, styles.inputLabel]}>Description</Text>
@@ -50,18 +150,45 @@ const TaskActionModal: FC<ModalProps & { actionModal: RefObject<Modal> }> = ({ a
               keyboardType="name-phone-pad"
               textContentType="name"
               multiline
+              value={taskInput.description}
+              onChangeText={(text) => setTaskInput((prev) => ({ ...prev, description: text }))}
+            />
+            {
+              /* simple validation */
+              simpleValidator.current.message('description', taskInput.description, 'alpha_num_space|between:2,500')
+            }
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={[globalStyles.text, styles.inputLabel]}>Done</Text>
+            <CheckBox
+              disabled={false}
+              value={taskInput.done}
+              onCheckColor="#4845D2"
+              onTintColor="#4845D2"
+              tintColors={{ true: '#4845D2' }}
+              onValueChange={(done) => setTaskInput((prev) => ({ ...prev, done }))}
             />
           </View>
           <View style={styles.inputBox}>
             <Text style={[globalStyles.text, styles.inputLabel]}>Starts</Text>
-            <DatePicker date={examStarts} onDateChange={setExamStarts} textColor="black" />
+            <DatePicker
+              date={taskInput.starts as Date}
+              onDateChange={(date) => setTaskInput((prev) => ({ ...prev, starts: date }))}
+              textColor="black"
+            />
           </View>
           <View style={styles.inputBox}>
             <Text style={[globalStyles.text, styles.inputLabel]}>Ends</Text>
-            <DatePicker date={examEnds} onDateChange={setExamEnds} textColor="black" />
+            <DatePicker
+              date={taskInput.ends as Date}
+              onDateChange={(date) => setTaskInput((prev) => ({ ...prev, ends: date }))}
+              textColor="black"
+            />
           </View>
           <TouchableOpacity style={styles.button} onPress={handleAction}>
-            <Text style={[globalStyles.text, styles.buttonText]}>Add</Text>
+            <Text style={[globalStyles.text, styles.buttonText]}>
+              {actionMode === 'edit' ? (isUpdating ? 'Updating...' : 'Update') : isAdding ? 'Adding...' : 'Add'}
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       </Modal>

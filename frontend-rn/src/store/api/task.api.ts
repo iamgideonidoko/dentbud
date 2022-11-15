@@ -22,6 +22,7 @@ const taskApi = coreApi.injectEndpoints({
         body,
       }),
       transformResponse: (response: { data: { task: AddTaskResponse } }) => response.data.task,
+      invalidatesTags: ['Tasks'],
     }),
     updateTask: builder.mutation<UpdateTaskResponse, UpdateTaskInput>({
       query: ({ id, ...body }) => ({
@@ -43,6 +44,6 @@ const taskApi = coreApi.injectEndpoints({
   }),
 });
 
-export const { useAddTaskMutation } = taskApi;
+export const { useAddTaskMutation, useGetTasksQuery, useUpdateTaskMutation, useDeleteTaskMutation } = taskApi;
 
 export default taskApi;

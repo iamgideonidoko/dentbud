@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { ScrollView, Text, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import { ScrollView, Text, StyleSheet, View, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import type { AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
 import Accordion from 'react-native-collapsible/Accordion';
-import type { FC, RefObject } from 'react';
+import type { FC, RefObject, Dispatch, SetStateAction } from 'react';
 import PlusIcon from '../assets/icons/Plus.svg';
 import EditIcon from '../assets/icons/Edit.svg';
 import NotificationIcon from '../assets/icons/Notification.svg';
@@ -12,25 +12,64 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import globalStyles from '../styles/global.style';
 import TaskActionModal from '../components/TaskActionModal';
 import Modal from 'react-native-modalbox';
+import { useGetTasksQuery, useDeleteTaskMutation } from '../store/api/task.api';
+import { useAppSelector } from '../hooks/store.hook';
+import type { GetTaskResponse } from '../interfaces/store.interface';
+import dayjs from 'dayjs';
 
-const taskSectionTitle: AccordionRenderFC<{ actionModal: RefObject<Modal> }> = ({ actionModal }, __, index) => {
+const taskSectionTitle: AccordionRenderFC<
+  {
+    actionModal: RefObject<Modal>;
+    actionModalPayload: RefObject<{
+      actionMode: 'create' | 'edit';
+      taskInfo: GetTaskResponse | null;
+    }>;
+    setShouldUpdate: Dispatch<SetStateAction<boolean>>;
+  },
+  GetTaskResponse
+> = ({ actionModal, actionModalPayload, setShouldUpdate }, __, index) => {
   if (index !== 0) return <></>;
+  const handleModalOpen = () => {
+    if (actionModalPayload.current) {
+      actionModalPayload.current.actionMode = 'create';
+      actionModalPayload.current.taskInfo = null;
+      setShouldUpdate((prev) => !prev);
+      actionModal.current?.open();
+    }
+  };
   return (
     <View style={styles.sectionTitle}>
       <Text style={[globalStyles.text]}>Here are all your tasks:</Text>
-      <TouchableWithoutFeedback onPress={() => actionModal.current?.open()}>
+      <TouchableWithoutFeedback onPress={() => handleModalOpen()}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
     </View>
   );
 };
 
-const taskHeader: AccordionRenderFC = (_, section, __, isActive) => {
+const taskHeader: AccordionRenderFC<
+  {
+    handleDeleteTask: (id: string) => void;
+    actionModalPayload: RefObject<{
+      actionMode: 'create' | 'edit';
+      taskInfo: GetTaskResponse | null;
+    }>;
+    actionModal: RefObject<Modal>;
+    setShouldUpdate: Dispatch<SetStateAction<boolean>>;
+  },
+  GetTaskResponse
+> = ({ handleDeleteTask, actionModalPayload, actionModal, setShouldUpdate }, { title, content }, __, isActive) => {
+  const handleEditPress = () => {
+    if (actionModalPayload.current) {
+      actionModalPayload.current.actionMode = 'edit';
+      actionModalPayload.current.taskInfo = content;
+      setShouldUpdate((prev) => !prev);
+      actionModal.current?.open();
+    }
+  };
   return (
     <View style={[styles.header, { backgroundColor: isActive ? '#4845d2' : '#dadaf6' }]}>
-      <Text style={[globalStyles.text, styles.headerText, { color: isActive ? 'white' : '#070715' }]}>
-        {section.title}
-      </Text>
+      <Text style={[globalStyles.text, styles.headerText, { color: isActive ? 'white' : '#070715' }]}>{title}</Text>
       <View style={styles.headerActions}>
         <TouchableWithoutFeedback onPress={() => console.log('trigger notification')}>
           {true ? (
@@ -39,10 +78,10 @@ const taskHeader: AccordionRenderFC = (_, section, __, isActive) => {
             <NotificationActiveIcon style={styles.headerActionBtn} width={20} height={20} />
           )}
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => console.log('trigger edit')}>
+        <TouchableWithoutFeedback onPress={() => handleEditPress()}>
           <EditIcon style={styles.headerActionBtn} width={20} height={20} />
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => console.log('trigger delete')}>
+        <TouchableWithoutFeedback onPress={() => handleDeleteTask(content._id)}>
           <TrashIcon style={styles.headerActionBtn} width={20} height={20} />
         </TouchableWithoutFeedback>
       </View>
@@ -50,7 +89,7 @@ const taskHeader: AccordionRenderFC = (_, section, __, isActive) => {
   );
 };
 
-const taskContent: AccordionRenderFC = (_, section) => {
+const taskContent: AccordionRenderFC<object, GetTaskResponse> = (_, { content }) => {
   return (
     <View style={styles.content}>
       {/* <Text style={[globalStyles.text]}>{section.content}</Text> */}
@@ -60,7 +99,7 @@ const taskContent: AccordionRenderFC = (_, section) => {
           <Text style={[globalStyles.text]}>: </Text>
         </View>
         <Text style={[globalStyles.text, styles.listItemChild2]}>
-          <Text style={[globalStyles.text]}>Operating System</Text>
+          <Text style={[globalStyles.text]}>{content.title}</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
@@ -69,7 +108,16 @@ const taskContent: AccordionRenderFC = (_, section) => {
           <Text style={[globalStyles.text]}>: </Text>
         </View>
         <Text style={[globalStyles.text, styles.listItemChild2]}>
-          <Text style={[globalStyles.text]}>Lorem, ipsum dolor sit amet consectetur adipisicing!</Text>
+          <Text style={[globalStyles.text]}>{content.description}</Text>
+        </Text>
+      </View>
+      <View style={styles.listItem}>
+        <View style={styles.listItemChild1}>
+          <Text style={[globalStyles.text]}>Done</Text>
+          <Text style={[globalStyles.text]}>: </Text>
+        </View>
+        <Text style={[globalStyles.text, styles.listItemChild2]}>
+          <Text style={[globalStyles.text]}>{content.done ? 'Yes' : 'No'}</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
@@ -78,7 +126,7 @@ const taskContent: AccordionRenderFC = (_, section) => {
           <Text style={[globalStyles.text]}>: </Text>
         </View>
         <Text style={[globalStyles.text, styles.listItemChild2]}>
-          <Text style={[globalStyles.text]}>10-10-2022 by 11:30am</Text>
+          <Text style={[globalStyles.text]}>{dayjs(content.starts).format('DD-MM-YYYY by hh:mma')}</Text>
         </Text>
       </View>
       <View style={styles.listItem}>
@@ -87,7 +135,7 @@ const taskContent: AccordionRenderFC = (_, section) => {
           <Text style={[globalStyles.text]}>: </Text>
         </View>
         <Text style={[globalStyles.text, styles.listItemChild2]}>
-          <Text style={[globalStyles.text]}>10-10-2022 by 11:30am</Text>
+          <Text style={[globalStyles.text]}>{dayjs(content.ends).format('DD-MM-YYYY by hh:mma')}</Text>
         </Text>
       </View>
     </View>
@@ -95,39 +143,56 @@ const taskContent: AccordionRenderFC = (_, section) => {
 };
 
 const Task: FC = () => {
+  const user_id = useAppSelector((state) => state.auth.userInfo?.id as string);
   const [activeSections, setActiveSections] = useState<number[]>([]);
-  const [sections] = useState<AccordionSection[]>([
-    {
-      title: 'First',
-      content: 'First Lorem ipsum...',
-    },
-    {
-      title: 'Second',
-      content: 'Second Lorem ipsum...',
-    },
-    {
-      title: 'Third',
-      content: 'Third Lorem ipsum...',
-    },
-  ]);
   const actionModal = useRef<Modal>(null);
+  const { data, isFetching, isLoading } = useGetTasksQuery({ user_id });
+  const [deleteTask] = useDeleteTaskMutation();
+  const actionModalPayload = useRef<{
+    actionMode: 'create' | 'edit';
+    taskInfo: GetTaskResponse | null;
+  }>({
+    actionMode: 'create',
+    taskInfo: null,
+  });
+  const [shouldUpdate, setShouldUpdate] = useState<boolean>(false);
 
   const handleAccordionChange = (newActiveSections: number[]) => {
     setActiveSections(newActiveSections);
   };
+
+  const sections: AccordionSection<GetTaskResponse>[] = data
+    ? data.map((item) => ({
+        title: item.title,
+        content: item,
+      }))
+    : [];
+
+  const handleDeleteTask = (id: string) => {
+    deleteTask({ id });
+  };
   return (
     <>
+      {(isFetching || isLoading) && (
+        <View style={{ marginVertical: 10 }}>
+          <ActivityIndicator color="#4845D2" />
+        </View>
+      )}
       <ScrollView style={styles.scrollView}>
         <Accordion
           sections={sections}
           activeSections={activeSections}
-          renderSectionTitle={(...args) => taskSectionTitle({ actionModal }, ...args)}
-          renderHeader={(...args) => taskHeader({}, ...args)}
+          renderSectionTitle={(...args) =>
+            taskSectionTitle({ actionModal, actionModalPayload, setShouldUpdate }, ...args)
+          }
+          renderHeader={(...args) =>
+            taskHeader({ handleDeleteTask, actionModalPayload, actionModal, setShouldUpdate }, ...args)
+          }
           renderContent={(...args) => taskContent({}, ...args)}
           onChange={handleAccordionChange}
         />
       </ScrollView>
-      <TaskActionModal actionModal={actionModal} />
+      <TaskActionModal actionModal={actionModal} actionModalPayload={actionModalPayload} shouldUpdate={shouldUpdate} />
     </>
   );
 };

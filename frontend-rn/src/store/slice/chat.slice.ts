@@ -23,7 +23,6 @@ export const chatSlice = createSlice({
       state.chat = payload;
     },
     undoLastChat: (state) => {
-      console.log('should undo last chat');
       state.chat = [...state.chat].slice(0, -1);
     },
   },

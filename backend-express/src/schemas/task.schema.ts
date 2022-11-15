@@ -7,7 +7,7 @@ const newTaskSchema: JSONSchemaType<NewTask> = {
   properties: {
     user_id: { type: 'string', nullable: false },
     title: { type: 'string', nullable: false, minLength: 2 },
-    description: { type: 'string', nullable: true, minLength: 2 },
+    description: { type: 'string', nullable: true },
     starts: { type: 'string', nullable: true },
     ends: { type: 'string', nullable: true },
     done: { type: 'boolean', nullable: true },
@@ -24,7 +24,7 @@ const updateTaskSchema: JSONSchemaType<UpdateTask> = {
   properties: {
     user_id: { type: 'string', nullable: true },
     title: { type: 'string', nullable: true, minLength: 2 },
-    description: { type: 'string', nullable: true, minLength: 2 },
+    description: { type: 'string', nullable: true },
     starts: { type: 'string', nullable: true },
     ends: { type: 'string', nullable: true },
     done: { type: 'boolean', nullable: true },

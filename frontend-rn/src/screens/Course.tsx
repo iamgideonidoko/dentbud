@@ -1,8 +1,9 @@
-import React, { useState, useRef, RefObject, Dispatch, SetStateAction } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import type { DrawerScreenProps, AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
 import Accordion from 'react-native-collapsible/Accordion';
+import type { RefObject, Dispatch, SetStateAction } from 'react';
 import PlusIcon from '../assets/icons/Plus.svg';
 import EditIcon from '../assets/icons/Edit.svg';
 import NotificationIcon from '../assets/icons/Notification.svg';
