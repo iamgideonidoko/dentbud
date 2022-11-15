@@ -15,10 +15,13 @@ set-conda-env-vars:
 
 deploy-landing: frontend-rn/android/app/build/outputs/apk/release/app-release.apk
 	@echo Copying release apk
+	sleep 3
 	mkdir -p ${landing_dir}/${deploy_dir}
 	cp $^ ${landing_dir}/${deploy_dir}/Dentbud.apk
 	@echo Done copying release apk
+	sleep 3
 	@echo Starting surge deploy...
+	sleep 3
 	surge ${landing_dir}
 	@echo Done.
 
