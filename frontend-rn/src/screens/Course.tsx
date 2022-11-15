@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback, ActivityI
 import CustomHeader from '../components/CustomHeader';
 import type { DrawerScreenProps, AccordionRenderFC, AccordionSection } from '../interfaces/helper.interface';
 import Accordion from 'react-native-collapsible/Accordion';
-import type { RefObject, Dispatch, SetStateAction } from 'react';
+import type { RefObject, Dispatch, SetStateAction, FC } from 'react';
 import PlusIcon from '../assets/icons/Plus.svg';
 import EditIcon from '../assets/icons/Edit.svg';
 import NotificationIcon from '../assets/icons/Notification.svg';
@@ -18,18 +18,15 @@ import { useAppSelector } from '../hooks/store.hook';
 import type { GetCourseResponse } from '../interfaces/store.interface';
 import dayjs from 'dayjs';
 
-const courseSectionTitle: AccordionRenderFC<
-  {
-    actionModal: RefObject<Modal>;
-    actionModalPayload: RefObject<{
-      actionMode: 'create' | 'edit';
-      courseInfo: GetCourseResponse | null;
-    }>;
-    setShouldUpdate: Dispatch<SetStateAction<boolean>>;
-  },
-  GetCourseResponse
-> = ({ actionModal, actionModalPayload, setShouldUpdate }, __, index) => {
-  if (index !== 0) return <></>;
+const CourseHeader: FC<{
+  actionModal: RefObject<Modal>;
+  actionModalPayload: RefObject<{
+    actionMode: 'create' | 'edit';
+    courseInfo: GetCourseResponse | null;
+  }>;
+  setShouldUpdate: Dispatch<SetStateAction<boolean>>;
+  hasCourse: boolean;
+}> = ({ actionModal, actionModalPayload, setShouldUpdate, hasCourse }) => {
   const handleModalOpen = () => {
     if (actionModalPayload.current) {
       actionModalPayload.current.actionMode = 'create';
@@ -40,7 +37,9 @@ const courseSectionTitle: AccordionRenderFC<
   };
   return (
     <View style={styles.sectionTitle}>
-      <Text style={[globalStyles.text]}>Here are all your courses:</Text>
+      <Text style={[globalStyles.text, { width: wp('100%') - 80 }]}>
+        {hasCourse ? 'Here are all your courses:' : 'You do not have any course, use the plus button to add one.'}
+      </Text>
       <TouchableWithoutFeedback onPress={() => handleModalOpen()}>
         <PlusIcon width={25} height={25} />
       </TouchableWithoutFeedback>
@@ -171,13 +170,17 @@ const Course: React.FC<DrawerScreenProps> = ({ navigation }) => {
           <ActivityIndicator color="#4845D2" />
         </View>
       )}
+      <CourseHeader
+        actionModal={actionModal}
+        actionModalPayload={actionModalPayload}
+        setShouldUpdate={setShouldUpdate}
+        hasCourse={Array.isArray(data) && data.length > 0}
+      />
       <ScrollView style={styles.scrollView}>
         <Accordion
           sections={sections}
           activeSections={activeSections}
-          renderSectionTitle={(...args) =>
-            courseSectionTitle({ actionModal, actionModalPayload, setShouldUpdate }, ...args)
-          }
+          renderSectionTitle={() => <></>}
           renderHeader={(...args) =>
             courseHeader({ handleDeleteCourse, actionModalPayload, actionModal, setShouldUpdate }, ...args)
           }
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#edecfb',
   },
   scrollView: {
-    marginBottom: 60,
+    marginBottom: 125,
   },
   sectionTitle: {
     padding: 15,
