@@ -28,6 +28,7 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
     password: '',
     retype_password: '',
   });
+  const [matricNo, setMatricNo] = useState<string>('');
   const [, forceUpdate] = useState<boolean>(false);
   const toast = useToast();
 
@@ -38,6 +39,11 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
         password_match: {
           message: 'The :attribute must match password',
           rule: (val, params) => val === params[0],
+        },
+        valid_matricno: {
+          message: 'The :attribute must be a valid CSC matric no.',
+          rule: (val: string) =>
+            val?.toLowerCase().indexOf('sci') !== -1 && val?.toLowerCase().indexOf('csc') !== -1 && val?.length === 11,
         },
       },
     }),
@@ -101,6 +107,25 @@ const Register: React.FC<DrawerScreenProps> = ({ navigation }) => {
                 {
                   /* simple validation */
                   simpleValidator.current.message('email', input.email, 'required|email|between:2,50')
+                }
+              </View>
+              <View style={styles.inputBox}>
+                <Text style={[globalStyles.text, styles.inputLabel]}>Matric No.</Text>
+                <TextInput
+                  style={[globalStyles.text, styles.input]}
+                  autoCapitalize={'none'}
+                  keyboardType="name-phone-pad"
+                  textContentType="name"
+                  value={matricNo}
+                  onChangeText={(text) => setMatricNo(text)}
+                />
+                {
+                  /* simple validation */
+                  simpleValidator.current.message(
+                    'matric no.',
+                    matricNo,
+                    'required|alpha_num|valid_matricno|between:2,50',
+                  )
                 }
               </View>
               <View style={styles.inputBox}>

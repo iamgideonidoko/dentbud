@@ -29,7 +29,7 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) =>
 
   const handleLogout = async () => {
     try {
-      toast.show('Logged you out...', { placement: 'top', type: 'warning' });
+      toast.show('Logging you out...', { placement: 'top', type: 'warning' });
       await logoutUser({ user_id: userInfo?.id as string }).unwrap();
       toast.show('Logged out successfully 😎', { placement: 'top', type: 'success' });
     } catch (err) {
