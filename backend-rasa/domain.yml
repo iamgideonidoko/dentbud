@@ -8,14 +8,16 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - thank
+  - ask_for_all_courses
+  - ask_for_all_tasks
 
 responses:
   utter_greet:
   - text: "Hey! How are you?"
 
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+  - text: "Don't worry you'd be fine."
 
   utter_did_that_help:
   - text: "Did that help you?"
@@ -28,7 +30,16 @@ responses:
   - text: "Yeah"
 
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  - text: "I'm Dentbud, your personal assistant built by Gideon Idoko."
+
+  utter_send_all_courses:
+  - text: "[[SEND_ALL_COURSES]]"
+
+  utter_send_all_tasks:
+  - text: "[[SEND_ALL_TASKS]]"
+
+  utter_nlu_fallback:
+  - text: "[[NLU_FALLBACK]]"
 
 session_config:
   session_expiration_time: 60

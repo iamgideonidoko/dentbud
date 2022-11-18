@@ -11,3 +11,18 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+- rule: Sent fallback response
+  steps:
+  - intent: nlu_fallback
+  - action: utter_nlu_fallback
+
+- rule: Send all courses when user ask for all courses
+  steps:
+  - intent: ask_for_all_courses
+  - action: utter_send_all_courses
+
+- rule: Send all tasks when user ask for all tasks
+  steps:
+  - intent: ask_for_all_tasks
+  - action: utter_send_all_tasks

@@ -16,6 +16,10 @@ ADD requirements.txt /app/requirements.txt
 # upgrade pip version
 RUN pip install --no-cache-dir --upgrade pip
 
+# install requirements
 RUN pip install -r requirements.txt
+
+# download language model for english
+RUN python -m spacy download en_core_web_md
 
 COPY ./ /app
