@@ -12,6 +12,7 @@ type Constants = {
   apiBase: string;
   proxyBase: string;
   rasaHost: string;
+  bookBaseUrl: string;
 };
 
 const constants: Constants = {
@@ -24,6 +25,7 @@ const constants: Constants = {
   apiBase: '/api',
   proxyBase: '/api/proxy',
   rasaHost: process.env.RASA_HOST as string,
+  bookBaseUrl: 'https://www.googleapis.com/books/v1/volumes',
 };
 
 export default constants;

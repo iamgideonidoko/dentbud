@@ -1,0 +1,14 @@
+{
+    "[[SEND_ALL_COURSES]]": {
+        "description": "Send back all user courses",
+        "slots": []
+    },
+    "[[SEND_ALL_TASKS]]": {
+        "description": "Send back all user task",
+        "slots": []
+    },
+    "[[NLU_FALLBACK]]": {
+        "description": "No intent could be predicted with >=70% accuracy",
+        "slots": []
+    }
+}

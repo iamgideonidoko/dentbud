@@ -12,3 +12,9 @@ export const callRasa = (data: { sender: string; text: string }): Promise<CallRa
     });
   });
 };
+
+export const processText = (text: string): Promise<string> => {
+  return new Promise<string>((resolve) => {
+    resolve(text);
+  });
+};
