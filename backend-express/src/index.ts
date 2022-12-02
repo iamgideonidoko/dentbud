@@ -11,7 +11,7 @@ import limiter from './config/rateLimiter.config';
 import appCors from './config/cors.config';
 import mongoose from 'mongoose';
 import constants from './config/constants.config';
-import cron from 'node-cron';
+import { pingRasa } from './jobs/rasa.job';
 // Routes Import
 import userRoute from './routes/user.route';
 import authRoute from './routes/auth.route';
@@ -57,10 +57,8 @@ app.use(limiter());
 // cors
 app.use(appCors());
 
-/* JOB */
-cron.schedule('0 */1 * * *', () => {
-  console.log('this should run every hour');
-});
+/* Register Jobs */
+pingRasa();
 
 /* 
 @description    MongoDB Connection using Mongoose ORM

@@ -5,6 +5,10 @@ landing_dir = frontend-web
 create-conda-env:
 	conda create -n rasa_env python=3.8
 
+# Create an admin user before setting conda environment variables
+# use admin # select admin colection
+# db.createUser({user:"admin", pwd:"password", roles:[{role:"root", db:"admin"}]}) # create the admin user
+
 set-conda-env-vars:
 	@echo Setting environment variables for current environment...
 	conda env config vars set MONGODB_URI=mongodb://localhost:27017/dentbud_tracker_store
@@ -24,5 +28,6 @@ deploy-landing: frontend-rn/android/app/build/outputs/apk/release/app-release.ap
 	sleep 3
 	surge ${landing_dir}
 	@echo Done.
+
 
 .PHONY: create-conda-env set-conda-env-vars deploy-landing
