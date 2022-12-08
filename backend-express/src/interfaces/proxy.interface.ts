@@ -1,4 +1,5 @@
 export interface ConverseRasa {
+  id: string;
   name: string;
   email: string;
   text: string;

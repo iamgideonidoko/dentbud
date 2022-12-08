@@ -5,11 +5,12 @@ import { ConverseRasa } from '../interfaces/proxy.interface';
 const converseRasaSchema: JSONSchemaType<ConverseRasa> = {
   type: 'object',
   properties: {
+    id: { type: 'string', nullable: false, minLength: 2 },
     name: { type: 'string', nullable: false, minLength: 2 },
     email: { type: 'string', nullable: false, format: 'email' },
     text: { type: 'string', nullable: false, minLength: 1 },
   },
-  required: ['name', 'email', 'text'],
+  required: ['id', 'name', 'email', 'text'],
   additionalProperties: false,
 };
 

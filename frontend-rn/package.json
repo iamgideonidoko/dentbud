@@ -11,7 +11,8 @@
     "lint:fix": "eslint ./**/*.{js,jsx,ts,tsx} --fix",
     "bundle:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "remove:junky-android-src-assets": "rm -r ./android/app/src/main/res/drawable-*",
-    "build:apk-release": "cd android && ./gradlew assembleRelease"
+    "build:apk-release": "cd android && ./gradlew assembleRelease",
+    "linux:access": "chmod 755 android/gradlew "
   },
   "dependencies": {
     "@notifee/react-native": "^7.0.4",

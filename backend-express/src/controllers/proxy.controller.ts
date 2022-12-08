@@ -4,7 +4,7 @@ import { createSuccess } from '../helpers/http.helper';
 import { callRasa, replaceNamePlaceholder, processText } from '../services/proxy.service';
 
 export const converseRasa = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, email, text } = req.body;
+  const { name, email, text } = req.body as { id: string; name: string; email: string; text: string };
   if (!name || !email || !text) return next(createError(400, 'Please, enter all fields'));
 
   const cannotRespondMsg = `Sorry ${(name?.split(' ')?.[0] ?? '').trim()}, I can't provide a response at the moment.`;
