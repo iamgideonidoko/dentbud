@@ -10,5 +10,17 @@
     "[[NLU_FALLBACK]]": {
         "description": "No intent could be predicted with >=70% accuracy",
         "slots": []
+    },
+    "[[SEND_BOOK_RECOMMENDATIONS]]": {
+        "description": "Send book recommendations",
+        "slots": []
+    },
+    "[[ADD_TASK]]": {
+        "description": "Add a new task",
+        "slots": ["slot_task_title", "slot_task_time"]
+    },
+    "[[SEND_TODAY_TASK]]": {
+        "description": "Send all today task",
+        "slots": []
     }
 }

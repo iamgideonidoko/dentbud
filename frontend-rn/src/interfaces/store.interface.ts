@@ -66,6 +66,7 @@ export interface ChatState {
 }
 
 export interface ConverseRasaInput {
+  id: string;
   name: string;
   email: string;
   text: string;

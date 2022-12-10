@@ -657,3 +657,29 @@ nlu:
     - what are all the things I need to do?
     - my tasks
     - my activities
+
+- intent: ask_for_book_recommendations
+  examples: |
+    - what should i read?
+    - what materials do you recommend?
+    - i need to read something
+    - i need to read some books
+    - i need some materials
+    - can i get a book to read?
+    - what should i study?
+
+- intent: ask_to_add_task
+  examples: |
+    - remind me to [do something](task_title)
+    - i want to [read a book](task_title)
+    - remind me to [do something](task_title) [tomorrow](task_time)
+    - remind me to [do something](task_title) in [10min](task_time)
+
+- intent: ask_for_today_task 
+  examples: |
+    - ask today
+    - what do i have to do today
+    - what do i want to do today?
+    - can i get my task for today?
+    - task today
+    - what is in for me today?

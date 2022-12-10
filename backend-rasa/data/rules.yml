@@ -26,3 +26,18 @@ rules:
   steps:
   - intent: ask_for_all_tasks
   - action: utter_send_all_tasks
+
+- rule: Send random book recommendations when the user asks for it
+  steps:
+  - intent: ask_for_book_recommendations
+  - action: utter_send_book_recommendations
+
+- rule: Add task
+  steps:
+  - intent: ask_to_add_task
+  - action: utter_add_task
+
+- rule: Send today task
+  steps:
+  - intent: ask_for_today_task
+  - action: utter_send_today_task

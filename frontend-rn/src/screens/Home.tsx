@@ -86,6 +86,7 @@ const Home: React.FC<DrawerScreenProps> = ({ navigation }) => {
         }),
       );
       await converseRasa({
+        id: userInfo?.id as string,
         name: userInfo?.name as string,
         email: userInfo?.email as string,
         text: inputMessage,

@@ -48,3 +48,18 @@ export const updateCourseInDb = (id: string, newUpdate: object): Promise<ICourse
     }
   });
 };
+
+export const fetchSingleRandomCourseByUserId = (user_id: string): Promise<(ICourse & { _id: string }) | null> => {
+  return new Promise<(ICourse & { _id: string }) | null>(async (resolve, reject) => {
+    // get courses
+    try {
+      const count = await Course.countDocuments();
+      const random = Math.floor(Math.random() * count);
+      const course = await Course.findOne({ user_id }).skip(random);
+      if (!course) resolve(null);
+      resolve(course);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};

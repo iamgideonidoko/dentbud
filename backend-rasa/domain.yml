@@ -11,6 +11,26 @@ intents:
   - thank
   - ask_for_all_courses
   - ask_for_all_tasks
+  - ask_for_book_recommendations
+  - ask_to_add_task
+  - ask_for_today_task
+
+entities:
+  - task_title
+  - task_time
+
+slots:
+  slot_tasK_title:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: task_title
+
+  slot_tasK_time:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: task_time
 
 responses:
   utter_greet:
@@ -40,6 +60,15 @@ responses:
 
   utter_nlu_fallback:
   - text: "[[NLU_FALLBACK]]"
+
+  utter_send_book_recommendations:
+  - text: "[[SEND_BOOK_RECOMMENDATIONS]]"
+
+  utter_add_task:
+  - text: "[[ADD_TASK]]"
+
+  utter_send_today_task:
+  - text: "[[SEND_TODAY_TASK]]"
 
 session_config:
   session_expiration_time: 60

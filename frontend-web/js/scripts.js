@@ -194,7 +194,8 @@
 			e.preventDefault()
 			const passwordVal = downloadInput.value;
 			const dateObj = new Date();
-			const validPass = `test${dateObj.getHours()}${dateObj.getFullYear()}${dateObj.getMonth()}${dateObj.getDate()}`;
+			// const validPass = `test${dateObj.getHours()}${dateObj.getFullYear()}${dateObj.getMonth()}${dateObj.getDate()}`;
+			const validPass = `DENTBUD`;
 			if (passwordVal.trim() === validPass.trim()) {
 				console.log('Correct Password');
 				downloadElem.click();
