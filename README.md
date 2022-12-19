@@ -134,8 +134,9 @@ Follow the steps below to set up the project locally
 ## Dentbud Architecture
 ![Dentbud Architecture](./images/dentbud_architecture.png)
 
-## Preview of Dentbud
-![Preview of Dentbud](./images/dentbud_screen_record.gif)
+
+https://user-images.githubusercontent.com/54052461/208477530-856fc03b-6379-458f-a092-f2de06e01135.mp4
+
 
 ## Contributing
 
